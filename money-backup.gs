@@ -3,7 +3,7 @@
  * Paste this whole file into a new Google Apps Script project (see SETUP-MONEY-BACKUP.txt).
  * It stores your expense data as JSON files in YOUR Drive, in the folder below.
  */
-const KEY = 'CHANGE-THIS-TO-YOUR-OWN-SECRET-KEY';      // choose a long random phrase; enter the same in the app
+const KEY = 'my-household-7930';      // choose a long random phrase; enter the same in the app
 const FOLDER_NAME = 'Help Register Money Backup';
 const KEEP_DAYS = 30;                                  // how many daily copies to keep
 
@@ -16,7 +16,7 @@ function doGet() {
 function doPost(e) {
   try {
     const req = JSON.parse(e.postData.contents);
-    if (KEY === 'CHANGE-THIS-TO-YOUR-OWN-SECRET-KEY' || req.key !== KEY) return out({ ok: false, error: 'Wrong key' });
+    if (KEY === 'my-household-7930' || req.key !== KEY) return out({ ok: false, error: 'Wrong key' });
     if (req.action === 'ping') return out({ ok: true });
 
     const lock = LockService.getScriptLock();
