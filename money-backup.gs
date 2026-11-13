@@ -7,6 +7,12 @@ const KEY = 'CHANGE-THIS-TO-YOUR-OWN-SECRET-KEY';      // choose a long random p
 const FOLDER_NAME = 'Help Register Money Backup';
 const KEEP_DAYS = 30;                                  // how many daily copies to keep
 
+/** Open the web app address in a browser: you should see a short "running" message. */
+function doGet() {
+  return ContentService.createTextOutput('Help Register Money script is running. Use the app to sync (this page needs no action).')
+    .setMimeType(ContentService.MimeType.TEXT);
+}
+
 function doPost(e) {
   try {
     const req = JSON.parse(e.postData.contents);
@@ -25,6 +31,24 @@ function doPost(e) {
         write_(folder, 'money-' + day + '.json', text);
         prune_(folder);
         return out({ ok: true, file: 'money-' + day + '.json' });
+      }
+      if (req.action === 'sget') {          // two-way sync: read the shared copy (skipped if you already have this version)
+        const doc = readSync_(folder);
+        if (!doc) return out({ ok: true, ver: 0, same: Number(req.have || 0) === 0, data: null });
+        if (Number(req.have || 0) === doc.ver) return out({ ok: true, ver: doc.ver, same: true });
+        return out({ ok: true, ver: doc.ver, data: doc.data });
+      }
+      if (req.action === 'sput') {          // two-way sync: save the merged copy if nobody else saved first
+        const cur = readSync_(folder), curVer = cur ? cur.ver : 0;
+        if (Number(req.ver || 0) !== curVer) return out({ ok: false, conflict: true, error: 'conflict', ver: curVer });
+        if (!req.data || !Array.isArray(req.data.mv)) return out({ ok: false, error: 'Nothing to save' });
+        const doc = { ver: curVer + 1, savedAt: new Date().toISOString(), data: req.data };
+        const text = JSON.stringify(doc);
+        write_(folder, 'money-sync.json', text);
+        const day = Utilities.formatDate(new Date(), Session.getScriptTimeZone(), 'yyyy-MM-dd');
+        write_(folder, 'money-sync-' + day + '.json', text);   // one safety copy per day
+        pruneSync_(folder);
+        return out({ ok: true, ver: doc.ver });
       }
       if (req.action === 'get') {
         const name = /^money-(latest|\d{4}-\d{2}-\d{2})$/.test(String(req.name || 'latest').replace('.json', ''))
@@ -68,6 +92,19 @@ function prune_(folder) {
   while (it.hasNext()) {
     const f = it.next();
     if (/^money-\d{4}-\d{2}-\d{2}\.json$/.test(f.getName())) files.push(f);
+  }
+  files.sort((a, b) => (a.getName() < b.getName() ? 1 : -1));
+  files.slice(KEEP_DAYS).forEach(f => f.setTrashed(true));
+}
+function readSync_(folder) {
+  const it = folder.getFilesByName('money-sync.json');
+  return it.hasNext() ? JSON.parse(it.next().getBlob().getDataAsString()) : null;
+}
+function pruneSync_(folder) {
+  const files = [], it = folder.getFiles();
+  while (it.hasNext()) {
+    const f = it.next();
+    if (/^money-sync-\d{4}-\d{2}-\d{2}\.json$/.test(f.getName())) files.push(f);
   }
   files.sort((a, b) => (a.getName() < b.getName() ? 1 : -1));
   files.slice(KEEP_DAYS).forEach(f => f.setTrashed(true));

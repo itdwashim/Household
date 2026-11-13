@@ -1,13 +1,15 @@
-SETUP: BACK UP YOUR MONEY DATA TO GOOGLE DRIVE (one time, about 5 minutes)
-==========================================================================
-Your expense data is saved into YOUR own Google Drive by a small script that runs in YOUR Google account.
-Nobody else can read it. Do this once, then enter the address and key in the app on each device.
+SETUP: SYNC AND BACK UP YOUR MONEY DATA THROUGH GOOGLE DRIVE (one time, about 5 minutes)
+=======================================================================================
+Your money data syncs between your devices (Windows, Android, web) through YOUR own Google Drive, using a small script
+that runs in YOUR Google account. Nobody else can read it. This is separate from the Household sync, which keeps using
+its own script. The Sync button at the top of the app lets you sync Household, Money, or both.
 
+FIRST-TIME SETUP
 1. Open https://script.google.com and sign in with your Google account.
 2. Click "New project". Delete the sample code.
 3. Open the file money-backup.gs (in this repository), copy ALL of it and paste it into the editor.
-4. Near the top, replace  CHANGE-THIS-TO-YOUR-OWN-SECRET-KEY  with a long secret phrase of your own
-   (for example 4 random words and some digits). Keep it private. You will type the same phrase in the app.
+4. Near the top, replace  CHANGE-THIS-TO-YOUR-OWN-SECRET-KEY  with a long secret phrase of your own.
+   Keep it private. You will type the same phrase in the app.
 5. Click the Save icon. At the top choose the function "authorizeOnce" and click Run.
    Google asks you to allow access to Drive: Review permissions > choose your account >
    Advanced > "Go to (project name) (unsafe)" > Allow.
@@ -15,17 +17,44 @@ Nobody else can read it. Do this once, then enter the address and key in the app
 6. Click Deploy > New deployment. Click the gear icon > "Web app".
       Execute as:         Me
       Who has access:     Anyone
-   Click Deploy. Copy the "Web app" address (it starts with https://script.google.com/macros/s/ and ends with /exec).
-7. In the app: Money > Settings > "Back up to Google Drive".
-   Paste the address and your secret key, tick "Back up automatically", press "Save settings",
-   then "Test connection" (it should say Connected), then "Back up now".
-8. Check Google Drive: a folder "Help Register Money Backup" now holds money-latest.json and one copy per day.
+   Click Deploy. Copy the "Web app" address. It must start with https://script.google.com/macros/s/ and end with /exec
+7. CHECK IT: paste that address into a browser. You should see the words "Help Register Money script is running."
+   If you see a Google sign-in page or an error instead, go to the TROUBLESHOOTING section below.
+8. In the app: Settings > Money > "Google Drive sync and backup (Money)".
+   Paste the address and your secret key, tick "Sync automatically", press "Save settings",
+   then "Test connection" (it should say Connected), then "Sync Money now".
+9. Repeat step 8 on every device, using the SAME address and key. Press Sync on each device to bring them together.
 
-RESTORE: on a new phone or computer, enter the same address and key, then press
-"Restore: replace everything on this device" (or "add missing records" to merge).
+IF YOU SET THIS UP EARLIER WITH THE OLD SCRIPT (it only had backup, not sync)
+The script has new code for syncing. Update it:
+1. Open your project at script.google.com, select all the code and replace it with the new money-backup.gs.
+2. Put your SAME secret key back into the KEY line near the top. Save.
+3. Deploy > Manage deployments > click the pencil (Edit) > Version: "New version" > Deploy.
+   (The address stays the same. If you skip "New version", the old code keeps running and sync will not work.)
 
-NOTES
+HOW SYNC WORKS
+* Each account, category, record and budget has its own identity. Devices merge their changes: the newest change wins,
+  and deletions are remembered so a record you delete on one device is removed on the others.
+* Nothing is lost if two devices change different things; they are combined. If both change the same record,
+  the later change wins.
+* Drive keeps a daily safety copy of the synced data for 30 days (files money-sync-YYYY-MM-DD.json),
+  plus the separate backup copies you can save from the app.
+* Display settings (currency, date format, button colours and positions) stay per device on purpose.
+* A device that is offline syncs next time it is online.
+
+TROUBLESHOOTING
+"Unexpected token '<' ... is not valid JSON"  or  "Google sent back a web page instead of data"
+  Google returned a web page (usually a sign-in page) instead of data. Check, in this order:
+  1. Deploy > Manage deployments > pencil > Version: New version > Deploy (needed after ANY script change).
+  2. "Who has access" must be Anyone (not "Only myself" and not "Anyone with Google account").
+  3. Use the address that ends with /exec. Do not use the editor address, the "/dev" address, or the Household script address.
+  4. Open the address in a browser (step 7). It must show the "running" message without asking you to sign in.
+  5. If you use several Google accounts in one browser, deploy from the account you want and open the address once in a
+     private window to confirm it works without signing in.
+"Wrong key"  The key in the app is not exactly the same as the KEY line in the script (check for spaces).
+"Another device was syncing at the same time"  Just press Sync again.
+
+SECURITY NOTES
 * "Anyone" only means the address can be called; every request must carry your secret key, otherwise it is refused.
   Do not share the address and key.
-* If you ever change the script code, use Deploy > Manage deployments > edit > New version.
-* To use a different secret key later: change KEY in the script, create a new version, and update the app.
+* To change the key later: change KEY in the script, deploy a New version, then update the key in the app on each device.

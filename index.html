@@ -200,8 +200,14 @@ svg{vertical-align:-.18em}
 #mipk .ipbig{max-height:46vh}
 #mipk .emo{width:44px;height:44px;font-size:24px;color:var(--ink)}
 #mipk .emo svg{width:26px;height:26px}
+/* sync window */
+#msy{position:fixed;inset:0;z-index:70;background:rgba(0,0,0,.55);display:none;align-items:flex-start;justify-content:center;overflow-y:auto;padding:12px}
+#msy .mpc{background:var(--card);color:var(--ink);border-radius:14px;width:100%;max-width:480px;padding:16px;margin:auto 0}
+#msy .mph{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;font:700 18px Georgia,serif}
+.syr{display:flex;justify-content:space-between;gap:10px;align-items:center;padding:10px 0;border-top:1px solid var(--ln)}
+.syr span{display:flex;flex-direction:column;font-size:15px}.syr small{color:var(--mut);font-size:12px;font-weight:400}.syr em{font-style:normal;font-size:13px;text-align:right;max-width:55%}
 </style></head><body>
-<header><img id="hl" alt="" style="display:none"><h1 id="hn"></h1><span class="sy" id="sy">Connecting…</span><button class="ex" id="sb" onclick="syncNow()" title="Sync now">Sync</button><button class="ex" id="lkb" onclick="showLock()" title="Lock the app" hidden>🔒 Lock</button><button class="ex" id="ib" onclick="installApp()" hidden>Install app</button><button class="ex x" onclick="exitApp()" title="Save and exit">Exit</button></header>
+<header><img id="hl" alt="" style="display:none"><h1 id="hn"></h1><span class="sy" id="sy">Connecting…</span><button class="ex" id="sb" onclick="window.syncMenu?syncMenu():syncNow()" title="Sync Household and Money">Sync</button><button class="ex" id="lkb" onclick="showLock()" title="Lock the app" hidden>🔒 Lock</button><button class="ex" id="ib" onclick="installApp()" hidden>Install app</button><button class="ex x" onclick="exitApp()" title="Save and exit">Exit</button></header>
 <section id="dash" class="noprint"></section><div id="subnav" class="noprint"></div>
 <nav id="nav"></nav><main id="m"></main><div id="toast"></div>
 <script>
@@ -648,7 +654,7 @@ function mExport(){const ai=new Map(M.acc.map((a,i)=>[a.id,i])),ci=new Map(M.cat
  records:M.mv.map(r=>{const o=[ai.get(r.a),ci.get(r.c),r.m,r.s,r.d,r.t||'',r.n||''];if(r.ok===0||r.pic)o.push(r.ok===0?0:1,r.pic||'');return o}),
  budgets:M.bud.map(b=>[ci.get(b.c),b.amt]),prefs:M.pf}}
 function mImport(x,mode){if(!x||x.format!==MFMT||!Array.isArray(x.records))throw new Error('This is not an expense data file. Use the file named expense-data.json, or a backup made from the Money settings.');
- if(mode=='replace'){M.acc=[];M.cat=[];M.mv=[];M.bud=[];M.nx=1}
+ if(mode=='replace'){M.acc=[];M.cat=[];M.mv=[];M.bud=[];M.nx=1;M.sy={};M.tb={};M.sv=0}
  const am=[],cm=[];let added=0,skipped=0;
  (x.accounts||[]).forEach((a,i)=>{let e=M.acc.find(z=>z.name.toLowerCase()==String(a.name).toLowerCase());if(!e){e={id:'a'+M.nx++,name:a.name,detail:a.detail||'',icon:a.icon||'🏦',svg:a.svg||undefined,color:a.color||'#334155',ini:+a.ini||0,inc:a.inc===0?0:1};M.acc.push(e)}am[i]=e.id});
  (x.categories||[]).forEach((c,i)=>{let e=M.cat.find(z=>z.name==c.name&&z.s==c.sign);if(!e){e={id:'c'+M.nx++,name:c.name,s:c.sign,icon:c.icon||'📦',svg:c.svg||undefined};M.cat.push(e)}cm[i]=e.id});
@@ -878,50 +884,138 @@ function mAccSave(id){const n=$('#mfn').value.trim();if(!n)return toast('Enter a
 function mAccDel(id){const n=M.mv.filter(r=>r.a==id).length,to=$('#mfm')?$('#mfm').value:'';if(!confirm(n?`Move ${n} records to “${mA(to).name}” and delete “${mA(id).name}”?`:`Delete “${mA(id).name}”?`))return;
  if(n){const dest=mA(to);dest.ini=(+dest.ini||0)+(+mA(id).ini||0);M.mv.forEach(r=>{if(r.a==id)r.a=to})}M.acc=M.acc.filter(a=>a.id!=id);if(ui.macc==id)ui.macc='all';if(ui.mrf.acc==id)ui.mrf.acc='all';if(ui.mpf.acc==id)ui.mpf.acc='all';if(M.pf.lk.acc==id)M.pf.lk.acc='';ui.mae=null;mSave();mDraw()}
 
-/* ===== MONEY MODULE: Google Drive backup (your own Google account, through your own Apps Script) ===== */
+/* ===== MONEY MODULE: Google Drive sync and backup (your own Google account, through your own Apps Script) ===== */
 const GDK=K+'-mgd';let GD={};try{GD=JSON.parse(localStorage.getItem(GDK)||'{}')}catch(e){}
 let gdT,gdBusy=0,gdDirty=false;
 const gdOn=()=>!!(GD.url&&GD.key),gdSaveCfg=()=>{try{localStorage.setItem(GDK,JSON.stringify(GD))}catch(e){}};
-async function gdApi(action,x){const c=new AbortController(),t=setTimeout(()=>c.abort(),45000);
- try{const r=await fetch(GD.url,{method:'POST',body:JSON.stringify(Object.assign({key:GD.key,action},x)),signal:c.signal}),j=await r.json();if(!j.ok)throw new Error(j.error||'Request failed');return j}
- catch(e){throw new Error(e.name=='AbortError'?'Timed out':e.message)}finally{clearTimeout(t)}}
+const GD_HELP='Google sent back a web page instead of data. Check these three things in Google Apps Script: (1) Deploy > Manage deployments > pencil > Version: New version > Deploy. (2) “Who has access” must be Anyone. (3) Use the Web app address that ends with /exec.';
+async function gdApi(action,x){const c=new AbortController(),t=setTimeout(()=>c.abort(),60000);
+ try{const r=await fetch(GD.url,{method:'POST',body:JSON.stringify(Object.assign({key:GD.key,action},x)),signal:c.signal}),tx=await r.text();let j;
+  try{j=JSON.parse(tx)}catch(e){throw new Error(/^\s*</.test(tx)?GD_HELP:'Unexpected reply from Google. '+tx.slice(0,80))}
+  if(!j.ok){const e=new Error(j.error||'Request failed');e.conflict=!!j.conflict;throw e}return j}
+ catch(e){if(e.name=='AbortError')throw new Error('Timed out');if(e instanceof TypeError)throw new Error('Could not reach Google. Check your internet connection.');throw e}finally{clearTimeout(t)}}
 const gdWhen=t=>{if(!t)return'never';const d=new Date(t),p=n=>String(n).padStart(2,'0');return mFd(d.getFullYear()+'-'+p(d.getMonth()+1)+'-'+p(d.getDate()))+' '+mFt(p(d.getHours())+':'+p(d.getMinutes()))};
 function gdStatus(t,bad){GD.msg=t;GD.bad=bad?1:0;const e=$('#gds');if(e){e.textContent=t;e.style.color=bad?'var(--exp)':''}}
-/* called whenever money data changes */
-function mGdMark(){gdDirty=true;if(!gdOn()||!GD.auto)return;clearTimeout(gdT);gdT=setTimeout(()=>mGdBackup(true),60000)}
-async function mGdBackup(auto){if(!gdOn()){if(!auto)toast('Enter your Drive backup address and key first.');return false}
- if(gdBusy)return false;if(!navigator.onLine){gdStatus('Offline. The backup will run when you are online.',1);return false}
+/* called whenever money data changes: sync about a minute later (if automatic sync is on) */
+function mGdMark(){gdDirty=true;if(!gdOn()||!GD.auto)return;clearTimeout(gdT);gdT=setTimeout(()=>mSyncRun(true),60000)}
+async function mGdBackup(auto){if(!gdOn()){if(!auto)toast('Enter your Drive address and key first.');return false}
+ if(gdBusy)return false;if(!navigator.onLine){gdStatus('Offline. Try again when you are online.',1);return false}
  if(!M.mv.length&&!M.acc.length){if(!auto)toast('There is nothing to back up yet.');return false}
- gdBusy=1;gdStatus('Backing up to Google Drive…');
- try{mFlush();const j=await gdApi('put',{data:mExport()});GD.last=Date.now();GD.count=M.mv.length;gdDirty=false;gdSaveCfg();gdStatus('Backed up '+gdWhen(GD.last)+' ('+M.mv.length+' records)'+(j.file?' · '+j.file:''));if(!auto)toast('Backed up to Google Drive');gdBusy=0;return true}
- catch(e){gdStatus('Backup failed: '+e.message,1);if(!auto)toast('Backup failed: '+e.message);gdBusy=0;return false}}
+ gdBusy=1;gdStatus('Saving a backup copy to Google Drive…');
+ try{mFlush();const j=await gdApi('put',{data:mExport()});GD.last=Date.now();gdSaveCfg();gdStatus('Backup copy saved '+gdWhen(GD.last)+' ('+M.mv.length+' records)'+(j.file?' · '+j.file:''));if(!auto)toast('Backup copy saved to Google Drive');gdBusy=0;return true}
+ catch(e){gdStatus('Backup failed: '+e.message,1);if(!auto)toast('Backup failed');gdBusy=0;return false}}
 /* used when the app is closed with the Exit button */
-async function mGdFlush(){if(gdOn()&&GD.auto&&gdDirty){clearTimeout(gdT);await Promise.race([mGdBackup(true),new Promise(r=>setTimeout(r,8000))])}}
-function mGdSave(){const u=$('#gdu').value.trim(),k=$('#gdk').value.trim();if(!/^https:\/\/script\.google\.com\//.test(u)||!k)return toast('Paste the Web app address (it starts with https://script.google.com) and your secret key.');
- GD.url=u;GD.key=k;GD.auto=$('#gda').checked?1:0;gdSaveCfg();toast('Drive backup settings saved');mDraw()}
+async function mGdFlush(){if(gdOn()&&GD.auto&&gdDirty){clearTimeout(gdT);await Promise.race([mSyncRun(true),new Promise(r=>setTimeout(r,8000))])}}
+function mGdSave(){const u=$('#gdu').value.trim(),k=$('#gdk').value.trim();
+ if(!/^https:\/\/script\.google\.com\/macros\/s\/[^/]+\/exec$/.test(u))return toast('The address must look like https://script.google.com/macros/s/…/exec . You may have copied the editor or “dev” address. Use the Web app address from Deploy.');
+ if(!k)return toast('Enter your secret key.');
+ GD.url=u;GD.key=k;GD.auto=$('#gda').checked?1:0;gdSaveCfg();toast('Google Drive settings saved');mDraw()}
 function mGdAuto(v){GD.auto=v?1:0;gdSaveCfg();if(v&&gdDirty)mGdMark()}
-async function mGdTest(){mGdSaveQuiet();if(!gdOn())return toast('Enter the address and key first.');gdStatus('Testing…');try{await gdApi('ping');gdStatus('Connected to your Google Drive ✓');toast('Connected ✓')}catch(e){gdStatus('Could not connect: '+e.message,1);toast('Could not connect: '+e.message)}}
-function mGdSaveQuiet(){const u=$('#gdu'),k=$('#gdk');if(u&&k&&/^https:\/\/script\.google\.com\//.test(u.value.trim())&&k.value.trim()){GD.url=u.value.trim();GD.key=k.value.trim();GD.auto=$('#gda').checked?1:0;gdSaveCfg()}}
-function mGdOff(){if(!confirm('Disconnect this device from Google Drive backup? Existing backups stay in your Drive.'))return;GD={};gdSaveCfg();clearTimeout(gdT);mDraw()}
+function mGdSaveQuiet(){const u=$('#gdu'),k=$('#gdk');if(u&&k&&/^https:\/\/script\.google\.com\/macros\/s\/[^/]+\/exec$/.test(u.value.trim())&&k.value.trim()){GD.url=u.value.trim();GD.key=k.value.trim();GD.auto=$('#gda').checked?1:0;gdSaveCfg()}}
+async function mGdTest(){mGdSaveQuiet();if(!gdOn())return toast('Enter the address (ending in /exec) and key first.');gdStatus('Testing…');try{await gdApi('ping');gdStatus('Connected to your Google Drive ✓');toast('Connected ✓')}catch(e){gdStatus('Could not connect: '+e.message,1);toast('Could not connect. See the message in the box.')}}
+function mGdOff(){if(!confirm('Disconnect this device from Google Drive? Existing files stay in your Drive.'))return;GD={};gdSaveCfg();clearTimeout(gdT);mDraw()}
 async function mGdList(){mGdSaveQuiet();if(!gdOn())return toast('Enter the address and key first.');gdStatus('Looking for backups…');
- try{const j=await gdApi('list'),L=j.result||[];ui.gdl=L;gdStatus(L.length?L.length+' backups found in Drive':'No backups found yet');mDraw()}catch(e){gdStatus('Could not list backups: '+e.message,1)}}
+ try{const j=await gdApi('list'),L=j.result||[];ui.gdl=L;gdStatus(L.length?L.length+' backup copies found in Drive':'No backup copies found yet');mDraw()}catch(e){gdStatus('Could not list backups: '+e.message,1)}}
 async function mGdRestore(mode){mGdSaveQuiet();if(!gdOn())return toast('Enter the address and key first.');
  const name=($('#gdf')||{}).value||'latest';
- if(mode=='replace'&&!confirm('This replaces ALL money data on this device with the Drive backup. Continue?'))return;
- gdStatus('Downloading backup…');
+ if(mode=='replace'&&!confirm('This replaces ALL money data on this device with the Drive backup copy. Continue?'))return;
+ gdStatus('Downloading backup copy…');
  try{const j=await gdApi('get',{name}),x=j.result;if(!x)throw new Error('No backup found');
   const r=mImport(x,mode);gdStatus('Restored '+r.added+' records'+(r.skipped?' ('+r.skipped+' already here)':''));toast('Restored from Google Drive');ui.mtab='ms';draw()}
- catch(e){gdStatus('Restore failed: '+e.message,1);toast('Restore failed: '+e.message)}}
+ catch(e){gdStatus('Restore failed: '+e.message,1);toast('Restore failed')}}
+async function mGdSyncBtn(){mGdSaveQuiet();const b=$('#gdsb');if(b)b.disabled=true;const e=$('#gdy');if(e)e.textContent='Syncing…';await mSyncRun(false);if(b)b.disabled=false}
 function mGdCard(){const L=ui.gdl||[];
- return`<details class="card" ${fo('m-gd',1)}><summary>Back up to Google Drive</summary>
- <p class="mut">Saves your expense data to your own Google Drive, in a folder called “Help Register Money Backup”. The latest copy is always kept, plus one copy per day for the last 30 days. One-time setup: follow SETUP-MONEY-BACKUP.txt (about 5 minutes), then enter the address and key below.</p>
- <div class="row"><label style="flex:2 1 260px">Web app address<input id="gdu" value="${esc(GD.url||'')}" placeholder="https://script.google.com/macros/s/…/exec" autocomplete="off"></label><label style="flex:1 1 150px">Secret key<input id="gdk" type="password" value="${esc(GD.key||'')}" autocomplete="off"></label></div>
- <label class="ck" style="margin-top:8px"><input type="checkbox" id="gda" ${GD.auto?'checked':''} onchange="mGdAuto(this.checked)"> Back up automatically about a minute after I make changes, and when I press Exit</label>
- <div class="row" style="margin-top:10px"><button class="b" onclick="mGdSave()">Save settings</button><button class="b g" onclick="mGdTest()">Test connection</button><button class="b g" onclick="mGdBackup()" ${gdOn()?'':'disabled'}>Back up now</button>${gdOn()?'<button class="b d" onclick="mGdOff()">Disconnect</button>':''}</div>
- <p id="gds" class="mut" style="margin:8px 0 0;${GD.bad?'color:var(--exp)':''}">${esc(GD.msg||(GD.last?'Last backup: '+gdWhen(GD.last):'No backup made yet.'))}</p>
- ${gdOn()?`<h3 style="margin:14px 0 6px">Restore from Google Drive</h3><div class="row"><label style="flex:1 1 220px">Which backup<select id="gdf"><option value="latest">Latest backup</option>${L.map(f=>`<option value="${esc(f.name)}">${esc(f.name)} (${esc(String(f.updated||'').slice(0,16).replace('T',' '))})</option>`).join('')}</select></label><button class="b g" onclick="mGdList()">Show older backups</button></div>
+ return`<details class="card" ${fo('m-gd',1)}><summary>Google Drive sync and backup (Money)</summary>
+ <p class="mut">Money data syncs between your devices through your own Google Drive, using its own small script (separate from the Household sync). One-time setup: follow SETUP-MONEY-BACKUP.txt (about 5 minutes), then enter the address and key below on each device. Use the <b>Sync</b> button at the top to sync Household, Money or both.</p>
+ <div class="row"><label style="flex:2 1 260px">Web app address (ends with /exec)<input id="gdu" value="${esc(GD.url||'')}" placeholder="https://script.google.com/macros/s/…/exec" autocomplete="off"></label><label style="flex:1 1 150px">Secret key<input id="gdk" type="password" value="${esc(GD.key||'')}" autocomplete="off"></label></div>
+ <label class="ck" style="margin-top:8px"><input type="checkbox" id="gda" ${GD.auto?'checked':''} onchange="mGdAuto(this.checked)"> Sync automatically: when the app opens, about a minute after I make changes, and when I press Exit</label>
+ <div class="row" style="margin-top:10px"><button class="b" onclick="mGdSave()">Save settings</button><button class="b g" onclick="mGdTest()">Test connection</button><button class="b" id="gdsb" onclick="mGdSyncBtn()" ${gdOn()?'':'disabled'}>Sync Money now</button>${gdOn()?'<button class="b d" onclick="mGdOff()">Disconnect</button>':''}</div>
+ <p id="gdy" class="mut" style="margin:8px 0 0;${GD.syncBad?'color:var(--exp)':''}">${esc(GD.syncMsg||'Not synced yet.')}</p>
+ <p id="gds" class="mut" style="margin:6px 0 0;${GD.bad?'color:var(--exp)':''}">${esc(GD.msg||'')}</p>
+ ${gdOn()?`<h3 style="margin:14px 0 6px">Backup copies</h3><p class="mut" style="margin:0 0 8px">A separate safety copy of all your money data. Syncing also keeps a daily safety copy in Drive for 30 days.</p><div class="row"><button class="b g" onclick="mGdBackup()">Save a backup copy now</button><button class="b g" onclick="mGdList()">Show older copies</button></div>
+ <div class="row" style="margin-top:10px"><label style="flex:1 1 220px">Restore from<select id="gdf"><option value="latest">Latest backup copy${GD.last?' ('+gdWhen(GD.last)+')':''}</option>${L.map(f=>`<option value="${esc(f.name)}">${esc(f.name)} (${esc(String(f.updated||'').slice(0,16).replace('T',' '))})</option>`).join('')}</select></label></div>
  <div class="row" style="margin-top:10px"><button class="b g" onclick="mGdRestore('add')">Restore: add missing records</button><button class="b d" onclick="mGdRestore('replace')">Restore: replace everything on this device</button></div>`:''}
  </details>`}
+
+/* ===== MONEY MODULE: two-way sync through Google Drive =====
+   Every account, category, record and budget gets a global id (g). Devices merge by g: the newest change wins,
+   deletions are remembered (tombstones), and the merged copy is stored in Drive as one versioned file. */
+const hsh=s=>{let h=2166136261;for(let i=0;i<s.length;i++){h^=s.charCodeAt(i);h=Math.imul(h,16777619)}return h>>>0};
+const syKey=o=>JSON.stringify(o,(k,v)=>k=='u'||k=='id'?undefined:(v&&typeof v=='object'&&!Array.isArray(v)?Object.fromEntries(Object.keys(v).sort().map(z=>[z,v[z]])):v));
+let msyBusy=false;
+/* this device's data in portable form (global ids instead of local ids); also detects local edits and deletions */
+function syLocal(R){const now=Date.now();M.tb=M.tb||{};M.sy=M.sy||{};
+ const used=new Set();[M.acc,M.cat,M.mv].forEach(a=>a.forEach(o=>{if(o.g)used.add(o.g)}));
+ const give=(o,b)=>{if(o.g)return;let k=0;while(used.has(b+'.'+k))k++;o.g=b+'.'+k;used.add(o.g)};
+ M.acc.forEach(a=>give(a,'A'+String(a.name).toLowerCase()));M.cat.forEach(c=>give(c,'C'+c.s+String(c.name).toLowerCase()));
+ const ag={},cg={};M.acc.forEach(a=>ag[a.id]=a.g);M.cat.forEach(c=>cg[c.id]=c.g);
+ M.mv.forEach(r=>give(r,'R'+hsh([ag[r.a],cg[r.c],r.m,r.s,r.d,r.t,r.n].join('|')).toString(36)));
+ M.bud.forEach(b=>{b.g='B'+cg[b.c]});
+ const rem={};if(R)['acc','cat','mv','bud'].forEach(k=>(R[k]||[]).forEach(p=>{rem[p.g]=p}));
+ let changed=false;const seen=new Set();
+ const mk=(o,p)=>{seen.add(p.g);const h=hsh(syKey(p));if(M.sy[p.g]!==h){const r=rem[p.g];if(r&&hsh(syKey(r))==h)o.u=r.u||0;else{o.u=now;changed=true}}p.u=o.u||0;return p};
+ const acc=M.acc.map(a=>{const{id,...f}=a;return mk(a,f)}),cat=M.cat.map(c=>{const{id,...f}=c;return mk(c,f)}),
+  mv=M.mv.filter(r=>ag[r.a]&&cg[r.c]).map(r=>{const{id,...f}=r;f.a=ag[r.a];f.c=cg[r.c];return mk(r,f)}),
+  bud=M.bud.filter(b=>cg[b.c]).map(b=>{const f={g:b.g,c:cg[b.c],amt:b.amt};return mk(b,f)});
+ Object.keys(M.sy).forEach(g=>{if(!seen.has(g)){M.tb[g]=now;changed=true}});
+ return{acc,cat,mv,bud,changed}}
+function syMerge(L,R){const now=Date.now(),tb=Object.assign({},R&&R.tb||{});Object.keys(M.tb).forEach(g=>{tb[g]=Math.max(tb[g]||0,M.tb[g])});
+ Object.keys(tb).forEach(g=>{if(tb[g]<now-15552e6)delete tb[g]});
+ const out={tb};['acc','cat','mv','bud'].forEach(k=>{const mp=new Map();L[k].forEach(p=>mp.set(p.g,p));
+  (R&&R[k]||[]).forEach(r=>{const l=mp.get(r.g);if(!l||(r.u||0)>(l.u||0))mp.set(r.g,r)});
+  mp.forEach((p,g)=>{if(tb[g]&&tb[g]>=(p.u||0))mp.delete(g)});out[k]=[...mp.values()]});return out}
+function sySame(A,R){if(!R)return false;const ka=Object.keys(A.tb||{}),kr=Object.keys(R.tb||{});if(ka.length!=kr.length||ka.some(g=>(R.tb||{})[g]!==A.tb[g]))return false;
+ for(const k of['acc','cat','mv','bud']){const rl=R[k]||[];if(A[k].length!=rl.length)return false;const rm=new Map(rl.map(p=>[p.g,p]));
+  for(const p of A[k]){const r=rm.get(p.g);if(!r||(r.u||0)!=(p.u||0)||hsh(syKey(r))!=hsh(syKey(p)))return false}}return true}
+/* put the merged result into this device's data (keeping local ids; creating new ones for new items) */
+function syApplyList(local,items,upd,mk){const mg=new Map(items.map(p=>[p.g,p])),keep=local.filter(o=>mg.has(o.g)),have=new Set(keep.map(o=>o.g));let add=0;
+ keep.forEach(o=>upd(o,mg.get(o.g)));items.forEach(p=>{if(!have.has(p.g)){keep.push(mk(p));add++}});return{list:keep,add,del:local.length-(keep.length-add)}}
+function syApply(out){const fld=(o,p)=>{Object.keys(o).forEach(k=>{if(k!='id'&&!(k in p))delete o[k]});Object.assign(o,p)};
+ const A=syApplyList(M.acc,out.acc,fld,p=>Object.assign({id:'a'+M.nx++},p)),C=syApplyList(M.cat,out.cat,fld,p=>Object.assign({id:'c'+M.nx++},p));
+ M.acc=A.list;M.cat=C.list;const ai={},ci={};M.acc.forEach(a=>ai[a.g]=a.id);M.cat.forEach(c=>ci[c.g]=c.id);
+ const mvs=out.mv.filter(p=>ai[p.a]&&ci[p.c]).map(p=>Object.assign({},p,{a:ai[p.a],c:ci[p.c]})),mg=new Map(mvs.map(p=>[p.g,p]));
+ const keep=M.mv.filter(o=>mg.has(o.g)),have=new Set(keep.map(o=>o.g));let add=0;
+ keep.forEach(o=>{fld(o,mg.get(o.g))});mvs.forEach(p=>{if(!have.has(p.g)){keep.push(Object.assign({id:M.nx++},p));add++}});
+ const del=M.mv.length-(keep.length-add);M.mv=keep;
+ M.bud=out.bud.filter(p=>ci[p.c]).map(p=>({g:p.g,c:ci[p.c],amt:p.amt,u:p.u}));
+ M.tb=out.tb;M.sy={};['acc','cat','mv','bud'].forEach(k=>out[k].forEach(p=>{M.sy[p.g]=hsh(syKey(p))}));
+ return{add:add+A.add+C.add,del:del+A.del+C.del}}
+async function mSyncMoney(){if(!gdOn())throw new Error('Money sync is not set up yet.');if(msyBusy)throw new Error('Money sync is already running.');msyBusy=true;
+ try{mFlush();
+  for(let tries=0;tries<4;tries++){
+   const r=await gdApi('sget',{have:M.sv||0});let R=r.same?null:(r.data||null);
+   if(!r.same&&!R){M.sy={};M.sv=0}
+   const L=syLocal(R);let out,put;
+   if(r.same){out={acc:L.acc,cat:L.cat,mv:L.mv,bud:L.bud,tb:Object.assign({},M.tb)};put=L.changed}
+   else{out=syMerge(L,R);put=!sySame(out,R)}
+   let nv=r.ver||0;
+   if(put){try{const j=await gdApi('sput',{ver:nv,data:{v:2,acc:out.acc,cat:out.cat,mv:out.mv,bud:out.bud,tb:out.tb}});nv=j.ver}catch(e){if(e.conflict)continue;throw e}}
+   const res=syApply(out);M.sv=nv;mDirty=true;mFlush();return res}
+  throw new Error('Another device was syncing at the same time. Please try again.')}
+ finally{msyBusy=false}}
+/* run a sync and report the result in Settings */
+async function mSyncRun(auto){if(!gdOn()){if(!auto)toast('Set up Money sync first (Settings > Money > Google Drive).');return false}
+ if(!navigator.onLine){GD.syncMsg='Offline. Will sync when you are online.';gdSaveCfg();return false}
+ try{const r=await mSyncMoney();GD.syncT=Date.now();gdDirty=false;
+  GD.syncMsg='Synced ✓ '+gdWhen(GD.syncT)+(r.add||r.del?' ('+(r.add?r.add+' received':'')+(r.add&&r.del?', ':'')+(r.del?r.del+' removed':'')+')':'');GD.syncBad=0;gdSaveCfg();
+  const e=$('#gdy');if(e){e.textContent=GD.syncMsg;e.style.color=''}if(!auto)toast('Money synced');if(r.add||r.del)setTimeout(()=>{if(ui.mode=='money')mDraw()},0);return true}
+ catch(e){GD.syncMsg='Not synced – '+e.message;GD.syncBad=1;gdSaveCfg();const el=$('#gdy');if(el){el.textContent=GD.syncMsg;el.style.color='var(--exp)'}if(!auto)toast(GD.syncMsg);return false}}
+/* ---- the Sync button: choose Household, Money or both ---- */
+function syClose(){const o=$('#msy');if(o)o.style.display='none'}
+function syncMenu(){let o=$('#msy');if(!o){o=document.createElement('div');o.id='msy';o.className='noprint';document.body.appendChild(o);o.addEventListener('mousedown',e=>{if(e.target===o)syClose()})}o.style.display='flex';syDraw()}
+function syDraw(){const hOn=on(),mOn=gdOn(),o=$('#msy');if(!o)return;
+ o.innerHTML=`<div class="mpc"><div class="mph"><b>Sync with Google Drive</b><button class="b g s" onclick="syClose()">Close</button></div>
+ <div class="syr"><span>🏠 <b>Household</b><small>Attendance, payments, people, journal, planner</small></span><em id="syh" ${hOn?'':'class="mut"'}>${hOn?esc($('#sy').textContent):'Not set up'}</em></div>
+ <div class="syr"><span>💰 <b>Money</b><small>Accounts, categories, expenses, income</small></span><em id="sym" ${mOn?(GD.syncBad?'style="color:var(--exp)"':''):'class="mut"'}>${mOn?esc(GD.syncMsg||'Not synced yet'):'Not set up'}</em></div>
+ <div class="row" style="margin-top:14px"><button class="b" onclick="syncAll('both')">Sync both</button><button class="b g" onclick="syncAll('house')">Household only</button><button class="b g" onclick="syncAll('money')">Money only</button></div>
+ <p class="mut" style="margin:12px 0 0;font-size:13px">${hOn?'':'Household sync: set it up in Settings › Household. '}${mOn?'':'Money sync: set it up in Settings › Money › Google Drive.'}</p></div>`}
+async function syncAll(w){const bs=[...document.querySelectorAll('#msy .row button')];bs.forEach(b=>b.disabled=true);const set=(id,t,bad)=>{const e=$('#'+id);if(e){e.textContent=t;e.style.color=bad?'var(--exp)':''}};
+ if(w!='money'){if(on()){set('syh','Syncing…');try{await syncNow()}catch(e){}set('syh',$('#sy').textContent,!/^Synced/.test($('#sy').textContent))}else set('syh','Not set up (Settings › Household)')}
+ if(w!='house'){if(gdOn()){set('sym','Syncing…');const ok=await mSyncRun(true);set('sym',GD.syncMsg||'',!ok)}else set('sym','Not set up (Settings › Money › Google Drive)')}
+ bs.forEach(b=>b.disabled=false);toast(w=='both'?'Sync finished':w=='house'?'Household sync finished':'Money sync finished')}
+/* automatic sync when the app opens or comes back to the front */
+setTimeout(()=>{if(gdOn()&&GD.auto)mSyncRun(true)},4000);
+document.addEventListener('visibilitychange',()=>{if(!document.hidden&&gdOn()&&GD.auto&&Date.now()-(GD.syncT||0)>120000)mSyncRun(true)});
 
 /* ===== MONEY MODULE: grouped navigation (Money first) ===== */
 const NAVG=[
@@ -939,7 +1033,7 @@ function navTo(k){const isM=['mh','mr','ma','mp','ms'].includes(k);
 function navPick(g){const G=NAVG.find(x=>x[0]==g),m=(ui.nmem||{})[g];navTo(m&&G[3].some(s=>s[0]==m)?m:G[3][0][0])}
 function navDraw(){const cur=navCur(),G=navGrp(),n=window.plN?plN():0;ui.nmem=ui.nmem||{};ui.nmem[G[0]]=cur;
  $('#nav').innerHTML=NAVG.map(g=>`<button class="${g[0]==G[0]?'on':''}" onclick="navPick('${g[0]}')" ${g[0]==G[0]?'aria-current="page"':''}><span class="ni">${g[1]}</span><span class="nl">${g[2]}</span>${g[0]=='events'&&n?` <span class="bd">${n}</span>`:''}</button>`).join('');
- const s=$('#subnav');if(s)s.innerHTML=G[3].length>1?`<div class="mchips">${G[3].map(([k,t])=>`<button class="mchip ${k==cur?'on':''}" onclick="navTo('${k}')">${t}${k=='pl'&&n?` <span class="bd">${n}</span>`:''}</button>`).join('')}</div>`:''}
+ const s=$('#subnav'),nv=$('#nav');if(s&&nv&&nv.nextElementSibling!==s)nv.after(s);if(s)s.innerHTML=G[3].length>1?`<div class="mchips">${G[3].map(([k,t])=>`<button class="mchip ${k==cur?'on':''}" onclick="navTo('${k}')">${t}${k=='pl'&&n?` <span class="bd">${n}</span>`:''}</button>`).join('')}</div>`:''}
 
 /* ===== MONEY MODULE: reports ===== */
 const MREPS=[['sum','Summary (income, expenses, balance)'],['cat','By category'],['date','By date (day-wise)'],['wk','By week'],['mon','By month'],['fy','By financial year (Apr–Mar)'],['year','By calendar year'],['acc','By account'],['cxm','Category by month'],['led','Transaction ledger'],['top','Largest transactions'],['bud','Budget vs actual']];

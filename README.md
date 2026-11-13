@@ -29,9 +29,9 @@ Use Money > Settings > Download backup file regularly. The Help Register's payme
 The app opens on **Money**. Buttons: Money, Events Journal (Journal, Planner), Household (Attendance, Payments, People),
 Holiday, Reports (Money, Household) and Settings (Money, Household).
 
-## Backup of expense data to Google Drive
+## Money sync and backup through Google Drive
 Follow `SETUP-MONEY-BACKUP.txt` once (paste `money-backup.gs` into Google Apps Script), then enter the address and key in
-Money > Settings > Back up to Google Drive.
+Settings > Money > Google Drive sync and backup. The header **Sync** button syncs Household, Money, or both.
 
 ## Icons
 Money > Settings > Categories > Edit > Choose... offers 1,400+ built-in emoji and a search of 200,000+ modern icons from open icon sets
