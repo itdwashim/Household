@@ -1,0 +1,31 @@
+SETUP: BACK UP YOUR MONEY DATA TO GOOGLE DRIVE (one time, about 5 minutes)
+==========================================================================
+Your expense data is saved into YOUR own Google Drive by a small script that runs in YOUR Google account.
+Nobody else can read it. Do this once, then enter the address and key in the app on each device.
+
+1. Open https://script.google.com and sign in with your Google account.
+2. Click "New project". Delete the sample code.
+3. Open the file money-backup.gs (in this repository), copy ALL of it and paste it into the editor.
+4. Near the top, replace  CHANGE-THIS-TO-YOUR-OWN-SECRET-KEY  with a long secret phrase of your own
+   (for example 4 random words and some digits). Keep it private. You will type the same phrase in the app.
+5. Click the Save icon. At the top choose the function "authorizeOnce" and click Run.
+   Google asks you to allow access to Drive: Review permissions > choose your account >
+   Advanced > "Go to (project name) (unsafe)" > Allow.
+   (It says "unsafe" only because you wrote the script yourself and Google has not reviewed it.)
+6. Click Deploy > New deployment. Click the gear icon > "Web app".
+      Execute as:         Me
+      Who has access:     Anyone
+   Click Deploy. Copy the "Web app" address (it starts with https://script.google.com/macros/s/ and ends with /exec).
+7. In the app: Money > Settings > "Back up to Google Drive".
+   Paste the address and your secret key, tick "Back up automatically", press "Save settings",
+   then "Test connection" (it should say Connected), then "Back up now".
+8. Check Google Drive: a folder "Help Register Money Backup" now holds money-latest.json and one copy per day.
+
+RESTORE: on a new phone or computer, enter the same address and key, then press
+"Restore: replace everything on this device" (or "add missing records" to merge).
+
+NOTES
+* "Anyone" only means the address can be called; every request must carry your secret key, otherwise it is refused.
+  Do not share the address and key.
+* If you ever change the script code, use Deploy > Manage deployments > edit > New version.
+* To use a different secret key later: change KEY in the script, create a new version, and update the app.

@@ -1,0 +1,16 @@
+BUILD THE WINDOWS .EXE INSTALLER (run on a Windows PC)
+1. Install Node.js LTS from https://nodejs.org
+2. Open this folder in a terminal (Command Prompt or PowerShell).
+3. Run:   npm install
+4. Test:  npm start          (opens the app in its own window)
+5. Build: npm run dist
+Result: dist\Household Help Register Setup 1.0.0.exe  (installer with Start menu + desktop shortcut)
+Windows SmartScreen may warn on first run because the installer is unsigned: More info > Run anyway.
+Note: data is stored inside the installed app. Use Settings > Backup before uninstalling.
+
+WINDOWS PIN (WINDOWS HELLO) UNLOCK
+In the app: Settings > App lock > set an app PIN first (it stays as a fallback), then press
+"Enable Windows PIN unlock". Windows asks for your Windows 11 PIN (or fingerprint/face if you use them).
+After that the lock screen asks Windows Hello automatically when you open the app, and the app also locks
+when you lock Windows (Win+L).
+Requires a Windows PIN: Settings > Accounts > Sign-in options > PIN (Windows Hello) > Add.

@@ -1,0 +1,22 @@
+{
+  "name": "household-help-register",
+  "version": "1.0.0",
+  "description": "Household Help Register",
+  "main": "main.js",
+  "author": "Household Help Register",
+  "scripts": {
+    "start": "electron .",
+    "dist": "electron-builder --win nsis --x64"
+  },
+  "devDependencies": {
+    "electron": "^33.0.0",
+    "electron-builder": "^25.1.8"
+  },
+  "build": {
+    "appId": "com.householdhelp.register",
+    "productName": "Household Help Register",
+    "files": ["main.js", "preload.js", "index.html", "sw.js", "manifest.webmanifest", "icons/**/*"],
+    "win": { "icon": "build/icon.png", "target": ["nsis"] },
+    "nsis": { "oneClick": false, "allowToChangeInstallationDirectory": true, "createDesktopShortcut": true, "createStartMenuShortcut": true }
+  }
+}

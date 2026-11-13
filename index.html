@@ -1,0 +1,1045 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Household Help Register</title>
+<link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#0e7c66"><link rel="icon" href="icons/icon-192.png"><link rel="apple-touch-icon" href="icons/apple-touch-icon.png"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes">
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);--bg:#f3f6f4;--card:#fff;--ink:#16302b;--mut:#5d716c;--ln:#d5e0db;--pri:#0e7c66;--pri2:#0a5e4d;--p:#d7f0e4;--pt:#0b6b3f;--a:#fbe0d6;--at:#a8380f;--h:#fdeec4;--ht:#7a5400;--hol:#dce7fb;--holt:#2c4f9e}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f1a17;--card:#17261f;--ink:#e6f1ed;--mut:#9bb0a9;--ln:#2a3d36;--pri:#3cc4a3;--pri2:#2aa085;--p:#173d2c;--pt:#7be0aa;--a:#46241a;--at:#ff9b78;--h:#40340f;--ht:#f2cf6b;--hol:#1d2c4d;--holt:#9fbcf7}}
+:root[data-theme="dark"]{--bg:#0f1a17;--card:#17261f;--ink:#e6f1ed;--mut:#9bb0a9;--ln:#2a3d36;--pri:#3cc4a3;--pri2:#2aa085;--p:#173d2c;--pt:#7be0aa;--a:#46241a;--at:#ff9b78;--h:#40340f;--ht:#f2cf6b;--hol:#1d2c4d;--holt:#9fbcf7}
+*{box-sizing:border-box}html,body{margin:0}body{background:var(--bg);color:var(--ink);font:15px/1.5 "Trebuchet MS",Verdana,system-ui,sans-serif}
+header{display:flex;align-items:center;gap:12px;padding:14px 16px;background:var(--pri);color:var(--on,#fff)}
+header img{height:44px;width:44px;object-fit:contain;background:#fff;border-radius:10px;padding:3px}
+header h1{font:700 20px/1.2 Georgia,serif;margin:0}
+nav{display:flex;gap:4px;overflow-x:auto;padding:8px 10px;background:var(--card);border-bottom:1px solid var(--ln);position:sticky;top:env(safe-area-inset-top,0px);z-index:3}
+nav button{flex:0 0 auto;border:0;background:none;color:var(--mut);font:600 14px "Trebuchet MS",Verdana,system-ui,sans-serif;padding:8px 13px;border-radius:999px;cursor:pointer}
+nav button.on{background:var(--pri);color:var(--on,#fff)}
+main{max-width:980px;margin:0 auto;padding:14px}
+.card{background:var(--card);border:1px solid var(--ln);border-radius:12px;padding:14px;margin-bottom:14px}
+h2{font:700 18px Georgia,serif;margin:0 0 10px}h3{margin:0 0 8px;font-size:15px}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:end}
+label{display:block;font-size:13px;color:var(--mut);flex:1 1 150px}
+input,select,textarea{width:100%;margin-top:3px;padding:9px;border:1px solid var(--ln);border-radius:8px;background:var(--bg);color:var(--ink);font:inherit}
+input[type=checkbox]{width:auto;margin:0 6px 0 0}
+button.b{border:0;background:var(--pri);color:var(--on,#fff);border-radius:9px;padding:9px 15px;font:600 14px "Trebuchet MS",Verdana,system-ui,sans-serif;cursor:pointer}
+button.b:hover{background:var(--pri2)}button.g{background:none;color:var(--pg,var(--pri));border:1px solid var(--pg,var(--pri))}button.d{background:none;color:var(--at);border:1px solid var(--at)}
+button.s{padding:5px 10px;font-size:13px}
+button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid #f2a900;outline-offset:1px}
+.tw{overflow-x:auto}table{border-collapse:collapse;width:100%;min-width:480px}th{background:var(--pri);color:var(--on,#fff);text-align:left;padding:8px;font-size:13px;white-space:nowrap}td{padding:8px;border-top:1px solid var(--ln);white-space:nowrap}td.n,th.n{text-align:right}tr.t td{font-weight:700;background:var(--bg)}
+.cal{display:grid;grid-template-columns:repeat(7,1fr);gap:5px}.cal .wd{text-align:center;font-size:12px;color:var(--mut)}
+.day{border:1px solid var(--ln);border-radius:9px;min-height:58px;padding:4px;background:var(--card);color:var(--ink);font:inherit;cursor:pointer;text-align:left;display:flex;flex-direction:column;justify-content:space-between}
+.day b{font-size:13px}.day small{font-size:11px;font-weight:700;line-height:1.1;overflow:hidden}
+.day.P{background:var(--p);color:var(--pt)}.day.A{background:var(--a);color:var(--at)}.day.H{background:var(--h);color:var(--ht)}.day.hol{background:var(--hol);color:var(--holt)}.day.e{visibility:hidden}
+.sum{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}.sum span{background:var(--bg);border:1px solid var(--ln);border-radius:9px;padding:6px 10px;font-size:13px}.sum b{font-size:16px}
+.mut{color:var(--mut);font-size:13px}.bad{color:var(--at)}.ok{color:var(--pt)}
+.empty{text-align:center;padding:26px 10px;color:var(--mut)}
+#toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:9px 16px;border-radius:999px;font-size:14px;display:none;z-index:9}
+.logo-prev{height:64px;width:64px;object-fit:contain;border:1px solid var(--ln);border-radius:10px;background:#fff}
+.rh{display:none}
+.ex{margin-left:10px;background:none;border:1px solid var(--on,#fff);color:var(--on,#fff);border-radius:8px;padding:6px 12px;font:600 13px "Trebuchet MS",Verdana,system-ui,sans-serif;cursor:pointer}.ex.x{background:#d92d20;border-color:#d92d20;color:#fff}.ex.x:hover{background:#b42318;border-color:#b42318}
+.sw{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:8px 0 12px}.swb{width:38px;height:38px;border-radius:50%;border:3px solid var(--card);box-shadow:0 0 0 1px var(--ln);cursor:pointer;padding:0}.swb.on{box-shadow:0 0 0 3px var(--ink)}.cp{flex:0 0 auto;display:flex;align-items:center;gap:8px}.cp input{width:44px;height:38px;padding:0;margin:0;border:0;background:none}
+.row>button{flex:0 0 auto}.card>.tw:not(:first-child){margin-top:16px;clear:both;position:relative}.ck{display:flex;align-items:center;gap:8px;flex:none;font-size:14px}.ck input{margin:0;flex:none}
+label{text-transform:capitalize}.ck{text-transform:none}th{text-transform:capitalize}
+details.card>summary{cursor:pointer;list-style:none;display:flex;align-items:center;justify-content:space-between;gap:10px;font:700 18px Georgia,serif;user-select:none;-webkit-user-select:none;min-height:32px}
+details.card>summary::-webkit-details-marker{display:none}
+details.card>summary::after{content:'Show ▾';font:600 12px "Trebuchet MS",Verdana,system-ui,sans-serif;color:var(--pg,var(--pri));border:1px solid var(--pg,var(--pri));border-radius:999px;padding:4px 11px;flex:none}
+details.card[open]>summary::after{content:'Hide ▴'}details.card[open]>summary{margin-bottom:10px}
+summary:focus-visible{outline:3px solid #f2a900;outline-offset:2px}
+.edb{background:var(--h);color:var(--ht);border-radius:9px;padding:8px 12px;font-size:13px;font-weight:700;margin:10px 0}
+.cal.lk .day{cursor:not-allowed}
+.pr{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:10px 0;border-top:1px solid var(--ln)}.pr.dn .pt{text-decoration:line-through;opacity:.6}.pt small{color:var(--mut);font-weight:400}.pa{display:flex;gap:6px;flex:none}.gh{font-weight:700;margin:14px 0 2px;font-size:14px;color:var(--pg,var(--pri))}.pc{flex:1;min-width:0;align-items:flex-start;font-size:15px;color:var(--ink)}.pc input{margin-top:4px;width:20px;height:20px}.bd{background:#d92d20;color:#fff;border-radius:999px;padding:0 6px;font-size:11px;margin-left:2px}
+.chip{display:inline-block;border:1px solid;border-radius:999px;padding:0 9px;font-size:12px;font-weight:700}.pa{flex-wrap:wrap;justify-content:flex-end}
+#dash{max-width:980px;margin:0 auto;padding:12px 14px 0}
+.dtop{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:12px}
+.clk{display:flex;align-items:center;gap:10px;color:var(--ink)}.dg{display:flex;flex-direction:column;line-height:1.15}.dg b{font:700 22px Georgia,serif}.dg small{color:var(--mut);font-size:12px}
+#flag{display:block}
+.wx{display:flex;flex-wrap:wrap;align-items:center;gap:14px;padding:12px 16px;border-radius:14px;color:#fff;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.18)}
+.wx .wi{font-size:38px;line-height:1}.wt b{display:block;font-size:30px;line-height:1.05}.wt small{font-size:13px}
+.wm{flex:1 1 220px;min-width:0}.wd1{font-weight:700;font-size:14px}.wd2{font-size:12.5px;margin-top:2px}
+.w-sun{background:linear-gradient(120deg,#c2570c,#9a3412)}.w-cloud{background:linear-gradient(120deg,#5b6b7e,#334155)}.w-rain{background:linear-gradient(120deg,#2563eb,#1e3a8a)}.w-storm{background:linear-gradient(120deg,#5b21b6,#1e1b4b)}.w-snow{background:linear-gradient(120deg,#0e7490,#475569)}.w-night{background:linear-gradient(120deg,#1e3a8a,#312e81)}
+.spb{margin-top:10px;padding:10px 14px;border-radius:12px;background:linear-gradient(90deg,#be185d,#c2410c,#15803d,#1d4ed8);color:#fff;font-weight:700;text-align:center}
+#lk{position:fixed;inset:0;z-index:100;background:var(--bg);display:none;align-items:center;justify-content:center;padding:20px}
+.lkb{width:100%;max-width:320px;text-align:center}.lkl{font-size:40px}.lkb h2{margin:6px 0}
+.dots{display:flex;justify-content:center;gap:14px;margin:16px 0}.dots i{width:16px;height:16px;border-radius:50%;border:2px solid var(--pri)}.dots i.f{background:var(--pri)}
+.pad{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.pad button{height:64px;border-radius:50%;border:1px solid var(--ln);background:var(--card);color:var(--ink);font:600 24px "Trebuchet MS",Verdana,system-ui,sans-serif;cursor:pointer}.pad button:active{background:var(--pri);color:var(--on,#fff)}
+.lkf{margin-top:18px;background:none;border:0;color:var(--mut);text-decoration:underline;cursor:pointer;font-size:13px}
+@media print{#dash,#lk{display:none!important}}
+.ex:disabled{opacity:.6;cursor:wait}.ex:hover{background:rgba(128,128,128,.25)}
+.sy{margin-left:auto;font-size:12px;opacity:.9;text-align:right}
+html{-webkit-text-size-adjust:100%;touch-action:manipulation}
+@media(max-width:700px){
+header{padding:10px 14px;flex-wrap:wrap;row-gap:6px}header img{height:38px;width:38px}header h1{font-size:17px}
+nav{position:fixed;top:auto;bottom:0;left:0;right:0;border-bottom:0;border-top:1px solid var(--ln);padding:6px 4px calc(6px + env(safe-area-inset-bottom,0px));gap:2px;z-index:5}
+nav button{flex:1 0 auto;padding:10px 8px;font-size:12px;border-radius:10px;text-align:center}
+main{padding:12px 10px calc(84px + env(safe-area-inset-bottom,0px))}
+.card{padding:12px}
+input,select,textarea{font-size:16px;padding:11px}
+label{flex:1 1 44%}
+button.b{min-height:44px;padding:10px 14px}button.s{min-height:38px;padding:8px 12px}
+.cal{gap:3px}.day{min-height:54px;padding:3px}.day b{font-size:14px}.day small{font-size:10px}
+#toast{bottom:calc(76px + env(safe-area-inset-bottom,0px));max-width:90vw;text-align:center;border-radius:14px}
+table{min-width:420px}
+}
+@media print{header,nav,.noprint,#toast{display:none!important}.rh{display:flex;align-items:center;gap:10px;margin-bottom:10px}.rh img{height:40px}body{background:#fff;color:#000}.card{border:0;padding:0}th{background:#ddd!important;color:#000!important}}
+/* ===== Money module ===== */
+:root{--s1:#2a78d6;--s2:#eb6834;--s3:#1baf7a;--s4:#eda100;--s5:#e87ba4;--s6:#008300;--s7:#6250d6;--so:#8b9099;--exp:#b42318;--inc:#0b7a3b}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--s1:#3987e5;--s2:#d95926;--s3:#199e70;--s4:#c98500;--s5:#d55181;--s6:#008300;--s7:#9085e9;--exp:#ff9b8a;--inc:#62d68f}}
+:root[data-theme="dark"]{--s1:#3987e5;--s2:#d95926;--s3:#199e70;--s4:#c98500;--s5:#d55181;--s6:#008300;--s7:#9085e9;--exp:#ff9b8a;--inc:#62d68f}
+body.mm #dash{display:none!important}
+#modesw{max-width:980px;margin:0 auto;padding:10px 14px 0;display:flex;gap:8px}
+#modesw button{flex:1;border:1px solid var(--ln);background:var(--card);color:var(--mut);border-radius:12px;padding:10px;font:700 15px "Trebuchet MS",Verdana,system-ui,sans-serif;cursor:pointer}
+#modesw button.on{background:var(--pri);color:var(--on,#fff);border-color:var(--pri)}
+.mchips{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 12px}
+.mchip{border:1px solid var(--ln);background:var(--card);color:var(--ink);border-radius:999px;padding:6px 12px;font:600 13px "Trebuchet MS",Verdana,system-ui,sans-serif;cursor:pointer;display:inline-flex;align-items:center;gap:6px}
+.mchip.on{background:var(--pri);border-color:var(--pri);color:var(--on,#fff)}
+.mnav{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:12px}
+.mnav b{font:700 18px Georgia,serif;text-align:center;flex:1}
+.mnav button{min-width:44px}
+.mtiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px}
+.mt{background:var(--bg);border:1px solid var(--ln);border-radius:10px;padding:10px 12px}
+.mt small{display:block;color:var(--mut);font-size:12px}
+.mt b{font-size:19px;display:block;margin-top:2px;overflow-wrap:anywhere}
+.mt.big{grid-column:1/-1;background:var(--card)}
+.mt.big b{font-size:24px}
+.inc{color:var(--inc)}.exp{color:var(--exp)}
+.mrow{display:flex;align-items:center;gap:10px;width:100%;text-align:left;background:none;border:0;border-top:1px solid var(--ln);padding:9px 2px;color:var(--ink);font:inherit;cursor:pointer}
+.mrow:first-of-type{border-top:0}
+.mrow:hover{background:var(--bg)}
+.mic{flex:none;width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px;background:var(--bg);border:1px solid var(--ln)}
+.mtx{flex:1;min-width:0}
+.mtx b{display:block;font-size:14.5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.mtx small{display:block;color:var(--mut);font-size:12px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.mam{flex:none;font-weight:700;font-variant-numeric:tabular-nums;white-space:nowrap}
+.mdh{display:flex;justify-content:space-between;gap:8px;margin:14px 0 2px;font-weight:700;font-size:13px;color:var(--pg,var(--pri))}
+.mdh span:last-child{color:var(--mut);font-weight:600}
+.pend{font-size:11px;background:var(--h);color:var(--ht);border-radius:6px;padding:0 6px;margin-left:4px;font-weight:700}
+.lkd{font-size:11px;background:var(--hol);color:var(--holt);border-radius:6px;padding:0 6px;margin-left:4px;font-weight:700}
+/* add buttons */
+.mab{border:0;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:8px;font:700 15px "Trebuchet MS",Verdana,system-ui,sans-serif;box-shadow:0 2px 8px rgba(0,0,0,.25);padding:12px 20px;min-height:46px}
+.mab span{font-size:22px;line-height:1}.mab em{font-style:normal}
+.mab.pill{border-radius:999px}.mab.rounded{border-radius:14px}.mab.square{border-radius:3px}
+.mab.circle{border-radius:50%;width:56px;height:56px;padding:0}.mab.circle em{display:none}
+.mab.s{padding:8px 14px;min-height:36px;font-size:13px}.mab.l{padding:16px 26px;min-height:58px;font-size:17px}
+.mab.circle.s{width:44px;height:44px}.mab.circle.l{width:68px;height:68px}
+.mbtns{display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
+#mfab{position:fixed;z-index:6;display:flex;gap:12px;bottom:calc(20px + env(safe-area-inset-bottom,0px))}
+#mfab.br{right:18px}#mfab.bl{left:18px}#mfab.bc{left:50%;transform:translateX(-50%)}
+@media(max-width:700px){#mfab{bottom:calc(76px + env(safe-area-inset-bottom,0px))}}
+/* pie + bars */
+.mpie{display:flex;flex-wrap:wrap;gap:14px;align-items:flex-start}
+.mpie svg{flex:1 1 320px;max-width:460px;height:auto;overflow:visible}
+.mpie svg text{fill:var(--ink);font:11px "Trebuchet MS",Verdana,sans-serif}
+.mpie svg .ct{font:700 15px Georgia,serif}.mpie svg .cs{fill:var(--mut);font-size:10px}
+.mpie svg path{cursor:pointer;transition:opacity .15s}.mpie svg path.dim{opacity:.35}
+.mleg{flex:1 1 260px;min-width:0}
+.mlr{display:flex;align-items:center;gap:8px;width:100%;background:none;border:0;border-top:1px solid var(--ln);padding:7px 2px;color:var(--ink);font:inherit;cursor:pointer;text-align:left}
+.mlr:first-child{border-top:0}.mlr.on{background:var(--bg)}
+.mlr i{flex:none;width:14px;height:14px;border-radius:4px}
+.mlr .nm{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:14px}
+.mlr .vl{font-weight:700;font-variant-numeric:tabular-nums;font-size:13.5px}.mlr .pc2{color:var(--mut);font-size:12px;width:44px;text-align:right}
+.mex{background:var(--bg);border:1px solid var(--ln);border-radius:10px;padding:10px 12px;font-size:14px;margin-top:12px}
+.mbr{display:grid;grid-template-columns:minmax(90px,36%) 1fr auto;gap:8px;align-items:center;width:100%;background:none;border:0;padding:5px 2px;color:var(--ink);font:inherit;cursor:pointer;text-align:left;border-radius:8px}
+.mbr.on{background:var(--bg)}
+.mbr .nm{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:13.5px}
+.mbr .tr{height:14px;background:var(--bg);border-radius:0 4px 4px 0;position:relative}
+.mbr .tr i{display:block;height:100%;border-radius:0 4px 4px 0;min-width:2px}
+.mbr .vl{font-size:13px;font-weight:700;font-variant-numeric:tabular-nums}
+.mcols{display:flex;align-items:flex-end;gap:4px;height:150px;border-bottom:1px solid var(--ln);padding-top:8px;margin-top:6px}
+.mcol{flex:1;min-width:0;display:flex;align-items:flex-end;justify-content:center;gap:2px;height:100%}
+.mcol i{display:block;width:100%;max-width:18px;border-radius:3px 3px 0 0;min-height:1px}
+.mcl{display:flex;gap:4px}.mcl span{flex:1;text-align:center;font-size:10.5px;color:var(--mut);white-space:nowrap;overflow:hidden}
+.mkey{display:flex;gap:14px;flex-wrap:wrap;font-size:12.5px;color:var(--mut);margin-top:6px}.mkey i{display:inline-block;width:11px;height:11px;border-radius:3px;margin-right:5px;vertical-align:-1px}
+.mpb{height:9px;border-radius:6px;background:var(--bg);border:1px solid var(--ln);overflow:hidden;margin-top:3px}.mpb i{display:block;height:100%}
+.mbu{margin:10px 0}.mbu .h{display:flex;justify-content:space-between;gap:8px;font-size:14px}
+/* dialog */
+#mdlg{position:fixed;inset:0;z-index:50;background:rgba(0,0,0,.5);display:flex;align-items:flex-start;justify-content:center;overflow-y:auto;padding:12px}
+#mdlg .mdc{background:var(--card);color:var(--ink);border-radius:14px;width:100%;max-width:560px;padding:14px;margin:auto 0}
+.mseg{display:flex;gap:6px;margin-bottom:10px}.mseg button{flex:1}
+.mseg button.on.ex1{background:var(--exp);border-color:var(--exp);color:#fff}.mseg button.on.in1{background:var(--inc);border-color:var(--inc);color:#fff}
+.mamt{display:flex;align-items:center;gap:8px;font:700 26px Georgia,serif;margin:4px 0 8px}.mamt input{font:700 26px Georgia,serif;margin:0}
+.mcg{display:grid;grid-template-columns:repeat(auto-fill,minmax(86px,1fr));gap:6px;max-height:260px;overflow-y:auto;padding:2px}
+.mcb{border:1px solid var(--ln);background:var(--bg);color:var(--ink);border-radius:10px;padding:7px 4px;font:12px "Trebuchet MS",Verdana,sans-serif;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px;text-align:center;min-height:62px}
+.mcb span{font-size:22px;line-height:1.1}.mcb em{font-style:normal;line-height:1.15;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;word-break:break-word}
+.mcb.on{border-color:var(--pri);box-shadow:0 0 0 2px var(--pri);background:var(--card)}
+.df{display:flex;gap:6px;align-items:center;position:relative}.df input[type=text]{flex:1;min-width:0}.df .hp{position:absolute;right:0;bottom:0;width:1px;height:1px;opacity:0;pointer-events:none;border:0;padding:0}
+.emo{border:1px solid var(--ln);background:var(--bg);border-radius:8px;font-size:20px;width:38px;height:38px;cursor:pointer;padding:0}
+.emg{display:flex;flex-wrap:wrap;gap:4px;max-height:150px;overflow-y:auto;margin-top:6px}
+.mset{display:flex;align-items:center;gap:10px;padding:8px 0;border-top:1px solid var(--ln)}
+.mset .mtx{flex:1}
+.mnum td.n,.mnum th.n{text-align:right;font-variant-numeric:tabular-nums}
+.rbar{display:inline-block;height:9px;border-radius:4px;background:var(--s1);vertical-align:middle;min-width:1px}
+.mfld{display:flex;flex-direction:column;gap:2px}
+@media print{#modesw,#mfab,#mdlg,.mchips,.mnav{display:none!important}}
+@media(max-width:700px){#modesw{padding:8px 10px 0}.mtiles{grid-template-columns:repeat(2,1fr)}.mt b{font-size:17px}}
+button.b.g:hover,button.b.d:hover{background:var(--bg)}
+/* grouped navigation */
+#subnav{max-width:980px;margin:0 auto;padding:10px 14px 0}
+#subnav .mchips{margin:0;flex-wrap:nowrap;overflow-x:auto}
+#subnav .mchip{flex:0 0 auto;font-size:14px;padding:7px 14px}
+nav button .ni{margin-right:6px}
+nav button .bd{margin-left:4px}
+@media(max-width:700px){
+ #subnav{padding:8px 10px 0}
+ nav button{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;padding:6px 2px;min-width:0;line-height:1.15}
+ nav button .ni{margin:0;font-size:19px;line-height:1.1}
+ nav button .nl{font-size:10.5px;font-weight:700}
+ nav button .bd{position:absolute;margin:0;transform:translate(14px,-4px)}
+ nav button{position:relative}
+}
+/* icon chooser */
+.icf{display:flex;align-items:center;gap:10px;flex:0 1 auto}
+.icp{width:48px;height:48px;border-radius:12px;border:1px solid var(--ln);background:var(--bg);font-size:26px;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;color:var(--ink);padding:0}
+svg{vertical-align:-.18em}
+.mic svg,.icp svg,.mlr .nm svg,.mbr .nm svg,.mbu svg,.mchip svg,.mset svg{width:1.15em;height:1.15em}
+.mic svg{width:22px;height:22px}.icp svg{width:28px;height:28px}
+#mipk{position:fixed;inset:0;z-index:60;background:rgba(0,0,0,.55);display:none;align-items:flex-start;justify-content:center;overflow-y:auto;padding:12px}
+#mipk .mpc{background:var(--card);color:var(--ink);border-radius:14px;width:100%;max-width:620px;padding:14px;margin:auto 0}
+#mipk .mph{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;font:700 18px Georgia,serif}
+#mipk input[type=search]{width:100%;margin:10px 0;padding:10px;font-size:16px;border:1px solid var(--ln);border-radius:10px;background:var(--bg);color:var(--ink)}
+#mipk .ipg{flex-wrap:nowrap;overflow-x:auto;padding-bottom:4px}
+#mipk .ipg .mchip{flex:0 0 auto}
+#mipk .ipbig{max-height:46vh}
+#mipk .emo{width:44px;height:44px;font-size:24px;color:var(--ink)}
+#mipk .emo svg{width:26px;height:26px}
+</style></head><body>
+<header><img id="hl" alt="" style="display:none"><h1 id="hn"></h1><span class="sy" id="sy">Connecting…</span><button class="ex" id="sb" onclick="syncNow()" title="Sync now">Sync</button><button class="ex" id="lkb" onclick="showLock()" title="Lock the app" hidden>🔒 Lock</button><button class="ex" id="ib" onclick="installApp()" hidden>Install app</button><button class="ex x" onclick="exitApp()" title="Save and exit">Exit</button></header>
+<section id="dash" class="noprint"></section><div id="subnav" class="noprint"></div>
+<nav id="nav"></nav><main id="m"></main><div id="toast"></div>
+<script>
+const K='helpbook-v1',$=s=>document.querySelector(s),pad=n=>String(n).padStart(2,'0'),
+esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])),
+MN=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
+money=n=>window.mFmt?mFmt(n):'₹'+Math.round(n).toLocaleString('en-IN'),dim=(y,m)=>new Date(y,m,0).getDate(),
+key=(y,m,d)=>y+'-'+pad(m)+'-'+pad(d),uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,5),
+fd=s=>s?(window.mFd?mFd(s):s.slice(8,10)+'-'+s.slice(5,7)+'-'+s.slice(0,4)):'';
+const DEF=()=>({label:'Household Help Register',logo:'',people:[],att:{},pay:[],hol:[],extra:[],pl:[],jr:[],cj:[],cp:[],at:{},nt:{},nat:{},del:{},lbt:0});
+let S;try{S=Object.assign(DEF(),JSON.parse(localStorage.getItem(K)||'{}'))}catch(e){S=DEF()}
+const now=new Date(),ui={tab:'att',pid:'',mon:now.getFullYear()+'-'+pad(now.getMonth()+1),ry:now.getFullYear(),rt:'month',rp:'all',edit:null};
+const LK=K+'-look',PRE=['#0e7c66','#1d4ed8','#6d28d9','#be185d','#c2410c','#0f766e','#334155','#b91c1c','#a16207'];
+let LOOK={th:'auto',acc:'',fs:15};try{Object.assign(LOOK,JSON.parse(localStorage.getItem(LK)||'{}'))}catch(e){}
+const lum=h=>{const n=parseInt(h.slice(1),16),f=v=>{v/=255;return v<=.03928?v/12.92:Math.pow((v+.055)/1.055,2.4)};return .2126*f(n>>16)+.7152*f(n>>8&255)+.0722*f(n&255)},
+mix=(h,t,a)=>{const n=parseInt(h.slice(1),16);return'#'+[n>>16,n>>8&255,n&255].map(v=>Math.round(v+(t-v)*a).toString(16).padStart(2,'0')).join('')};
+function look(){const r=document.documentElement,L=LOOK,st=r.style;if(L.th=='auto')r.removeAttribute('data-theme');else r.dataset.theme=L.th;
+ const dark=L.th=='dark'||(L.th=='auto'&&matchMedia('(prefers-color-scheme: dark)').matches);
+ if(L.acc){let a=L.acc;if(dark&&lum(a)<.12)a=mix(a,255,.35);st.setProperty('--pri',a);st.setProperty('--pri2',mix(a,0,.22));st.setProperty('--pg',dark?mix(L.acc,255,.45):a);st.setProperty('--on',lum(a)>.45?'#111':'#fff')}
+ else['--pri','--pri2','--pg','--on'].forEach(v=>st.removeProperty(v));
+ document.body.style.fontSize=(L.fs||15)+'px'}
+function savLook(){try{localStorage.setItem(LK,JSON.stringify(LOOK))}catch(e){}look()}
+function setTheme(v){LOOK.th=v;savLook()}
+function setFs(v){LOOK.fs=+v;savLook()}
+function setAcc(c){LOOK.acc=c;savLook();draw()}
+function resetLook(){LOOK={th:'auto',acc:'',fs:15};savLook();draw();toast('Appearance reset')}
+try{matchMedia('(prefers-color-scheme: dark)').addEventListener('change',look)}catch(e){}
+const FZ=(()=>{try{return JSON.parse(localStorage.getItem(K+'-fold')||'{}')}catch(e){return{}}})();
+const fo=(id,d)=>((FZ[id]===undefined?d:FZ[id])?'open ':'')+`ontoggle="fz('${id}',this.open)"`;
+function fz(id,v){if(FZ[id]===v)return;FZ[id]=v;try{localStorage.setItem(K+'-fold',JSON.stringify(FZ))}catch(e){}}
+let CFG={};try{CFG=JSON.parse(localStorage.getItem(K+'-cfg')||'{}')}catch(e){}
+let RTS=0,pushT,busy=false,dirty=false;
+const on=()=>CFG.url&&CFG.key,setSt=t=>{const e=$('#sy');if(e)e.textContent=t};
+async function api(action,x){const r=await fetch(CFG.url,{method:'POST',body:JSON.stringify(Object.assign({key:CFG.key,action},x))}),j=await r.json();if(!j.ok)throw new Error(j.error||'Request failed');return j}
+function keep(){if(window.mFlush)mFlush();try{localStorage.setItem(K,JSON.stringify(S))}catch(e){toast('Could not save: browser storage is full or blocked.')}}
+function save(){S.ts=Date.now();keep();if(on()){setSt('Saving…');clearTimeout(pushT);pushT=setTimeout(push,900)}}
+const canon=x=>JSON.stringify(x,(k,v)=>k==='ts'?undefined:(v&&typeof v=='object'&&!Array.isArray(v)?Object.fromEntries(Object.keys(v).sort().map(z=>[z,v[z]])):v));
+const rd=()=>{const a=document.activeElement;if(!(a&&/INPUT|SELECT|TEXTAREA/.test(a.tagName))&&$('#m'))draw()};
+async function push(){if(busy){dirty=true;return}busy=true;let ok=0;
+ try{for(let i=0;i<4&&!ok;i++){const j=await api('set',{data:S,expect:RTS});if(!j.conflict){RTS=S.ts;ok=1;break}S=merge(S,j.result);S.ts=Date.now();keep();RTS=j.result.ts||0;rd()}
+  setSt(ok?'Synced ✓':'Not synced – busy, will retry')}
+ catch(e){setSt('Not synced – '+e.message)}busy=false;if(dirty){dirty=false;push()}}
+async function pull(){if(!on()||busy)return;
+ try{const r=(await api('get')).result||{};
+  if(!r.ts){RTS=0;if(!S.ts)S.ts=Date.now();await push();return}
+  if(r.ts===RTS){setSt(S.ts===RTS?'Synced ✓':'Saving…');return}
+  const m=merge(S,r),ch=canon(m)!==canon(S),up=canon(m)!==canon(r);RTS=r.ts;S=m;
+  if(ch){keep();rd()}
+  if(up){S.ts=Date.now();keep();await push()}else setSt('Synced ✓')}
+ catch(e){setSt('Not synced – '+e.message)}}
+async function syncNow(){if(!on()){toast('Sync is not set up yet. Enter your address and key here.');go('set');return}
+ const b=$('#sb');b.disabled=true;b.textContent='Syncing…';setSt('Syncing…');clearTimeout(pushT);
+ try{for(let i=0;i<50&&busy;i++)await new Promise(r=>setTimeout(r,100));if(S.ts!==RTS)await push();await pull()}catch(e){setSt('Not synced – '+e.message)}
+ for(let i=0;i<50&&busy;i++)await new Promise(r=>setTimeout(r,100));
+ b.disabled=false;b.textContent='Sync';toast($('#sy').textContent.indexOf('Synced')==0?'Synced with your other devices':$('#sy').textContent)}
+async function exitApp(){if(ui.cal&&calDirty()&&!confirm('You have unsaved attendance changes. Exit without saving them?'))return;clearTimeout(pushT);keep();if(window.mGdFlush)await mGdFlush();if(on()){for(let i=0;i<50&&busy;i++)await new Promise(r=>setTimeout(r,100));await push();for(let i=0;i<50&&busy;i++)await new Promise(r=>setTimeout(r,100))}
+ const ok=!on()||$('#sy').textContent.indexOf('Synced')==0;CFG={};
+ document.body.innerHTML=`<div style="min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:24px;text-align:center;background:#f3f6f4;color:#16302b;font:16px 'Trebuchet MS',Verdana,sans-serif"><h2 style="font-family:Georgia,serif;margin:0">${ok?'Saved. You can close this window.':'Saved on this device.'}</h2><p style="margin:0;max-width:340px">${ok?'Your register is up to date on all devices.':'Syncing did not finish. It will sync the next time you open the app online.'}</p><button onclick="location.reload()" style="padding:12px 20px;border:0;border-radius:10px;background:#0e7c66;color:#fff;font:600 15px Verdana,sans-serif">Open again</button></div>`;
+ try{window.close()}catch(e){}}
+function saveSync(){const u=$('#su').value.trim(),k=$('#sk').value.trim();if(!/^https:\/\/script\.google\.com\//.test(u)||!k)return toast('Paste the Web app address (it starts with https://script.google.com) and your secret key.');CFG={url:u,key:k};try{localStorage.setItem(K+'-cfg',JSON.stringify(CFG))}catch(e){}setSt('Connecting…');pull();toast('Sync settings saved')}
+function stopSync(){CFG={};try{localStorage.removeItem(K+'-cfg')}catch(e){}setSt('This device only');draw()}
+function merge(a,b){const D=Object.assign({},b.del,a.del),o=Object.assign(DEF(),b);o.del=D;
+ const pick=(x,y,k,pre)=>{const m=new Map();(y||[]).forEach(i=>m.set(i[k],i));(x||[]).forEach(i=>{const j=m.get(i[k]);if(!j||(i.t||0)>=(j.t||0))m.set(i[k],i)});return[...m.values()].filter(i=>!D[pre+i[k]]&&!(i.pid&&D['p:'+i.pid])).sort((p,q)=>String(p[k]).localeCompare(String(q[k])))};
+ o.people=pick(a.people,b.people,'id','p:');o.pay=pick(a.pay,b.pay,'id','y:');o.extra=pick(a.extra,b.extra,'id','x:');o.hol=pick(a.hol,b.hol,'date','h:');o.pl=pick(a.pl,b.pl,'id','l:');o.jr=pick(a.jr,b.jr,'id','j:');o.cj=pick(a.cj,b.cj,'id','c:');o.cp=pick(a.cp,b.cp,'id','q:');
+ const live=new Set(o.people.map(p=>p.id)),u=(...z)=>[...new Set(z.flatMap(q=>Object.keys(q||{})))];
+ const cm=(ma,ta,mb,tb)=>{const m={},t={};u(ma,ta,mb,tb).forEach(pid=>{if(!live.has(pid))return;m[pid]={};t[pid]={};const A=(ma||{})[pid]||{},B=(mb||{})[pid]||{},TA=(ta||{})[pid]||{},TB=(tb||{})[pid]||{};u(A,B,TA,TB).forEach(d=>{const x=TA[d]||0,y=TB[d]||0,v=x>y?A[d]:y>x?B[d]:(A[d]!==undefined?A[d]:B[d]);if(v!==undefined)m[pid][d]=v;if(x||y)t[pid][d]=Math.max(x,y)})});return[m,t]};
+ [o.att,o.at]=cm(a.att,a.at,b.att,b.at);[o.nt,o.nat]=cm(a.nt,a.nat,b.nt,b.nat);
+ if((a.lbt||0)>(b.lbt||0)){o.label=a.label;o.logo=a.logo;o.lbt=a.lbt}else if(!b.logo&&a.logo&&!b.lbt)o.logo=a.logo;
+ return o}
+function toast(t){const e=$('#toast');e.textContent=t;e.style.display='block';clearTimeout(e._t);e._t=setTimeout(()=>e.style.display='none',2600)}
+const hm=()=>Object.fromEntries(S.hol.map(h=>[h.date,h.name])),P=id=>S.people.find(p=>p.id==id),
+ym=s=>[+s.slice(0,4),+s.slice(5,7)];
+function stats(p,y,m,at0){const H=hm(),a=at0||S.att[p.id]||{};let pr=0,ab=0,hf=0,hl=0;
+ for(let d=1;d<=dim(y,m);d++){const k=key(y,m,d),v=a[k];if(v=='P')pr++;else if(v=='A')ab++;else if(v=='H')hf++;else if(H[k])hl++}
+ const r=+p.rate||0;let earned;
+ if(p.basis=='day')earned=r*(pr+hf/2+(p.payHol?hl:0));else earned=r-r/dim(y,m)*(ab+hf/2);
+ const paid=S.pay.filter(x=>x.pid==p.id&&x.mon==y+'-'+pad(m)).reduce((s,x)=>s+ +x.amt,0);
+ const ex=(S.extra||[]).filter(x=>x.pid==p.id&&x.date.slice(0,7)==y+'-'+pad(m)).reduce((s,x)=>s+ +x.amt,0);
+ return{pr,ab,hf,hl,ex,earned:Math.max(0,earned)+ex,paid}}
+const exd=(id,k)=>(S.extra||[]).filter(x=>x.pid==id&&x.date==k).reduce((s,x)=>s+ +x.amt,0);
+const TABS=[['att','Attendance'],['pay','Payments'],['ppl','People'],['hol','Holidays'],['pl','Planner'],['jr','Journal'],['rep','Reports'],['set','Settings']];
+function go(t){if(t!=ui.tab&&!lose())return;ui.tab=t;ui.edit=null;draw()}
+function brand(){$('#hn').textContent=S.label;document.title=S.label;const l=$('#hl');l.style.display=S.logo?'block':'none';if(S.logo)l.src=S.logo}
+function draw(){if(window.mSw)mSw();if(ui.mode=='money'&&window.mDraw)return mDraw();brand();window.navDraw&&navDraw();
+ if(!ui.pid||!P(ui.pid))ui.pid=S.people[0]?.id||'';
+ const y0=window.scrollY,same=ui._t==ui.tab;ui._t=ui.tab;$('#m').innerHTML=V[ui.tab]();window.scrollTo(0,same?y0:0);if(window.spDraw)spDraw()}
+const psel=(id,val,all)=>`<label>Person<select id="${id}" onchange="${id=='ap'?'chgP(this)':'ui.'+(id=='rp'?'rp':'pp')+'=this.value;'+(id=='rp'?'rep()':'')}">${all?`<option value="all" ${val=='all'?'selected':''}>All people</option>`:''}${S.people.map(p=>`<option value="${p.id}" ${p.id==val?'selected':''}>${esc(p.name)} (${esc(p.role)})</option>`).join('')}</select></label>`;
+const none=()=>`<div class="card empty"><p>No one is on the register yet.</p><button class="b" onclick="go('ppl')">Add a house-maid, milkman or helper</button></div>`;
+const V={
+att(){if(!S.people.length)return none();const p=P(ui.pid),[y,m]=ui.mon.split('-').map(Number),H=hm(),a=ui.cal&&ui.draft&&ui.draft.pid==p.id?ui.draft.att:(S.att[p.id]||{}),first=(new Date(y,m-1,1).getDay()-(window.mWk?mWk():0)+7)%7,st=stats(p,y,m,a);
+ let c=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'].map((_,i,A)=>A[(i+(window.mWk?mWk():0))%7]).map(d=>`<div class="wd">${d}</div>`).join('')+'<div class="day e"></div>'.repeat(first);
+ for(let d=1;d<=dim(y,m);d++){const k=key(y,m,d),v=a[k],cl=v||(H[k]?'hol':''),lb=v=='P'?'Present':v=='A'?'Absent':v=='H'?'Half day':H[k]?esc(H[k]).slice(0,14):'';
+  c+=`<button class="day ${cl}" onclick="tog('${k}')" aria-label="${k} ${lb}"><b>${d}</b><small>${lb}${exd(p.id,k)?' +'+money(exd(p.id,k)):''}${(S.nt[p.id]||{})[k]?' 📝':''}</small></button>`}
+ return `<div class="card"><div class="row">${psel('ap',ui.pid)}<label>Month<input type="month" value="${ui.mon}" onchange="chgMon(this)"></label></div>
+ <div class="sum"><span>Present <b>${st.pr}</b></span><span>Half <b>${st.hf}</b></span><span>Absent <b>${st.ab}</b></span><span>Holidays <b>${st.hl}</b></span><span>Extra work <b>${money(st.ex)}</b></span><span>Earned <b>${money(st.earned)}</b></span><span>Paid <b>${money(st.paid)}</b></span><span>Balance <b class="${st.earned-st.paid>0?'bad':'ok'}">${money(st.earned-st.paid)}</b></span></div>
+ ${ui.cal?'<div class="edb">Editing mode: your marks are saved only when you press Save.</div>':''}
+ <div class="row noprint" style="margin:0 0 12px">${ui.cal?`<button class="b" onclick="saveCal()">Save</button><button class="b g" onclick="cancelCal()">Cancel</button><button class="b g s" onclick="allP()">Mark all working days present</button><button class="b d s" onclick="clr()">Clear this month</button>`:`<button class="b" onclick="editCal()">Edit attendance</button><span class="mut">The calendar is locked so a stray touch cannot change it.</span>`}</div>
+ <div class="cal ${ui.cal?'':'lk'}">${c}</div><p class="mut">${ui.cal?'Tap a day to cycle: Present, Absent, Half day, blank. Blue days are holidays.':'Blue days are holidays. 📝 marks a day that has a note.'}</p></div>
+ <details class="card" ${fo('notes',0)}><summary>Notes for a day</summary><div class="row"><label>Day<input id="nd" type="date" min="${ui.mon}-01" max="${key(y,m,dim(y,m))}" value="${ui.mon==tdy().slice(0,7)?tdy():ui.mon+'-01'}"></label><label style="flex:2 1 220px">Note<input id="nn" placeholder="Came late, left early, reason for leave…"></label><button class="b" onclick="saveNote()">Save note</button></div><p class="mut">Days with a note show 📝 on the calendar. Saving an empty note removes it.</p>
+ <div class="tw"><table><tr><th>Day</th><th>Note</th><th></th></tr>${Object.entries(S.nt[p.id]||{}).filter(([d,t])=>t&&d.slice(0,7)==ui.mon).sort().map(([d,t])=>`<tr><td>${fd(d)}</td><td style="white-space:normal">${esc(t)}</td><td><button class="b g s" onclick="editNote('${d}')">Edit</button> <button class="b d s" onclick="delNote('${d}')">Delete</button></td></tr>`).join('')||'<tr><td colspan=3 class="empty">No notes this month.</td></tr>'}</table></div></details>
+ <details class="card" ${fo('extra',0)}><summary>Extra work payment</summary><p class="mut">Pay ${esc(p.name)} extra for work done on a particular day. It is added to this month’s earnings.</p><div class="row"><label>Day<input id="xd" type="date" min="${ui.mon}-01" max="${key(y,m,dim(y,m))}" value="${ui.mon==tdy().slice(0,7)?tdy():ui.mon+'-01'}"></label><label>Amount (₹)<input id="xa" type="number" min="0"></label><label>Work done<input id="xn" placeholder="Guests, deep cleaning, festival…"></label></div><label class="ck" style="margin-top:14px"><input type="checkbox" id="xp" checked>Paid now (also adds it to Payments)</label><div class="row" style="margin:12px 0 18px"><button class="b" onclick="addExtra()">Add extra work</button></div>
+ <div class="tw"><table><tr><th>Day</th><th>Work done</th><th class="n">Amount</th><th></th></tr>${(S.extra||[]).filter(x=>x.pid==p.id&&x.date.slice(0,7)==ui.mon).sort((a,b)=>a.date.localeCompare(b.date)).map(x=>`<tr><td>${fd(x.date)}</td><td>${esc(x.note)}</td><td class="n">${money(x.amt)}</td><td><button class="b d s" onclick="delExtra('${x.id}')">Delete</button></td></tr>`).join('')||'<tr><td colspan=4 class="empty">No extra work recorded this month.</td></tr>'}</table></div></details>`},
+pay(){if(!S.people.length)return none();const f=ui.pf||'all',y=ui.ry,L=S.pay.filter(x=>(f=='all'||x.pid==f)&&x.date.slice(0,4)==y).sort((a,b)=>b.date.localeCompare(a.date));
+ return `<div class="card"><h2>Record a payment</h2><div class="row">${psel('pp',ui.pp||ui.pid)}<label>Date<input id="pd" type="date" value="${tdy()}"></label><label>For month<input id="pm" type="month" value="${ui.mon}"></label><label>Amount (₹)<input id="pa" type="number" min="0"></label><label>Note<input id="pn" placeholder="Cash, advance, bonus…"></label><button class="b" onclick="addPay()">Save payment</button></div></div>
+ <details class="card" ${fo('payh',1)}><summary>Payment history</summary><div class="row"><label>Show person<select onchange="ui.pf=this.value;draw()"><option value="all">All people</option>${S.people.map(p=>`<option value="${p.id}" ${p.id==f?'selected':''}>${esc(p.name)}</option>`).join('')}</select></label><label>Year<input type="number" value="${y}" onchange="ui.ry=+this.value;draw()"></label></div>
+ <div class="tw"><table><tr><th>Date</th><th>Person</th><th>For month</th><th>Note</th><th class="n">Amount</th><th></th></tr>${L.map(x=>`<tr><td>${fd(x.date)}</td><td>${esc(P(x.pid)?.name||'(removed)')}</td><td>${x.mon}</td><td>${esc(x.note)}</td><td class="n">${money(x.amt)}</td><td><button class="d s b" onclick="delPay('${x.id}')">Delete</button></td></tr>`).join('')||'<tr><td colspan=6 class="empty">No payments for this selection.</td></tr>'}${L.length?`<tr class="t"><td colspan=4>Total</td><td class="n">${money(L.reduce((s,x)=>s+ +x.amt,0))}</td><td></td></tr>`:''}</table></div></details>`},
+ppl(){const e=ui.edit?P(ui.edit):{basis:'month',role:'House-maid'},roles=[...new Set(['House-maid','Milkman','Cook','Driver','Newspaper vendor',...S.people.map(p=>p.role)])];
+ return `<div class="card"><h2>${ui.edit?'Edit person':'Add a person'}</h2><div class="row"><label>Name<input id="fn" value="${esc(e.name||'')}"></label><label>Role<input id="fr" list="rl" value="${esc(e.role||'')}"><datalist id="rl">${roles.map(r=>`<option>${esc(r)}</option>`).join('')}</datalist></label><label>Paid by<select id="fb"><option value="month" ${e.basis=='month'?'selected':''}>Fixed monthly salary</option><option value="day" ${e.basis=='day'?'selected':''}>Per day worked</option></select></label><label>Rate (₹)<input id="fa" type="number" min="0" value="${e.rate||''}"></label><label>Phone (optional)<input id="fp" value="${esc(e.phone||'')}"></label></div>
+ <label class="ck" style="margin-top:10px"><input type="checkbox" id="fh" ${e.payHol?'checked':''}>Pay for holidays (only matters for “per day” pay; monthly salary always covers holidays)</label>
+ <p class="mut">Monthly salary: absent days deduct 1⁄days-in-month of the salary each, half days deduct half. Unmarked days are not deducted.</p>
+ <div class="row"><button class="b" onclick="savePerson()">${ui.edit?'Update':'Add person'}</button>${ui.edit?'<button class="b g" onclick="go(\'ppl\')">Cancel</button>':''}</div></div>
+ <div class="card"><h2>People (${S.people.length})</h2><div class="tw"><table><tr><th>Name</th><th>Role</th><th>Paid by</th><th class="n">Rate</th><th>Phone</th><th></th></tr>${S.people.map(p=>`<tr><td>${esc(p.name)}</td><td>${esc(p.role)}</td><td>${p.basis=='day'?'Per day':'Monthly'}</td><td class="n">${money(p.rate)}</td><td>${esc(p.phone||'')}</td><td><button class="b g s" onclick="ui.edit='${p.id}';draw();scrollTo(0,0)">Edit</button> <button class="b d s" onclick="delPerson('${p.id}')">Remove</button></td></tr>`).join('')||'<tr><td colspan=6 class="empty">Nobody added yet.</td></tr>'}</table></div></div>`},
+hol(){const y=ui.ry,L=S.hol.filter(h=>h.date.slice(0,4)==y).sort((a,b)=>a.date.localeCompare(b.date));
+ return `<div class="card"><h2>Holidays</h2><p class="mut">On a holiday, helpers are not marked absent. Monthly salary is paid in full; per-day pay follows each person’s “pay for holidays” setting.</p><div class="row"><label>Date<input id="hd" type="date"></label><label>Name<input id="hn2" placeholder="Diwali, Eid, Christmas…"></label><button class="b" onclick="addHol()">Add holiday</button></div>
+ <div class="row" style="margin-top:12px"><label>Year<input type="number" value="${y}" onchange="ui.ry=+this.value;draw()"></label><button class="b g" onclick="sundays()">Add all Sundays of ${y}</button></div></div>
+ <div class="card"><div class="tw"><table><tr><th>Date</th><th>Day</th><th>Holiday</th><th></th></tr>${L.map(h=>`<tr><td>${fd(h.date)}</td><td>${new Date(h.date+'T00:00').toLocaleDateString('en-IN',{weekday:'long'})}</td><td>${esc(h.name)}</td><td><button class="b d s" onclick="delHol('${h.date}')">Delete</button></td></tr>`).join('')||`<tr><td colspan=4 class="empty">No holidays listed for ${y}.</td></tr>`}</table></div></div>`},
+rep(){setTimeout(rep,0);return `<div class="card noprint"><h2>Reports</h2><div class="row"><label>Report<select onchange="ui.rt=this.value;rep()" id="rt">${[['month','Monthly statement (everyone)'],['year','Yearly summary'],['ledger','Payment ledger'],['reg','Attendance register'],['notes','Attendance notes'],['pl','Chores and events'],['jr','Journal']].map(([k,n])=>`<option value="${k}" ${k==ui.rt?'selected':''}>${n}</option>`).join('')}</select></label>${psel('rp',ui.rp,1)}<label>Month<input type="month" value="${ui.mon}" onchange="ui.mon=this.value||ui.mon;ui.ry=+ui.mon.slice(0,4);rep()"></label><label>Year<input type="number" value="${ui.ry}" onchange="ui.ry=+this.value;rep()"></label></div></div><div class="card" id="rep"></div>`},
+set(){return `<details class="card" ${fo('s-logo',1)}><summary>App name and logo</summary><div class="row"><label>Label shown at the top<input id="sl" value="${esc(S.label)}"></label><button class="b" onclick="S.label=$('#sl').value.trim()||'Household Help Register';S.lbt=Date.now();save();brand();toast('Label saved')">Save label</button></div>
+ <div class="row" style="margin-top:14px">${S.logo?`<img class="logo-prev" src="${S.logo}" alt="Logo">`:'<span class="mut">No logo yet.</span>'}<label>Choose a logo image<input type="file" accept="image/*" onchange="logo(this)"></label>${S.logo?'<button class="b d" onclick="S.logo=\'\';S.lbt=Date.now();save();draw()">Remove logo</button>':''}</div></details>
+ <details class="card" ${fo('s-look',1)}><summary>Appearance</summary><div class="row"><label>Theme<select onchange="setTheme(this.value)"><option value="auto" ${LOOK.th=='auto'?'selected':''}>Automatic (follow my device)</option><option value="light" ${LOOK.th=='light'?'selected':''}>Light</option><option value="dark" ${LOOK.th=='dark'?'selected':''}>Dark</option></select></label><label>Text size<select onchange="setFs(this.value)">${[[14,'Small'],[15,'Normal'],[17,'Large'],[19,'Extra large']].map(([v,n])=>`<option value="${v}" ${(LOOK.fs||15)==v?'selected':''}>${n}</option>`).join('')}</select></label></div>
+ <h3 style="margin-top:14px">Colour</h3><div class="sw">${PRE.map(c=>`<button class="swb ${(LOOK.acc||PRE[0]).toLowerCase()==c?'on':''}" style="background:${c}" aria-label="Colour ${c}" onclick="setAcc('${c}')"></button>`).join('')}<label class="cp">Custom<input type="color" value="${LOOK.acc||PRE[0]}" onchange="setAcc(this.value)"></label></div>
+ <div class="row"><button class="b g s" onclick="resetLook()">Reset to default</button></div><p class="mut">Appearance is saved on this device only, so your phone and computer can look different.</p></details>
+ <details class="card" ${fo('s-dash',1)}><summary>Dashboard, clock and weather</summary>
+ <label class="ck"><input type="checkbox" ${PF.clock?'checked':''} onchange="setPF('clock',this.checked?1:0)">Show the clock</label>
+ <label class="ck" style="margin-top:8px"><input type="checkbox" ${PF.flag?'checked':''} onchange="setPF('flag',this.checked?1:0)">Show the waving National Flag</label>
+ <label class="ck" style="margin-top:8px"><input type="checkbox" ${PF.wx?'checked':''} onchange="setPF('wx',this.checked?1:0)">Show the date, temperature and weather banner</label>
+ <div class="row" style="margin-top:12px"><label>Temperature unit<select onchange="setPF('unit',this.value)"><option value="c" ${PF.unit!='f'?'selected':''}>Celsius (°C)</option><option value="f" ${PF.unit=='f'?'selected':''}>Fahrenheit (°F)</option></select></label></div>
+ <h3 style="margin-top:14px">Weather location: ${PF.loc?esc(PF.loc.name):'not set yet'}</h3>
+ <div class="row"><label style="flex:2 1 200px">Search your city or town<input id="wq" placeholder="Type a city name" onkeydown="if(event.key=='Enter')geoSearch()"></label><button class="b" onclick="geoSearch()">Search</button><button class="b g" onclick="myLoc()">Use my current location</button></div><div id="wr"></div>
+ <p class="mut">These choices are saved on this device only. Weather comes from the free Open-Meteo service and needs an internet connection.</p></details>
+ <details class="card" ${fo('s-cf',1)}><summary>Confetti on special days</summary>
+ <label class="ck"><input type="checkbox" ${PF.cf?'checked':''} onchange="setPF('cf',this.checked?1:0)">Shower confetti on special days</label>
+ <label class="ck" style="margin-top:8px"><input type="checkbox" ${PF.cfd?'checked':''} onchange="setPF('cfd',this.checked?1:0)">Important dates from the Planner (birthdays, anniversaries…)</label>
+ <label class="ck" style="margin-top:8px"><input type="checkbox" ${PF.cfh?'checked':''} onchange="setPF('cfh',this.checked?1:0)">Holidays from the Holidays list</label>
+ <div class="row" style="margin-top:12px"><button class="b g" onclick="confetti(1)">Test confetti</button></div>
+ <p class="mut">Confetti falls once a day, when you open the app on a special day. Today’s special days also show in a banner under the title. Saved on this device only.</p></details>
+ <details class="card" ${fo('s-lock',1)}><summary>App lock</summary>
+ <p class="mut">${lockOn()?'The app is protected. It asks for your PIN'+(LKS.bio?' or '+bioName():'')+' when you open it.':'Protect the app with a PIN. On a phone you can also unlock with your fingerprint or face.'}</p>
+ <div class="row">${lockOn()?'<label>Current PIN<input id="lp0" type="password" inputmode="numeric" maxlength="6" autocomplete="off"></label>':''}<label>${lockOn()?'New PIN':'Choose a PIN'} (4 to 6 digits)<input id="lp1" type="password" inputmode="numeric" maxlength="6" autocomplete="new-password"></label><label>Repeat PIN<input id="lp2" type="password" inputmode="numeric" maxlength="6" autocomplete="new-password"></label></div>
+ <div class="row" style="margin-top:10px"><button class="b" onclick="setPin()">${lockOn()?'Change PIN':'Turn on app lock'}</button>${lockOn()?'<button class="b d" onclick="removePin()">Turn off lock</button>':''}</div>
+ ${lockOn()?`<div class="row" style="margin-top:14px"><label>Lock again after<select onchange="setAfter(this.value)">${[[0,'Immediately when I leave the app'],[30,'30 seconds'],[60,'1 minute'],[300,'5 minutes'],[900,'15 minutes'],[-1,'Only when I open the app']].map(([v,n])=>`<option value="${v}" ${LKS.after==v?'selected':''}>${n}</option>`).join('')}</select></label></div>
+ <div class="row" style="margin-top:10px">${LKS.bio?'<button class="b g" onclick="bioOff()">Turn off '+bioName()+' unlock</button>':'<button class="b g" onclick="bioReg()">Enable '+bioName()+' unlock</button>'}<button class="b g" onclick="showLock()">Lock now</button></div>`:''}
+ <p class="mut">This is a privacy lock for this device. It stops other people from opening the app, but it is not encryption. Biometric unlock uses your device’s own security: Windows Hello PIN on Windows, or your fingerprint, face or screen lock on a phone. If you forget the PIN, this device’s copy is erased, and your synced data comes back when you set up sync again.</p></details>
+ <details class="card" ${fo('s-jc',1)}><summary>Journal categories</summary>
+ <div class="row"><label style="flex:2 1 200px">New category<input id="jcn" placeholder="Gifts, Vehicle, School…" onkeydown="if(event.key=='Enter')addJc()"></label><button class="b" onclick="addJc()">Add category</button></div>
+ <p class="mut">Built in: ${JCATS.join(', ')}.</p>
+ <div class="sw">${(S.cj||[]).map(c=>`<span class="chip" style="background:hsla(${hue(c.name)},65%,50%,.22);border-color:hsla(${hue(c.name)},65%,45%,.55);display:inline-flex;align-items:center;gap:6px">${esc(c.name)}<button class="b d s" style="padding:0 8px;min-height:26px" onclick="delJc('${c.id}')" aria-label="Delete ${esc(c.name)}">✕</button></span>`).join('')||'<span class="mut">No custom categories yet.</span>'}</div>
+ <p class="mut">Deleting a category does not change journal entries that already use it.</p></details>
+ <details class="card" ${fo('s-pt',1)}><summary>Planner types</summary>
+ <div class="row"><label style="flex:2 1 200px">Type name<input id="ptn" placeholder="Bill, Doctor visit, Festival…"></label><label style="flex:0 1 120px">Icon (emoji)<input id="pti" maxlength="4" placeholder="📌"></label></div>
+ <label class="ck" style="margin-top:10px"><input type="checkbox" id="ptk" checked>Has a tick box to mark as done (untick for dates only, like birthdays)</label>
+ <div class="row" style="margin-top:10px"><button class="b" onclick="addPt()">Add type</button></div>
+ <p class="mut">Built in: Chore, Event, Important date.</p>
+ <div class="sw">${(S.cp||[]).map(c=>`<span class="chip" style="display:inline-flex;align-items:center;gap:6px;border-color:var(--ln);background:var(--bg)">${esc(c.icon||'📌')} ${esc(c.name)}${c.tick?'':' (date only)'}<button class="b d s" style="padding:0 8px;min-height:26px" onclick="delPt('${c.id}')" aria-label="Delete ${esc(c.name)}">✕</button></span>`).join('')||'<span class="mut">No custom types yet.</span>'}</div>
+ <p class="mut">Deleting a type does not change planner entries that already use it.</p></details>
+ <details class="card" ${fo('s-sync',1)}><summary>Sync across devices</summary><p class="mut">Uses your own free Google account. Do the one-time steps in SETUP.txt, then enter the same address and key on every phone and computer.</p><div class="row"><label>Web app address<input id="su" value="${esc(CFG.url||'')}" placeholder="https://script.google.com/macros/s/…/exec"></label><label>Secret key<input id="sk" type="password" value="${esc(CFG.key||'')}"></label></div><div class="row" style="margin-top:10px"><button class="b" onclick="saveSync()">Save and sync</button>${on()?'<button class="b g" onclick="pull()">Sync now</button><button class="b d" onclick="stopSync()">Turn off sync</button>':''}</div></details>
+ <details class="card" ${fo('s-backup',1)}><summary>Backup and restore</summary><p class="mut">Data is also kept on each device, so the app opens offline. Copy a backup now and then and keep it somewhere safe.</p><div class="row"><button class="b g" onclick="txt('Backup (copy and save this text)',JSON.stringify(S))">Show backup text</button><button class="b g" onclick="restore()">Restore from backup text</button></div><div id="tx"></div></details>`}};
+const tdy=()=>{const d=new Date();return key(d.getFullYear(),d.getMonth()+1,d.getDate())},
+pd=s=>new Date(+s.slice(0,4),+s.slice(5,7)-1,+s.slice(8,10)),fmtD=d=>key(d.getFullYear(),d.getMonth()+1,d.getDate()),
+addDays=(s,n)=>{const d=pd(s);d.setDate(d.getDate()+n);return fmtD(d)},
+TYP={chore:'🧹',event:'📅',date:'⭐'};
+function occ(it,from,to){const out=[],r=it.rep||'none';
+ if(r=='none'){if(it.date>=from&&it.date<=to)out.push(it.date);return out}
+ if(it.date>to)return out;const s0=pd(it.date),f=pd(from>it.date?from:it.date),t=pd(to);
+ for(const d=new Date(f);d<=t;d.setDate(d.getDate()+1)){let ok=false;
+  if(r=='daily')ok=true;
+  else if(r=='weekly')ok=d.getDay()==s0.getDay();
+  else if(r=='monthly')ok=d.getDate()==Math.min(s0.getDate(),dim(d.getFullYear(),d.getMonth()+1));
+  else if(r=='yearly'){const ly=new Date(d.getFullYear(),1,29).getMonth()==1;ok=(s0.getMonth()==1&&s0.getDate()==29&&!ly)?(d.getMonth()==1&&d.getDate()==28):(d.getMonth()==s0.getMonth()&&d.getDate()==s0.getDate())}
+  if(ok)out.push(fmtD(d))}
+ return out}
+const plN=()=>{const t=tdy();return(S.pl||[]).filter(it=>ptype(it).k).reduce((n,it)=>n+occ(it,t,t).filter(d=>!(it.dn||{})[d]).length,0)};
+function prow(it,d,x){const dn=!!(it.dn||{})[d],y=it.rep=='yearly'?(+d.slice(0,4))-(+it.date.slice(0,4)):0;
+ return `<div class="pr ${dn?'dn':''}"><label class="ck pc">${ptype(it).k?`<input type="checkbox" ${dn?'checked':''} onchange="plDone('${it.id}','${d}',this.checked)" aria-label="Done">`:''}<span class="pt"><b>${ptype(it).i} ${esc(it.title)}</b>${it.time?` <small>${esc(it.time)}</small>`:''}${y>0?` <small>(${y} year${y>1?'s':''})</small>`:''}${x?` <small>${x}</small>`:''}${it.rep&&it.rep!='none'?` <small>↻ ${it.rep}</small>`:''}${it.note?`<br><small>${esc(it.note)}</small>`:''}</span></label><span class="pa"><button class="b g s" title="Add to journal" aria-label="Add to journal" onclick="plToJr('${it.id}','${d}')">📓</button><button class="b g s" onclick="editPl('${it.id}')">Edit</button><button class="b d s" onclick="delPl('${it.id}')">Delete</button></span></div>`}
+V.pl=()=>{const t0=tdy(),v=ui.pv||'day',e=ui.pe?S.pl.find(z=>z.id==ui.pe):null,sel=(a,b)=>a==b?'selected':'';ui.pd=ui.pd||t0;
+ const gather=(f,to)=>{const r=[];S.pl.forEach(it=>occ(it,f,to).forEach(d=>r.push([d,it])));return r.sort((a,b)=>a[0].localeCompare(b[0])||(a[1].time||'').localeCompare(b[1].time||'')||a[1].title.localeCompare(b[1].title))},
+ grp=r=>{let last='',h='';r.forEach(([d,it])=>{if(d!=last){last=d;h+=`<div class="gh">${pd(d).toLocaleDateString('en-IN',{weekday:'long',day:'numeric',month:'short',year:'numeric'})}${d==t0?' (Today)':''}</div>`}h+=prow(it,d)});return h||'<p class="empty">Nothing planned for this period.</p>'};
+ let body,top='';
+ if(v=='day'){const r=gather(ui.pd,ui.pd),ch=r.filter(([d,i])=>ptype(i).k),dn=ch.filter(([d,i])=>(i.dn||{})[d]).length;
+  top=`<label>Day<input type="date" value="${ui.pd}" onchange="ui.pd=this.value||ui.pd;draw()"></label><button class="b g s" onclick="ui.pd='${t0}';draw()">Today</button>`;
+  body=`<div class="sum"><span>Done <b>${dn}/${ch.length}</b></span><span>Entries <b>${r.length}</b></span></div>`+(r.map(([d,i])=>prow(i,d)).join('')||'<p class="empty">Nothing planned for this day.</p>')}
+ else if(v=='n30')body=grp(gather(t0,addDays(t0,30)));
+ else if(v=='mon'){const[y,m]=ym(ui.mon);top=`<label>Month<input type="month" value="${ui.mon}" onchange="ui.mon=this.value||ui.mon;draw()"></label>`;body=grp(gather(key(y,m,1),key(y,m,dim(y,m))))}
+ else{const r=[];S.pl.filter(i=>!ptype(i).k).forEach(it=>{const d=occ(it,t0,addDays(t0,366))[0];if(d)r.push([d,it])});r.sort((a,b)=>a[0].localeCompare(b[0]));
+  body=r.map(([d,it])=>{const n=Math.round((pd(d)-pd(t0))/864e5);return prow(it,d,fd(d)+' · '+(n==0?'Today':n==1?'Tomorrow':'in '+n+' days'))}).join('')||'<p class="empty">No important dates yet. Add birthdays, anniversaries, bills and renewals as “Important date”.</p>'}
+ return `<details class="card" ${ui.pe?'open':fo('plf',1)}><summary>${e?'Edit entry':'Add a chore, event or date'}</summary><div class="row"><label>Type<select id="lt" onchange="typeCh()">${ptypes().map(([k,n])=>`<option value="${k}" ${sel(e?.type||'chore',k)}>${esc(n)}</option>`).join('')}</select></label><label style="flex:2 1 220px">Title<input id="ln" value="${esc(e?.title||'')}" placeholder="Clean water tank, Guests coming, Mom’s birthday…"></label></div>
+ <div class="row" style="margin-top:10px"><label>Date<input id="ld" type="date" value="${e?e.date:ui.pd}"></label><label>Time (optional)<input id="lh" type="time" value="${e?.time||''}"></label><label>Repeat<select id="lr">${[['none','Does not repeat'],['daily','Every day'],['weekly','Every week'],['monthly','Every month'],['yearly','Every year']].map(([k,n])=>`<option value="${k}" ${sel(e?.rep||'none',k)}>${n}</option>`).join('')}</select></label></div>
+ <div class="row" style="margin-top:10px"><label style="flex:1 1 100%">Note<input id="lo" value="${esc(e?.note||'')}" placeholder="Details, phone number, reminder…"></label></div>
+ <div class="row" style="margin-top:12px"><button class="b" onclick="savePl()">${e?'Update':'Save entry'}</button>${e?'<button class="b g" onclick="ui.pe=null;draw()">Cancel</button>':''}</div></details>
+ <div class="card"><div class="row"><label>Show<select onchange="ui.pv=this.value;draw()"><option value="day" ${sel(v,'day')}>A single day</option><option value="n30" ${sel(v,'n30')}>Next 30 days</option><option value="mon" ${sel(v,'mon')}>A whole month</option><option value="imp" ${sel(v,'imp')}>Important dates</option></select></label>${top}</div>${body}</div>`};
+function savePl(){const t=$('#ln').value.trim(),d=$('#ld').value;if(!t||!d)return toast('Enter a title and a date.');
+ const o={type:$('#lt').value,tn:$('#lt').selectedOptions[0].textContent.replace(/^\S+\s/,''),title:t,date:d,time:$('#lh').value,rep:$('#lr').value,note:$('#lo').value.trim(),t:Date.now()};
+ if(ui.pe){Object.assign(S.pl.find(z=>z.id==ui.pe),o)}else S.pl.push(Object.assign({id:uid(),dn:{}},o));
+ ui.pe=null;ui.pd=d;save();toast('Saved');draw()}
+function plDone(id,d,v){const it=S.pl.find(z=>z.id==id);if(!it)return;it.dn=it.dn||{};if(v)it.dn[d]=1;else delete it.dn[d];it.t=Date.now();save();draw()}
+function editPl(id){ui.pe=id;draw();scrollTo(0,0)}
+function delPl(id){const it=S.pl.find(z=>z.id==id);if(!it||!confirm('Delete “'+it.title+'”'+(it.rep&&it.rep!='none'?' and all its repeats':'')+'?'))return;S.del['l:'+id]=Date.now();S.pl=S.pl.filter(z=>z.id!=id);save();draw()}
+const JCATS=['Purchase','Family','Health','Milestone','Task done','Travel','Home','Celebration','Other'],
+jcats=()=>[...new Set([...JCATS,...(S.cj||[]).map(c=>c.name),...(S.jr||[]).map(x=>x.cat).filter(Boolean)])],
+hue=s=>{let h=0;for(const c of s)h=(h*31+c.charCodeAt(0))%360;return h};
+function jBody(){const q=(ui.jq||'').toLowerCase().trim(),c=ui.jc||'',y=ui.jy||'',
+ L=S.jr.filter(x=>(!c||x.cat==c)&&(!y||x.date.slice(0,4)==y)&&(!q||(x.title+' '+(x.note||'')+' '+(x.cat||'')).toLowerCase().includes(q))).sort((a,b)=>b.date.localeCompare(a.date)||(b.t||0)-(a.t||0)),
+ tot=L.reduce((s,x)=>s+(+x.amt||0),0);let last='',h='';
+ L.forEach(x=>{const mk=x.date.slice(0,7);if(mk!=last){last=mk;h+=`<div class="gh">${pd(x.date).toLocaleDateString('en-IN',{month:'long',year:'numeric'})}</div>`}
+  const hu=hue(x.cat||'Other');
+  h+=`<div class="pr"><div class="pt" style="flex:1;min-width:0"><small>${pd(x.date).toLocaleDateString('en-IN',{weekday:'short',day:'numeric',month:'short',year:'numeric'})}</small> <span class="chip" style="background:hsla(${hu},65%,50%,.22);border-color:hsla(${hu},65%,45%,.55)">${esc(x.cat||'Other')}</span>${+x.amt?` <b>${money(x.amt)}</b>`:''}<br><b>${esc(x.title)}</b>${x.note?`<br><span style="white-space:pre-wrap;font-weight:400">${esc(x.note)}</span>`:''}</div><span class="pa"><button class="b g s" onclick="editJr('${x.id}')">Edit</button><button class="b d s" onclick="delJr('${x.id}')">Delete</button></span></div>`});
+ return `<div class="sum"><span>Entries <b>${L.length}</b></span>${tot?`<span>Total amount <b>${money(tot)}</b></span>`:''}</div>`+(h||'<p class="empty">No entries found. Add your first one above.</p>')}
+V.jr=()=>{const e=ui.je?S.jr.find(z=>z.id==ui.je):null,pre=!e&&ui.jpre?ui.jpre:null;ui.jpre=null;const v=e||pre||{},ys=[...new Set(S.jr.map(x=>x.date.slice(0,4)))].sort().reverse();
+ return `<details class="card" ${ui.je||pre?'open':fo('jf',1)}><summary>${e?'Edit entry':'Add to journal'}</summary>
+ <div class="row"><label>Date<input id="jd" type="date" value="${v.date||tdy()}"></label><label>Category<input id="jc" list="jcl" value="${esc(v.cat||'')}" placeholder="Purchase, Family, Health…"><datalist id="jcl">${jcats().map(c=>`<option>${esc(c)}</option>`).join('')}</datalist></label><label>Amount (₹, optional)<input id="ja" type="number" min="0" value="${v.amt||''}"></label></div>
+ <div class="row" style="margin-top:10px"><label style="flex:1 1 100%">What happened<input id="jt" value="${esc(v.title||'')}" placeholder="Bought a new wrist watch"></label></div>
+ <div class="row" style="margin-top:10px"><label style="flex:1 1 100%">Details<textarea id="jn" rows="3" placeholder="Where, who, how it went, anything to remember…">${esc(v.note||'')}</textarea></label></div>
+ <div class="row" style="margin-top:12px"><button class="b" onclick="saveJr()">${e?'Update':'Save entry'}</button>${e?'<button class="b g" onclick="ui.je=null;draw()">Cancel</button>':''}</div></details>
+ <div class="card"><div class="row"><label style="flex:2 1 200px">Search<input type="search" value="${esc(ui.jq||'')}" oninput="ui.jq=this.value;jList()" placeholder="Search your journal…"></label><label>Category<select onchange="ui.jc=this.value;jList()"><option value="">All</option>${jcats().map(c=>`<option ${c==ui.jc?'selected':''}>${esc(c)}</option>`).join('')}</select></label><label>Year<select onchange="ui.jy=this.value;jList()"><option value="">All</option>${ys.map(y=>`<option ${y==ui.jy?'selected':''}>${y}</option>`).join('')}</select></label></div><div id="jl">${jBody()}</div></div>`};
+function saveJr(){const t=$('#jt').value.trim(),d=$('#jd').value;if(!t||!d)return toast('Enter what happened and the date.');
+ const o={date:d,title:t,cat:$('#jc').value.trim()||'Other',amt:+$('#ja').value||0,note:$('#jn').value.trim(),t:Date.now()};
+ if(ui.je)Object.assign(S.jr.find(z=>z.id==ui.je),o);else S.jr.push(Object.assign({id:uid()},o));
+ ui.je=null;ui.jq=ui.jc=ui.jy='';save();toast('Saved to journal');draw()}
+function jList(){const e=$('#jl');if(e)e.innerHTML=jBody()}
+function editJr(id){ui.je=id;draw();scrollTo(0,0)}
+function delJr(id){const x=S.jr.find(z=>z.id==id);if(!x||!confirm('Delete “'+x.title+'”?'))return;S.del['j:'+id]=Date.now();S.jr=S.jr.filter(z=>z.id!=id);save();jList()}
+function plToJr(id,d){const it=S.pl.find(z=>z.id==id);if(!it)return;ui.jpre={title:it.title,date:d,note:it.note||'',cat:it.type=='chore'?'Task done':it.type=='event'?'Milestone':it.type=='date'?'Family':ptype(it).n};ui.tab='jr';draw()}
+// ===== planner types (built-in + custom from Settings) =====
+const BT={chore:{n:'Chore',i:'🧹',k:1},event:{n:'Event',i:'📅',k:1},date:{n:'Important date',i:'⭐',k:0}};
+const ptype=it=>{if(BT[it.type])return BT[it.type];const c=(S.cp||[]).find(x=>'x:'+x.id==it.type);return c?{n:c.name,i:c.icon||'📌',k:c.tick?1:0}:{n:it.tn||'Other',i:'📌',k:1}};
+const ptypes=()=>[['chore','🧹 Chore'],['event','📅 Event'],['date','⭐ Important date'],...(S.cp||[]).map(c=>['x:'+c.id,(c.icon||'📌')+' '+c.name])];
+function typeCh(){const v=$('#lt').value,nt=v=='date'||(S.cp||[]).some(c=>'x:'+c.id==v&&!c.tick);if(nt&&$('#lr').value=='none')$('#lr').value='yearly'}
+function addJc(){const n=$('#jcn').value.trim();if(!n)return toast('Type a category name.');if(jcats().some(c=>c.toLowerCase()==n.toLowerCase()))return toast('That category already exists.');(S.cj=S.cj||[]).push({id:uid(),name:n,t:Date.now()});save();toast('Category added');draw()}
+function delJc(id){S.del['c:'+id]=Date.now();S.cj=S.cj.filter(c=>c.id!=id);save();draw()}
+function addPt(){const n=$('#ptn').value.trim();if(!n)return toast('Type a name for the new type.');if(ptypes().some(([k,l])=>l.replace(/^\S+\s/,'').toLowerCase()==n.toLowerCase()))return toast('That type already exists.');(S.cp=S.cp||[]).push({id:uid(),name:n,icon:$('#pti').value.trim()||'📌',tick:$('#ptk').checked?1:0,t:Date.now()});save();toast('Type added');draw()}
+function delPt(id){S.del['q:'+id]=Date.now();S.cp=S.cp.filter(c=>c.id!=id);save();draw()}
+
+// ===== preferences kept on this device only =====
+const PK=K+'-prefs',LKK=K+'-lock';
+let PF={clock:1,flag:1,wx:1,unit:'c',loc:null,cf:1,cfd:1,cfh:1,cfLast:''};try{Object.assign(PF,JSON.parse(localStorage.getItem(PK)||'{}'))}catch(e){}
+const savePF=()=>{try{localStorage.setItem(PK,JSON.stringify(PF))}catch(e){}};
+let LKS={};try{LKS=JSON.parse(localStorage.getItem(LKK)||'{}')}catch(e){}
+const saveLock=()=>{try{localStorage.setItem(LKK,JSON.stringify(LKS))}catch(e){}},lockOn=()=>!!LKS.hash;
+function setPF(k,v){PF[k]=v;savePF();dashInit();if(k=='unit')draw()}
+
+// ===== dashboard: clock, waving flag, date + weather banner =====
+let dashT=null,flagRaf=0;
+const WMO=c=>c==0?['Clear sky','☀️','sun']:c<=2?[c==1?'Mainly clear':'Partly cloudy',c==1?'🌤️':'⛅','sun']:c==3?['Overcast','☁️','cloud']:c<=48?['Fog','🌫️','cloud']:c<=57?['Drizzle','🌦️','rain']:c<=67?[c>=65?'Heavy rain':'Rain','🌧️','rain']:c<=77?['Snow','🌨️','snow']:c<=82?['Rain showers','🌦️','rain']:c<=86?['Snow showers','🌨️','snow']:['Thunderstorm','⛈️','storm'];
+function clockHTML(){let t='';for(let i=0;i<12;i++)t+=`<line x1="0" y1="-41" x2="0" y2="${i%3?-37:-34}" transform="rotate(${i*30})" stroke="currentColor" stroke-width="${i%3?1.5:3}"/>`;
+ return `<div class="clk"><svg viewBox="-50 -50 100 100" width="70" height="70" aria-hidden="true"><circle r="47" fill="var(--card)" stroke="var(--pri)" stroke-width="4"/>${t}<line id="hh" y2="-24" stroke="currentColor" stroke-width="4" stroke-linecap="round"/><line id="mh" y2="-35" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><line id="sh" y2="-38" stroke="#d92d20" stroke-width="1.5"/><circle r="3.5" fill="#d92d20"/></svg><div class="dg"><b id="c1"></b><small id="c2"></small></div></div>`}
+function tick(){const n=new Date(),h=n.getHours()%12,m=n.getMinutes(),s=n.getSeconds(),r=(id,a)=>{const e=$('#'+id);if(e)e.setAttribute('transform','rotate('+a+')')};r('hh',h*30+m/2);r('mh',m*6+s/10);r('sh',s*6);
+ const c1=$('#c1'),c2=$('#c2');if(c1){c1.textContent=window.mFt?mFt(pad(n.getHours())+':'+pad(n.getMinutes())):n.toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit',hour12:true}).toUpperCase();c2.textContent=':'+pad(s)+' seconds'}}
+function flagStart(){const cv=$('#flag');if(!cv)return;const W=120,H=80,dpr=window.devicePixelRatio||1;cv.width=(W+16)*dpr;cv.height=(H+16)*dpr;cv.style.width=(W+16)+'px';cv.style.height=(H+16)+'px';
+ const sc=document.createElement('canvas');sc.width=W;sc.height=H;const g=sc.getContext('2d');g.fillStyle='#FF9933';g.fillRect(0,0,W,H/3);g.fillStyle='#fff';g.fillRect(0,H/3,W,H/3);g.fillStyle='#138808';g.fillRect(0,2*H/3,W,H/3);
+ g.translate(W/2,H/2);g.strokeStyle='#000080';g.lineWidth=1.2;g.beginPath();g.arc(0,0,11,0,7);g.stroke();for(let i=0;i<24;i++){g.beginPath();g.moveTo(0,0);g.lineTo(11*Math.cos(i*Math.PI/12),11*Math.sin(i*Math.PI/12));g.stroke()}g.fillStyle='#000080';g.beginPath();g.arc(0,0,2,0,7);g.fill();
+ const ctx=cv.getContext('2d'),still=matchMedia('(prefers-reduced-motion: reduce)').matches;
+ const paint=t=>{ctx.setTransform(dpr,0,0,dpr,0,0);ctx.clearRect(0,0,W+16,H+16);ctx.fillStyle='#8b5e3c';ctx.fillRect(4,2,4,H+14);ctx.fillStyle='#d4af37';ctx.beginPath();ctx.arc(6,3,3.5,0,7);ctx.fill();
+  for(let i=0;i<W;i++){const dy=Math.sin(i/9-t*4)*(1.2+i*.05);ctx.drawImage(sc,i,0,1,H,10+i,6+dy,1,H);const sh=Math.cos(i/9-t*4)*.16;ctx.fillStyle=sh>0?`rgba(0,0,0,${sh})`:`rgba(255,255,255,${-sh})`;ctx.fillRect(10+i,6+dy,1,H)}};
+ const loop=ts=>{if(!document.body.contains(cv))return;paint(ts/1000);flagRaf=requestAnimationFrame(loop)};
+ if(still)paint(0);else flagRaf=requestAnimationFrame(loop)}
+const wxKey=K+'-wx',wxK=()=>PF.loc?PF.loc.lat+','+PF.loc.lon+','+PF.unit:'';
+function wxClick(){if(!PF.loc)go('set');else{toast('Updating weather…');wxFetch(1)}}
+async function wxFetch(force){if(!PF.wx||!PF.loc)return;let c=null;try{c=JSON.parse(localStorage.getItem(wxKey)||'null')}catch(e){}
+ if(!force&&c&&c.k==wxK()&&Date.now()-c.t<9e5)return;
+ try{const u=`https://api.open-meteo.com/v1/forecast?latitude=${PF.loc.lat}&longitude=${PF.loc.lon}&current=temperature_2m,apparent_temperature,relative_humidity_2m,weather_code,wind_speed_10m,is_day&daily=temperature_2m_max,temperature_2m_min,precipitation_probability_max&timezone=auto&temperature_unit=${PF.unit=='f'?'fahrenheit':'celsius'}`,j=await(await fetch(u)).json();if(!j.current)throw 0;localStorage.setItem(wxKey,JSON.stringify({k:wxK(),t:Date.now(),d:j}))}catch(e){}
+ wxDraw()}
+function wxDraw(){const e=$('#wx');if(!e)return;const dt=new Date().toLocaleDateString('en-IN',{weekday:'long',day:'numeric',month:'long',year:'numeric'});let c=null;try{c=JSON.parse(localStorage.getItem(wxKey)||'null')}catch(x){}
+ if(!PF.loc){e.className='wx w-cloud';e.innerHTML=`<div class="wm"><div class="wd1">📅 ${dt}</div><div class="wd2">📍 Tap here to set your location and see the weather</div></div>`;return}
+ if(!c||c.k!=wxK()){e.className='wx w-cloud';e.innerHTML=`<div class="wm"><div class="wd1">📅 ${dt}</div><div class="wd2">⏳ Getting the weather for ${esc(PF.loc.name)}… (needs internet)</div></div>`;return}
+ const j=c.d,cu=j.current,[tx,ic,cl]=WMO(cu.weather_code),night=cu.is_day===0,u=PF.unit=='f'?'°F':'°C',R=v=>Math.round(v);
+ e.className='wx w-'+(night&&cl=='sun'?'night':cl);
+ e.innerHTML=`<div class="wi">${night&&cu.weather_code<=1?'🌙':ic}</div><div class="wt"><b>${R(cu.temperature_2m)}${u}</b><small>${tx}</small></div><div class="wm"><div class="wd1">📅 ${dt}</div><div class="wd2">📍 ${esc(PF.loc.name)} · Feels like ${R(cu.apparent_temperature)}° · 💧 ${R(cu.relative_humidity_2m)}% · 💨 ${R(cu.wind_speed_10m)} km/h</div><div class="wd2">⬆ ${R(j.daily.temperature_2m_max[0])}° ⬇ ${R(j.daily.temperature_2m_min[0])}° · ☔ ${j.daily.precipitation_probability_max[0]??0}% chance of rain</div></div>`}
+let WR=[];
+async function geoSearch(){const q=$('#wq').value.trim(),o=$('#wr');if(!q)return;o.innerHTML='<p class="mut">Searching…</p>';
+ try{const j=await(await fetch('https://geocoding-api.open-meteo.com/v1/search?count=6&language=en&name='+encodeURIComponent(q))).json();WR=j.results||[];o.innerHTML=WR.length?WR.map((r,i)=>`<button class="b g s" style="margin:6px 6px 0 0" onclick="pickLoc(${i})">${esc(r.name)}${r.admin1?', '+esc(r.admin1):''}, ${esc(r.country||'')}</button>`).join(''):'<p class="mut">No place found. Try a different spelling.</p>'}catch(e){o.innerHTML='<p class="mut">Could not search. Check your internet connection.</p>'}}
+function pickLoc(i){const r=WR[i];PF.loc={lat:r.latitude,lon:r.longitude,name:r.name+(r.admin1?', '+r.admin1:'')};savePF();dashInit();draw();toast('Weather location set')}
+function myLoc(){if(!navigator.geolocation)return toast('Location is not available on this device.');toast('Finding your location…');navigator.geolocation.getCurrentPosition(p=>{PF.loc={lat:+p.coords.latitude.toFixed(3),lon:+p.coords.longitude.toFixed(3),name:'My location'};savePF();dashInit();draw();toast('Weather location set')},()=>toast('Could not get your location. Allow location access, or search for your city.'),{timeout:15000})}
+function dashInit(){const d=$('#dash');if(!d)return;clearInterval(dashT);cancelAnimationFrame(flagRaf);
+ d.style.display=(PF.clock||PF.flag||PF.wx)?'':'none';
+ d.innerHTML=(PF.clock||PF.flag?`<div class="dtop">${PF.clock?clockHTML():'<span></span>'}${PF.flag?'<canvas id="flag" role="img" aria-label="Flag of India"></canvas>':'<span></span>'}</div>`:'')+(PF.wx?'<div id="wx" class="wx" onclick="wxClick()"></div>':'')+'<div id="sp"></div>';
+ if(PF.clock)tick();if(PF.flag)flagStart();if(PF.wx){wxDraw();wxFetch()}spDraw();
+ dashT=setInterval(()=>{if(PF.clock)tick();if(PF.wx&&new Date().getSeconds()==0)wxDraw()},1000)}
+
+// ===== confetti on special days =====
+function confetti(force){if(!force&&matchMedia('(prefers-reduced-motion: reduce)').matches)return;const cv=document.createElement('canvas');cv.style.cssText='position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:70';document.body.appendChild(cv);
+ const dpr=window.devicePixelRatio||1,W=cv.width=innerWidth*dpr,H=cv.height=innerHeight*dpr,x=cv.getContext('2d'),cols=['#f94144','#f3722c','#f9c74f','#90be6d','#43aa8b','#577590','#c77dff','#ff70a6'];
+ const P=Array.from({length:150},()=>({x:Math.random()*W,y:-Math.random()*H*.6,w:(6+Math.random()*8)*dpr,h:(4+Math.random()*6)*dpr,vx:(Math.random()-.5)*3*dpr,vy:(2+Math.random()*4)*dpr,r:Math.random()*6,vr:(Math.random()-.5)*.3,c:cols[Math.random()*cols.length|0]}));
+ const t0=performance.now();(function f(t){const el=t-t0;x.clearRect(0,0,W,H);P.forEach(p=>{p.x+=p.vx+Math.sin(p.y/80)*dpr;p.y+=p.vy;p.vy+=.03*dpr;p.r+=p.vr;x.save();x.translate(p.x,p.y);x.rotate(p.r);x.globalAlpha=Math.max(0,1-Math.max(0,el-4000)/1500);x.fillStyle=p.c;x.fillRect(-p.w/2,-p.h/2,p.w,p.h);x.restore()});if(el<5500)requestAnimationFrame(f);else cv.remove()})(t0)}
+function specialToday(){const t=tdy(),o=[];if(PF.cfd)(S.pl||[]).forEach(it=>{if(!ptype(it).k&&occ(it,t,t).length)o.push(it.title)});if(PF.cfh)(S.hol||[]).forEach(h=>{if(h.date==t&&h.name!='Sunday')o.push(h.name)});return o}
+function maybeConfetti(){const t=tdy();if(PF.cf&&specialToday().length&&PF.cfLast!=t){PF.cfLast=t;savePF();setTimeout(()=>confetti(),600)}}
+function spDraw(){const e=$('#sp');if(!e)return;const sd=specialToday();e.innerHTML=sd.length?`<div class="spb">🎉 Today: ${sd.map(esc).join(' · ')}</div>`:''}
+
+// ===== app lock (PIN + fingerprint / face through the phone's own security) =====
+let tries=0,until=0,pin='',hiddenAt=0,bioBusy=0,graceUntil=0;
+// Native unlock: the Windows app exposes window.NativeAuth (Windows Hello PIN); the Android app exposes window.AndroidAuth (fingerprint / screen lock).
+const __acb={};window.__authDone=(id,r)=>{const f=__acb[id];if(f){delete __acb[id];f(r)}};
+function nat(){if(window.NativeAuth)return window.NativeAuth;if(window.AndroidAuth)return{label:'fingerprint',verify:()=>new Promise(res=>{const id='a'+Date.now();__acb[id]=r=>res(r==='ok'?true:r);AndroidAuth.verify(id)})};return null}
+function bioName(){const n=nat();return n?n.label:'fingerprint or face'}
+const b64=u=>btoa(String.fromCharCode(...new Uint8Array(u))),ub=s=>Uint8Array.from(atob(s),c=>c.charCodeAt(0));
+async function hp(p,salt){const b=new TextEncoder().encode(salt+':'+p);if(window.crypto&&crypto.subtle){const h=await crypto.subtle.digest('SHA-256',b);return[...new Uint8Array(h)].map(x=>x.toString(16).padStart(2,'0')).join('')}return btoa(salt+':'+p)}
+function showLock(){if(!lockOn())return;let o=$('#lk');if(!o){o=document.createElement('div');o.id='lk';document.body.appendChild(o)}pin='';lkDraw();o.style.display='flex';if(LKS.bio)setTimeout(bioUnlock,300)}
+function lkDraw(msg){const o=$('#lk'),n=LKS.n||4;o.innerHTML=`<div class="lkb"><div class="lkl">🔒</div><h2>${esc(S.label)}</h2><p class="mut">${msg||'Enter your PIN to open'}</p><div class="dots">${Array.from({length:n},(_,i)=>`<i class="${i<pin.length?'f':''}"></i>`).join('')}</div><div class="pad">${[1,2,3,4,5,6,7,8,9].map(d=>`<button onclick="kp('${d}')">${d}</button>`).join('')}${LKS.bio?'<button onclick="bioUnlock()" aria-label="Use fingerprint">🖐️</button>':'<span></span>'}<button onclick="kp('0')">0</button><button onclick="kp('b')" aria-label="Delete">⌫</button></div><button class="lkf" onclick="forgotPin()">Forgot PIN?</button></div>`}
+async function kp(d){if(Date.now()<until)return lkDraw('Too many tries. Wait '+Math.ceil((until-Date.now())/1000)+' seconds.');const n=LKS.n||4;if(d=='b')pin=pin.slice(0,-1);else if(pin.length<n)pin+=d;lkDraw();
+ if(pin.length==n){const ok=(await hp(pin,LKS.salt))==LKS.hash;if(ok){tries=0;unlock()}else{tries++;pin='';if(tries>=5){until=Date.now()+30000;tries=0;lkDraw('Too many tries. Wait 30 seconds.')}else lkDraw('Wrong PIN. Try again.');if(navigator.vibrate)navigator.vibrate(200)}}}
+function unlock(){const o=$('#lk');if(o)o.style.display='none';pin='';maybeConfetti()}
+function forgotPin(){if(!confirm('A forgotten PIN cannot be recovered.\n\nTo get back in, this device’s saved copy of your register will be erased. If sync was set up, your data stays safe in your Google Drive and comes back when you enter your sync address and secret key again. If sync was NOT set up, the data on this device will be lost.\n\nErase this device’s data and remove the lock?'))return;try{Object.keys(localStorage).filter(k=>k.indexOf(K)==0).forEach(k=>localStorage.removeItem(k))}catch(e){}location.reload()}
+async function setPin(){const a=$('#lp1').value.trim(),b=$('#lp2').value.trim();if(!/^\d{4,6}$/.test(a))return toast('The PIN must be 4 to 6 digits.');if(a!=b)return toast('The two PINs do not match.');
+ if(lockOn()&&(await hp($('#lp0').value.trim(),LKS.salt))!=LKS.hash)return toast('The current PIN is not correct.');
+ const salt=b64(crypto.getRandomValues(new Uint8Array(12)));LKS=Object.assign({},LKS,{salt,n:a.length,hash:await hp(a,salt),after:LKS.after??60});saveLock();lkBtn();toast('App lock is on');draw()}
+async function removePin(){if((await hp(($('#lp0')||{}).value||'',LKS.salt))!=LKS.hash)return toast('Enter your current PIN to turn the lock off.');LKS={};saveLock();lkBtn();toast('App lock is off');draw()}
+function setAfter(v){LKS.after=+v;saveLock()}
+function lkBtn(){const b=$('#lkb');if(b)b.hidden=!lockOn()}
+async function bioReg(){const n=nat();
+ if(n){bioBusy=1;let r;try{r=await n.verify()}catch(e){r='Could not start the device check.'}bioBusy=0;graceUntil=Date.now()+1500;
+  if(r===true){LKS.bio='native';saveLock();toast(bioName()+' unlock is on');draw()}else toast(r||'Cancelled.');return}
+ try{if(!window.PublicKeyCredential)throw 0;const c=await navigator.credentials.create({publicKey:{challenge:crypto.getRandomValues(new Uint8Array(32)),rp:{name:S.label||'Register',id:location.hostname},user:{id:crypto.getRandomValues(new Uint8Array(16)),name:'owner',displayName:'Owner'},pubKeyCredParams:[{type:'public-key',alg:-7},{type:'public-key',alg:-257}],authenticatorSelection:{authenticatorAttachment:'platform',userVerification:'required',residentKey:'discouraged'},timeout:60000}});LKS.bio=b64(c.rawId);saveLock();toast('Fingerprint unlock is on');draw()}catch(e){toast('Fingerprint unlock is not available here, or it was cancelled.')}}
+async function bioUnlock(){if(bioBusy)return;bioBusy=1;
+ try{if(LKS.bio==='native'){const n=nat();if(n&&(await n.verify())===true)unlock();return}
+  await navigator.credentials.get({publicKey:{challenge:crypto.getRandomValues(new Uint8Array(32)),rpId:location.hostname,allowCredentials:[{type:'public-key',id:ub(LKS.bio),transports:['internal']}],userVerification:'required',timeout:60000}});unlock()}
+ catch(e){}finally{bioBusy=0;graceUntil=Date.now()+1500;hiddenAt=0}}
+function bioOff(){delete LKS.bio;saveLock();draw()}
+document.addEventListener('keydown',e=>{const o=$('#lk');if(!o||o.style.display=='none')return;if(/^\d$/.test(e.key))kp(e.key);else if(e.key=='Backspace')kp('b')});
+function lkHide(){if(!bioBusy&&Date.now()>graceUntil)hiddenAt=Date.now()}
+function lkShow(){if(!bioBusy&&Date.now()>graceUntil&&lockOn()&&LKS.after>=0&&hiddenAt&&Date.now()-hiddenAt>=LKS.after*1000)showLock();hiddenAt=0;wxFetch();wxDraw();spDraw()}
+window.__appHide=lkHide;window.__appShow=lkShow;
+document.addEventListener('visibilitychange',()=>document.hidden?lkHide():lkShow());
+if(window.NativeAuth&&NativeAuth.onLock)NativeAuth.onLock(()=>{if(lockOn())showLock()});
+function boot2(){lkBtn();dashInit();if(lockOn())showLock();else maybeConfetti();setInterval(()=>wxFetch(),9e5)}
+function stamp(m,pid,k){(m[pid]=m[pid]||{})[k]=Date.now()}
+const calDirty=()=>{const d=ui.draft;return !!d&&[...new Set([...Object.keys(d.att),...Object.keys(d.base)])].some(k=>d.att[k]!==d.base[k])};
+function lose(){if(ui.cal&&calDirty()&&!confirm('Discard your unsaved attendance changes?'))return false;ui.cal=false;ui.draft=null;return true}
+function editCal(){const p=P(ui.pid),c=S.att[p.id]||{};ui.cal=true;ui.draft={pid:p.id,att:Object.assign({},c),base:Object.assign({},c)};draw()}
+function cancelCal(){if(!lose())return;draw()}
+function saveCal(){const d=ui.draft;if(!d)return;const a=S.att[d.pid]=S.att[d.pid]||{};let n=0;
+ new Set([...Object.keys(d.att),...Object.keys(d.base)]).forEach(k=>{if(d.att[k]!==d.base[k]){n++;if(d.att[k])a[k]=d.att[k];else delete a[k];stamp(S.at,d.pid,k)}});
+ ui.cal=false;ui.draft=null;if(n)save();toast(n?'Attendance saved':'No changes to save');draw()}
+function chgMon(i){if(!lose()){draw();return}ui.mon=i.value||ui.mon;draw()}
+function chgP(i){if(!lose()){draw();return}ui.pid=i.value;draw()}
+function tog(k){if(!ui.cal||!ui.draft){toast('Calendar is locked. Press “Edit attendance” to change it.');return}const a=ui.draft.att,n={'':'P',P:'A',A:'H',H:''}[a[k]||''];if(n)a[k]=n;else delete a[k];draw()}
+function allP(){if(!ui.draft)return;const [y,m]=ui.mon.split('-').map(Number),H=hm(),a=ui.draft.att;for(let d=1;d<=dim(y,m);d++){const k=key(y,m,d);if(!H[k]&&!a[k])a[k]='P'}draw()}
+function clr(){if(!ui.draft||!confirm('Clear all attendance marks for this person in this month? (Press Save to keep the change.)'))return;const a=ui.draft.att;Object.keys(a).forEach(k=>{if(k.slice(0,7)==ui.mon)delete a[k]});draw()}
+function saveNote(){const p=P(ui.pid),d=$('#nd').value,t=$('#nn').value.trim();if(!d)return toast('Choose a day.');const m=S.nt[p.id]=S.nt[p.id]||{};if(t)m[d]=t;else delete m[d];stamp(S.nat,p.id,d);save();toast(t?'Note saved':'Note removed');draw()}
+function editNote(d){$('#nd').value=d;$('#nn').value=S.nt[ui.pid][d];$('#nn').focus()}
+function delNote(d){delete S.nt[ui.pid][d];stamp(S.nat,ui.pid,d);save();draw()}
+function addExtra(){const p=P(ui.pid),a=+$('#xa').value,d=$('#xd').value;if(!a||a<=0||!d)return toast('Choose a day and enter an amount above zero.');const x={id:uid(),pid:p.id,date:d,amt:a,note:$('#xn').value.trim()||'Extra work'};
+ if($('#xp').checked){const q={id:uid(),pid:p.id,date:d,mon:d.slice(0,7),amt:a,note:'Extra work: '+x.note};S.pay.push(q);x.payId=q.id}
+ (S.extra=S.extra||[]).push(x);save();toast('Extra work added');draw()}
+function delExtra(id){if(!confirm('Delete this extra work entry (and its linked payment, if any)?'))return;const x=S.extra.find(z=>z.id==id);if(x&&x.payId){S.del['y:'+x.payId]=Date.now();S.pay=S.pay.filter(q=>q.id!=x.payId)}S.del['x:'+id]=Date.now();S.extra=S.extra.filter(z=>z.id!=id);save();draw()}
+function addPay(){const a=+$('#pa').value,d=$('#pd').value,m=$('#pm').value,pid=$('#pp').value;if(!a||a<=0||!d||!m)return toast('Enter the date, month and an amount above zero.');S.pay.push({id:uid(),pid,date:d,mon:m,amt:a,note:$('#pn').value.trim()});save();toast('Payment saved');draw()}
+function delPay(id){if(confirm('Delete this payment?')){S.del['y:'+id]=Date.now();S.pay=S.pay.filter(x=>x.id!=id);save();draw()}}
+function savePerson(){const n=$('#fn').value.trim(),r=$('#fr').value.trim();if(!n||!r)return toast('Enter a name and a role.');const o={name:n,role:r,basis:$('#fb').value,rate:+$('#fa').value||0,phone:$('#fp').value.trim(),payHol:$('#fh').checked,t:Date.now()};
+ if(ui.edit)Object.assign(P(ui.edit),o);else{const p=Object.assign({id:uid()},o);S.people.push(p);ui.pid=p.id}save();ui.edit=null;toast('Saved');draw()}
+function delPerson(id){if(!confirm('Remove this person and all their attendance and payment records?'))return;S.del['p:'+id]=Date.now();S.people=S.people.filter(p=>p.id!=id);delete S.att[id];delete S.nt[id];S.extra=(S.extra||[]).filter(x=>x.pid!=id);S.pay=S.pay.filter(x=>x.pid!=id);save();draw()}
+function addHol(){const d=$('#hd').value,n=$('#hn2').value.trim();if(!d||!n)return toast('Enter a date and a name.');delete S.del['h:'+d];S.hol=S.hol.filter(h=>h.date!=d);S.hol.push({date:d,name:n});save();draw()}
+function delHol(d){S.del['h:'+d]=Date.now();S.hol=S.hol.filter(h=>h.date!=d);save();draw()}
+function sundays(){const y=ui.ry;for(let m=1;m<=12;m++)for(let d=1;d<=dim(y,m);d++)if(new Date(y,m-1,d).getDay()==0){const k=key(y,m,d);if(!S.hol.some(h=>h.date==k)){delete S.del['h:'+k];S.hol.push({date:k,name:'Sunday'})}}save();draw()}
+function logo(i){const f=i.files[0];if(!f)return;const r=new FileReader;r.onload=()=>{const im=new Image;im.onload=()=>{const k=Math.min(1,240/Math.max(im.width,im.height)),c=document.createElement('canvas');c.width=im.width*k;c.height=im.height*k;c.getContext('2d').drawImage(im,0,0,c.width,c.height);S.logo=c.toDataURL('image/png');S.lbt=Date.now();save();draw()};im.onerror=()=>toast('That file is not a usable image.');im.src=r.result};r.readAsDataURL(f)}
+function txt(t,v,ta){$('#tx').innerHTML=`<p class="mut">${t}</p><textarea id="tb" rows="6" ${ta?'':'readonly'}>${esc(v)}</textarea><div class="row" style="margin-top:8px"><button class="b s" onclick="$('#tb').select();try{document.execCommand('copy');toast('Copied')}catch(e){toast('Select the text and copy it')}">Copy</button></div>`;$('#tb').select()}
+function restore(){$('#tx').innerHTML=`<p class="mut">Paste backup text, then press Restore. This replaces the current data.</p><textarea id="tb" rows="6"></textarea><div class="row" style="margin-top:8px"><button class="b s" onclick="doRestore()">Restore</button></div>`}
+function doRestore(){try{const x=JSON.parse($('#tb').value);if(!Array.isArray(x.people))throw 0;S=Object.assign(DEF(),x);save();toast('Restored');draw()}catch(e){toast('That text is not a valid backup.')}}
+let RD=null;
+function rep(){const el=$('#rep');if(!el)return;const[y,m]=ym(ui.mon),t=ui.rt,pp=ui.rp=='all'?S.people:S.people.filter(p=>p.id==ui.rp),Y=ui.ry,H=hm();let T,hd,rows,tot;
+ if(!S.people.length){el.innerHTML='<p class="empty">Add people first.</p>';return}
+ if(t=='month'){T=`Monthly statement – ${MN[m-1]} ${y}`;hd=['Name','Role','Present','Half','Absent','Holidays','Extra work','Earned','Paid','Balance'];let e=0,pd=0,xt=0;rows=pp.map(p=>{const s=stats(p,y,m);e+=s.earned;pd+=s.paid;xt+=s.ex;return[p.name,p.role,s.pr,s.hf,s.ab,s.hl,money(s.ex),money(s.earned),money(s.paid),money(s.earned-s.paid)]});tot=['Total','','','','','',money(xt),money(e),money(pd),money(e-pd)]}
+ else if(t=='year'&&ui.rp!='all'){const p=pp[0];T=`Yearly summary – ${p.name} – ${Y}`;hd=['Month','Present','Half','Absent','Holidays','Extra work','Earned','Paid','Balance','Due so far'];let e=0,pd=0,xt=0;rows=MN.map((n,i)=>{const s=stats(p,Y,i+1);e+=s.earned;pd+=s.paid;xt+=s.ex;return[n,s.pr,s.hf,s.ab,s.hl,money(s.ex),money(s.earned),money(s.paid),money(s.earned-s.paid),money(e-pd)]});tot=['Total','','','','',money(xt),money(e),money(pd),'',money(e-pd)]}
+ else if(t=='year'){T=`Yearly summary – everyone – ${Y}`;hd=['Name','Role','Days present','Days absent','Earned','Paid','Due'];let e=0,pd=0;rows=pp.map(p=>{let a=0,b=0,x=0,z=0;for(let i=1;i<=12;i++){const s=stats(p,Y,i);a+=s.pr+s.hf/2;b+=s.ab+s.hf/2;x+=s.earned;z+=s.paid}e+=x;pd+=z;return[p.name,p.role,a,b,money(x),money(z),money(x-z)]});tot=['Total','','','',money(e),money(pd),money(e-pd)]}
+ else if(t=='ledger'){T=`Payment ledger – ${ui.rp=='all'?'everyone':pp[0].name} – ${Y}`;hd=['Date','Person','For month','Note','Amount'];const L=S.pay.filter(x=>(ui.rp=='all'||x.pid==ui.rp)&&x.date.slice(0,4)==Y).sort((a,b)=>a.date.localeCompare(b.date));rows=L.map(x=>[fd(x.date),P(x.pid)?.name||'(removed)',x.mon,x.note,money(x.amt)]);tot=['Total','','','',money(L.reduce((s,x)=>s+ +x.amt,0))]}
+ else if(t=='jr'){T=`Journal – ${Y}`;hd=['Date','Category','What happened','Amount','Details'];const L=S.jr.filter(x=>x.date.slice(0,4)==Y).sort((a,b)=>a.date.localeCompare(b.date));rows=L.map(x=>[fd(x.date),x.cat,x.title,x.amt?money(x.amt):'',x.note||'']);const sm=L.reduce((s,x)=>s+(+x.amt||0),0);tot=sm?['Total','','',money(sm),'']:null}
+ else if(t=='pl'){T=`Chores and events – ${MN[m-1]} ${y}`;hd=['Date','Type','Title','Status','Note'];rows=[];const f=key(y,m,1),e=key(y,m,dim(y,m));S.pl.forEach(it=>occ(it,f,e).forEach(d=>rows.push([d,ptype(it).n,it.title,ptype(it).k?((it.dn||{})[d]?'Done':'Pending'):'',it.note||''])));rows.sort((a,b)=>a[0].localeCompare(b[0])||a[2].localeCompare(b[2]));rows.forEach(r=>r[0]=fd(r[0]));tot=null}
+ else if(t=='notes'){T=`Attendance notes – ${ui.rp=='all'?'everyone':pp[0].name} – ${Y}`;hd=['Date','Person','Status','Note'];rows=[];pp.forEach(p=>Object.entries(S.nt[p.id]||{}).forEach(([d,x])=>{if(x&&d.slice(0,4)==Y)rows.push([d,p.name,({P:'Present',A:'Absent',H:'Half day'})[(S.att[p.id]||{})[d]]||(H[d]?'Holiday':'Not marked'),x])}));rows.sort((a,b)=>a[0].localeCompare(b[0])||a[1].localeCompare(b[1]));rows.forEach(r=>r[0]=fd(r[0]));tot=null}
+ else{const p=pp[0];T=`Attendance register – ${p.name} – ${Y}`;hd=['Month',...Array.from({length:31},(_,i)=>i+1)];const a=S.att[p.id]||{};rows=MN.map((n,i)=>[n,...Array.from({length:31},(_,d)=>{if(d+1>dim(Y,i+1))return'';const k=key(Y,i+1,d+1),v=a[k];return v=='P'?'P':v=='A'?'A':v=='H'?'½':H[k]?'H':'–'})]);tot=null}
+ RD={T,hd,rows,tot};
+ el.innerHTML=`<div class="rh">${S.logo?`<img src="${S.logo}" alt="">`:''}<b>${esc(S.label)}</b></div><h2>${esc(T)}</h2><div class="tw"><table><tr>${hd.map((h,i)=>`<th class="${i>=hd.length-3&&t!='reg'&&t!='notes'&&t!='pl'&&t!='jr'?'n':''}">${esc(h)}</th>`).join('')}</tr>${rows.map(r=>`<tr>${r.map((c,i)=>`<td class="${i>=hd.length-3&&t!='reg'&&t!='notes'&&t!='pl'&&t!='jr'?'n':''}">${esc(c)}</td>`).join('')}</tr>`).join('')}${tot?`<tr class="t">${tot.map((c,i)=>`<td class="${i>=hd.length-3?'n':''}">${esc(c)}</td>`).join('')}</tr>`:''}</table></div>
+ ${t=='reg'?'<p class="mut">P present, A absent, ½ half day, H holiday, – not marked.</p>':''}<div class="row noprint" style="margin-top:12px"><button class="b" onclick="window.print()">Print or save as PDF</button><button class="b g" onclick="csv()">Show as CSV</button></div><div id="tx" class="noprint"></div>`}
+function csv(){const q=c=>'"'+String(c).replace(/"/g,'""')+'"',a=[RD.T,RD.hd,...RD.rows];if(RD.tot)a.push(RD.tot);txt('Copy this text and paste it into Excel or Google Sheets.',a.map(r=>[].concat(r).map(q).join(',')).join('\n'))}
+look();draw();boot2();if(on()){setSt('Connecting…');pull();setInterval(pull,20000);document.addEventListener('visibilitychange',()=>{if(!document.hidden)pull()})}else setSt('This device only');
+</script><script>
+let DIP=null;
+window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();DIP=e;const b=document.getElementById('ib');if(b)b.hidden=false});
+window.addEventListener('appinstalled',()=>{DIP=null;const b=document.getElementById('ib');if(b)b.hidden=true});
+async function installApp(){if(!DIP)return;DIP.prompt();try{await DIP.userChoice}catch(e){}DIP=null;document.getElementById('ib').hidden=true}
+if('serviceWorker' in navigator&&location.protocol!=='file:')window.addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));
+</script><script>
+/* ===== MONEY MODULE: data, formats, helpers ===== */
+const MK=K+'-money',MFMT='help-register-money';
+const MDEF=()=>({v:1,nx:1,acc:[],cat:[],mv:[],bud:[],pf:{cur:'₹',cpos:'b',dec:2,grp:'in',df:'dd-mm-yyyy',tf:'12',fw:1,allName:'All Accounts',csort:'use',
+ btn:{pos:'br',shape:'pill',exp:'#d92d20',inc:'#15803d',size:'m',order:'ei',lab:1},
+ cards:[['bal',1],['btn',1],['pie',1],['last',1],['bar',1],['bud',1]],lk:{pay:1,jr:1,acc:'',from:''}}});
+function mMerge(r){const D=MDEF(),o=Object.assign({},D,r),p=r.pf||{};o.pf=Object.assign({},D.pf,p);o.pf.btn=Object.assign({},D.pf.btn,p.btn);o.pf.lk=Object.assign({},D.pf.lk,p.lk);
+ const have=new Set((o.pf.cards||[]).map(c=>c[0]));D.pf.cards.forEach(c=>{if(!have.has(c[0]))o.pf.cards.push(c.slice())});return o}
+let M;try{const r=JSON.parse(localStorage.getItem(MK)||'null');M=r?mMerge(r):MDEF()}catch(e){M=MDEF()}
+let MV=0,mT,mDirty=false;
+function mSave(){MV++;mDirty=true;if(window.mGdMark)mGdMark();clearTimeout(mT);mT=setTimeout(mFlush,300)}
+function mFlush(){if(!mDirty)return;try{localStorage.setItem(MK,JSON.stringify(M));mDirty=false}catch(e){toast('Could not save money data: browser storage is full or blocked.')}}
+window.addEventListener('pagehide',mFlush);
+
+/* ---- formats ---- */
+const MDFS=['dd-mm-yyyy','dd/mm/yyyy','dd.mm.yyyy','dd MMM yyyy','mm-dd-yyyy','mm/dd/yyyy','yyyy-mm-dd'],
+ WDN=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+function mFmt(n,dec){const d=dec==null?M.pf.dec:dec;n=+n||0;const s=Math.abs(n).toFixed(d),neg=n<0&&+s!=0;let[i,f]=s.split('.');
+ if(M.pf.grp=='in'&&i.length>3)i=i.slice(0,-3).replace(/\B(?=(\d{2})+(?!\d))/g,',')+','+i.slice(-3);else if(M.pf.grp=='int')i=i.replace(/\B(?=(\d{3})+(?!\d))/g,',');
+ const num=i+(f?'.'+f:''),c=M.pf.cur,b=M.pf.cpos=='a'?num+' '+c:c+num;return(neg?'−':'')+b}
+const msg=(n,dec)=>(n>0?'+':'')+mFmt(n,dec);
+function mFd(s){if(!s)return'';const[y,m,d]=s.split('-');return M.pf.df.replace(/yyyy|dd|mm|MMM/g,t=>t=='yyyy'?y:t=='dd'?d:t=='mm'?m:MN[+m-1])}
+function mParseD(str){str=String(str||'').trim();if(!str)return'';const order=(M.pf.df.match(/yyyy|dd|mm|MMM/g)||[]),parts=str.split(/[^0-9A-Za-z]+/).filter(Boolean);
+ if(parts.length!=3){const p3=str.replace(/\D/g,'');if(/^\d{8}$/.test(p3)&&!/[A-Za-z]/.test(str)){parts.length=0;let k=0;order.forEach(t=>{const w=t=='yyyy'?4:2;parts.push(p3.slice(k,k+w));k+=w})}else return''}
+ let y,m,d;order.forEach((t,i)=>{const v=parts[i];if(t=='yyyy')y=+v;else if(t=='dd')d=+v;else if(t=='mm')m=+v;else m=MN.findIndex(n=>n.toLowerCase()==v.slice(0,3).toLowerCase())+1});
+ if(y<100)y+=2000;const dt=new Date(y,m-1,d);if(!y||!m||!d||dt.getFullYear()!=y||dt.getMonth()!=m-1||dt.getDate()!=d)return'';return y+'-'+pad(m)+'-'+pad(d)}
+function mFt(t){if(!t)return'';let[h,m]=t.split(':').map(Number);if(M.pf.tf=='24')return pad(h)+':'+pad(m);const ap=h>=12?'pm':'am';h=h%12||12;return pad(h)+':'+pad(m)+' '+ap}
+function mParseT(s){s=String(s||'').trim().toLowerCase();if(!s)return'';const x=s.match(/^(\d{1,2})(?:[:.](\d{2}))?\s*([ap])?\.?m?\.?$/);if(!x)return'';let h=+x[1],m=+(x[2]||0);if(m>59)return'';if(x[3]){if(h<1||h>12)return'';h=h%12+(x[3]=='p'?12:0)}else if(h>23)return'';return pad(h)+':'+pad(m)}
+const mTd=()=>iso(new Date()),mNow=()=>{const d=new Date();return pad(d.getHours())+':'+pad(d.getMinutes())};
+function iso(d){return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate())}
+const mWk=()=>+M.pf.fw;
+function mMonthName(ym2){const[y,m]=ym2.split('-');return MN[+m-1]+' '+y}
+function mAddM(ym2,n){const[y,m]=ym2.split('-').map(Number),d=new Date(y,m-1+n,1);return d.getFullYear()+'-'+pad(d.getMonth()+1)}
+function mRange(pre,f,t){const n=new Date(),y=n.getFullYear(),m=n.getMonth(),d=n.getDate(),D=(a,b,c)=>iso(new Date(a,b,c)),off=(n.getDay()-mWk()+7)%7;
+ switch(pre){case'tw':return[D(y,m,d-off),D(y,m,d-off+6)];case'lw':return[D(y,m,d-off-7),D(y,m,d-off-1)];case'tm':return[D(y,m,1),D(y,m+1,0)];case'lm':return[D(y,m-1,1),D(y,m,0)];
+  case'l30':return[D(y,m,d-29),D(y,m,d)];case'l12':return[D(y,m-11,1),D(y,m+1,0)];case'tfy':{const s=m>=3?y:y-1;return[D(s,3,1),D(s+1,2,31)]}case'lfy':{const s=(m>=3?y:y-1)-1;return[D(s,3,1),D(s+1,2,31)]}
+  case'ty':return[D(y,0,1),D(y,11,31)];case'ly':return[D(y-1,0,1),D(y-1,11,31)];case'all':return['',''];default:return[f||'',t||'']}}
+const PRESETS=[['tw','This week'],['lw','Last week'],['tm','This month'],['lm','Last month'],['l30','Last 30 days'],['l12','Last 12 months'],['tfy','This financial year (Apr–Mar)'],['lfy','Last financial year'],['ty','This calendar year'],['ly','Last calendar year'],['all','All dates'],['cu','Custom dates']];
+function mRL(from,to){return!from&&!to?'All dates':(from?mFd(from):'start')+' to '+(to?mFd(to):'today')}
+
+/* ---- lookups ---- */
+const mA=id=>M.acc.find(a=>a.id==id)||{id,name:'(removed)',icon:'❔',color:'#64748b',ini:0};
+function mC(id){id=String(id);if(id=='@pay')return{id,name:'Household help',icon:'🧹',s:'-',vt:1};if(id.indexOf('@jr:')==0)return{id,name:'Journal – '+id.slice(4),icon:'📓',s:'-',vt:1};return M.cat.find(c=>c.id==id)||{id,name:'(deleted category)',icon:'❔',s:'-'}}
+const mAllName=()=>M.pf.allName||'All Accounts';
+const mAccName=sel=>sel=='all'?mAllName():mA(sel).name;
+function mDefAcc(){return M.pf.lk.acc&&M.acc.some(a=>a.id==M.pf.lk.acc)?M.pf.lk.acc:(M.acc[0]||{}).id}
+
+/* ---- records, including entries linked from the Help Register ---- */
+function mLinked(){const L=M.pf.lk,out=[],a=mDefAcc();if(!a)return out;
+ if(L.pay)(S.pay||[]).forEach(p=>{if(!p.date||!(+p.amt>0)||(L.from&&p.date<L.from))return;const pe=S.people.find(x=>x.id==p.pid);out.push({id:'p'+p.id,a,c:'@pay',m:+p.amt,s:'-',d:p.date,t:'',n:(pe?pe.name:'Helper')+(p.note?' – '+p.note:''),ok:1,lk:'pay'})});
+ if(L.jr)(S.jr||[]).forEach(j=>{if(!j.date||!(+j.amt>0)||(L.from&&j.date<L.from))return;out.push({id:'j'+j.id,a,c:'@jr:'+(j.cat||'Other'),m:+j.amt,s:'-',d:j.date,t:'',n:j.title||'',ok:1,lk:'jr'})});return out}
+let mvc=null,mvk='';
+function mvAll(){const k=MV+'|'+(S.ts||0)+'|'+JSON.stringify(M.pf.lk)+'|'+M.acc.length;if(k!==mvk){mvc=M.mv.concat(mLinked());mvc.sort((x,y)=>(y.d+(y.t||'')).localeCompare(x.d+(x.t||''))||(String(y.id)<String(x.id)?-1:1));mvk=k}return mvc}
+const mScope=sel=>new Set(sel=='all'?M.acc.filter(a=>a.inc!==0).map(a=>a.id):[sel]);
+function mFilter(f){const set=mScope(f.acc||'all'),q=(f.q||'').trim().toLowerCase();
+ return mvAll().filter(r=>set.has(r.a)&&(!f.from||r.d>=f.from)&&(!f.to||r.d<=f.to)&&(!f.type||f.type=='all'||r.s==f.type)&&(!f.cat||f.cat=='all'||r.c==f.cat)&&(!q||(mC(r.c).name+' '+(r.n||'')+' '+mA(r.a).name+' '+r.m).toLowerCase().includes(q)))}
+function mSum(recs){let i=0,e=0,ni=0,ne=0;for(const r of recs){if(r.ok===0)continue;if(r.s=='+'){i+=r.m;ni++}else{e+=r.m;ne++}}return{i,e,ni,ne,n:i-e}}
+function mOpen(sel,before){const set=mScope(sel);let b=0;M.acc.forEach(a=>{if(set.has(a.id))b+=+a.ini||0});mvAll().forEach(r=>{if(r.ok!==0&&set.has(r.a)&&r.d<before)b+=r.s=='+'?r.m:-r.m});return b}
+function mByCat(recs){const m=new Map();recs.forEach(r=>{if(r.ok===0)return;const o=m.get(r.c)||{c:r.c,v:0,n:0};o.v+=r.m;o.n++;m.set(r.c,o)});return[...m.values()].sort((a,b)=>b.v-a.v)}
+function mUse(){const m={};M.mv.forEach(r=>m[r.c]=(m[r.c]||0)+1);return m}
+function mCats(sign){const u=mUse(),l=M.cat.filter(c=>c.s==sign);return M.pf.csort=='az'?l.sort((a,b)=>a.name.localeCompare(b.name)):l.sort((a,b)=>(u[b.id]||0)-(u[a.id]||0)||a.name.localeCompare(b.name))}
+
+/* ---- import / export ---- */
+function mExport(){const ai=new Map(M.acc.map((a,i)=>[a.id,i])),ci=new Map(M.cat.map((c,i)=>[c.id,i]));
+ return{format:MFMT,v:1,exported:new Date().toISOString(),accounts:M.acc.map(a=>Object.assign({name:a.name,detail:a.detail||'',icon:a.icon,color:a.color,ini:a.ini||0,inc:a.inc===0?0:1},a.svg?{svg:a.svg}:{})),
+ categories:M.cat.map(c=>Object.assign({name:c.name,sign:c.s,icon:c.icon},c.svg?{svg:c.svg}:{})),
+ records:M.mv.map(r=>{const o=[ai.get(r.a),ci.get(r.c),r.m,r.s,r.d,r.t||'',r.n||''];if(r.ok===0||r.pic)o.push(r.ok===0?0:1,r.pic||'');return o}),
+ budgets:M.bud.map(b=>[ci.get(b.c),b.amt]),prefs:M.pf}}
+function mImport(x,mode){if(!x||x.format!==MFMT||!Array.isArray(x.records))throw new Error('This is not an expense data file. Use the file named expense-data.json, or a backup made from the Money settings.');
+ if(mode=='replace'){M.acc=[];M.cat=[];M.mv=[];M.bud=[];M.nx=1}
+ const am=[],cm=[];let added=0,skipped=0;
+ (x.accounts||[]).forEach((a,i)=>{let e=M.acc.find(z=>z.name.toLowerCase()==String(a.name).toLowerCase());if(!e){e={id:'a'+M.nx++,name:a.name,detail:a.detail||'',icon:a.icon||'🏦',svg:a.svg||undefined,color:a.color||'#334155',ini:+a.ini||0,inc:a.inc===0?0:1};M.acc.push(e)}am[i]=e.id});
+ (x.categories||[]).forEach((c,i)=>{let e=M.cat.find(z=>z.name==c.name&&z.s==c.sign);if(!e){e={id:'c'+M.nx++,name:c.name,s:c.sign,icon:c.icon||'📦',svg:c.svg||undefined};M.cat.push(e)}cm[i]=e.id});
+ const seen=new Set();if(mode!='replace')M.mv.forEach(r=>seen.add([r.a,r.c,r.m,r.s,r.d,r.t,r.n].join('|')));
+ (x.records||[]).forEach(r=>{const o={id:M.nx++,a:am[r[0]],c:cm[r[1]],m:+r[2],s:r[3],d:r[4],t:r[5]||'',n:r[6]||''};if(!o.a||!o.c||!(o.m>0))return;
+  if(r.length>7){if(r[7]===0)o.ok=0;if(r[8])o.pic=r[8]}
+  const k=[o.a,o.c,o.m,o.s,o.d,o.t,o.n].join('|');if(mode!='replace'&&seen.has(k)){skipped++;return}seen.add(k);M.mv.push(o);added++});
+ (x.budgets||[]).forEach(b=>{const c=cm[b[0]];if(c&&!M.bud.some(z=>z.c==c))M.bud.push({c,amt:+b[1]})});
+ if(mode=='replace'&&x.prefs&&x.prefs.df){M.pf=mMerge({pf:x.prefs}).pf}
+ mSave();mFlush();return{added,skipped}}
+function mDefaults(){const A=[['Cash','Cash in hand','💵','#15803d'],['Debit Card','','💳','#1d4ed8'],['Bank Account','','🏦','#6d28d9']],
+ E=[['Groceries','🛒'],['Food & Dining','🍽️'],['Transport','🚌'],['Fuel','⛽'],['Rent','🏠'],['Electricity','💡'],['Water','💧'],['Mobile & Internet','📱'],['Medical','🏥'],['Education','🏫'],['Shopping','🛍️'],['Entertainment','🎬'],['Travel','🧳'],['Insurance','🛡️'],['Loan EMI','🏦'],['Gifts & Charity','🎁'],['Personal Care','💇'],['Miscellaneous','📦']],
+ I=[['Salary','💼'],['Business','🧑‍💼'],['Interest','🏦'],['Gift','🎁'],['Refund','🧾'],['Other income','💰']];
+ A.forEach(a=>M.acc.push({id:'a'+M.nx++,name:a[0],detail:a[1],icon:a[2],color:a[3],ini:0,inc:1}));E.forEach(c=>M.cat.push({id:'c'+M.nx++,name:c[0],s:'-',icon:c[1]}));I.forEach(c=>M.cat.push({id:'c'+M.nx++,name:c[0],s:'+',icon:c[1]}));mSave()}
+
+const EMODB={"Faces":"😀|grinning face\n😁|grinning face with smiling eyes\n😂|face with tears of joy\n😃|smiling face with open mouth\n😄|smiling face with open mouth and smiling eyes\n😅|smiling face with open mouth and cold sweat\n😆|smiling face with open mouth and tightly-closed eyes\n😇|smiling face with halo\n😈|smiling face with horns\n😉|winking face\n😊|smiling face with smiling eyes\n😋|face savouring delicious food\n😌|relieved face\n😍|smiling face with heart-shaped eyes\n😎|smiling face with sunglasses\n😏|smirking face\n😐|neutral face\n😑|expressionless face\n😒|unamused face\n😓|face with cold sweat\n😔|pensive face\n😕|confused face\n😖|confounded face\n😗|kissing face\n😘|face throwing a kiss\n😙|kissing face with smiling eyes\n😚|kissing face with closed eyes\n😛|face with stuck-out tongue\n😜|face with stuck-out tongue and winking eye\n😝|face with stuck-out tongue and tightly-closed eyes\n😞|disappointed face\n😟|worried face\n😠|angry face\n😡|pouting face\n😢|crying face\n😣|persevering face\n😤|face with look of triumph\n😥|disappointed but relieved face\n😦|frowning face with open mouth\n😧|anguished face\n😨|fearful face\n😩|weary face\n😪|sleepy face\n😫|tired face\n😬|grimacing face\n😭|loudly crying face\n😮|face with open mouth\n😯|hushed face\n😰|face with open mouth and cold sweat\n😱|face screaming in fear\n😲|astonished face\n😳|flushed face\n😴|sleeping face\n😵|dizzy face\n😶|face without mouth\n😷|face with medical mask\n😸|grinning cat face with smiling eyes\n😹|cat face with tears of joy\n😺|smiling cat face with open mouth\n😻|smiling cat face with heart-shaped eyes\n😼|cat face with wry smile\n😽|kissing cat face with closed eyes\n😾|pouting cat face\n😿|crying cat face\n🙀|weary cat face\n🙁|slightly frowning face\n🙂|slightly smiling face\n🙃|upside-down face\n🙄|face with rolling eyes\n🙅|face with no good gesture\n🙆|face with ok gesture\n🙇|person bowing deeply\n🙈|see-no-evil monkey\n🙉|hear-no-evil monkey\n🙊|speak-no-evil monkey\n🙋|happy person raising one hand\n🙌|person raising both hands in celebration\n🙍|person frowning\n🙎|person with pouting face\n🙏|person with folded hands\n🤐|zipper-mouth face\n🤑|money-mouth face\n🤒|face with thermometer\n🤓|nerd face\n🤔|thinking face\n🤕|face with head-bandage\n🤖|robot face\n🤗|hugging face\n🤘|sign of the horns\n🤙|call me hand\n🤚|raised back of hand\n🤛|left-facing fist\n🤜|right-facing fist\n🤝|handshake\n🤞|hand with index and middle fingers crossed\n🤟|i love you hand sign\n🤠|face with cowboy hat\n🤡|clown face\n🤢|nauseated face\n🤣|rolling on the floor laughing\n🤤|drooling face\n🤥|lying face\n🤦|face palm\n🤧|sneezing face\n🤨|face with one eyebrow raised\n🤩|grinning face with star eyes\n🤪|grinning face with one large and one small eye\n🤫|face with finger covering closed lips\n🤬|serious face with symbols covering mouth\n🤭|smiling face with smiling eyes and hand covering mouth\n🤮|face with open mouth vomiting\n🤯|shocked face with exploding head\n🥰|smiling face with smiling eyes and three hearts\n🥱|yawning face\n🥲|smiling face with tear\n🥳|face with party horn and party hat\n🥴|face with uneven eyes and wavy mouth\n🥵|overheated face\n🥶|freezing face\n🥷|ninja\n🥸|disguised face\n🥹|face holding back tears\n🥺|face with pleading eyes\n🫠|melting face\n🫡|saluting face\n🫢|face with open eyes and hand over mouth\n🫣|face with peeking eye\n🫤|face with diagonal mouth\n🫥|dotted line face\n🫦|biting lip\n🫧|bubbles\n🫨|shaking face","People":"👀|eyes\n👁️|eye\n👂|ear\n👃|nose\n👄|mouth\n👅|tongue\n👆|white up pointing backhand index\n👇|white down pointing backhand index\n👈|white left pointing backhand index\n👉|white right pointing backhand index\n👊|fisted hand sign\n👋|waving hand sign\n👌|ok hand sign\n👍|thumbs up sign\n👎|thumbs down sign\n👏|clapping hands sign\n👐|open hands sign\n👑|crown\n👒|womans hat\n👓|eyeglasses\n👔|necktie\n👕|t-shirt\n👖|jeans\n👗|dress\n👘|kimono\n👙|bikini\n👚|womans clothes\n👛|purse\n👜|handbag\n👝|pouch\n👞|mans shoe\n👟|athletic shoe\n👠|high-heeled shoe\n👡|womans sandal\n👢|womans boots\n👣|footprints\n👤|bust in silhouette\n👥|busts in silhouette\n👦|boy\n👧|girl\n👨|man\n👩|woman\n👪|family\n👫|man and woman holding hands\n👬|two men holding hands\n👭|two women holding hands\n👮|police officer\n👯|woman with bunny ears\n👰|bride with veil\n👱|person with blond hair\n👲|man with gua pi mao\n👳|man with turban\n👴|older man\n👵|older woman\n👶|baby\n👷|construction worker\n👸|princess\n👹|japanese ogre\n👺|japanese goblin\n👻|ghost\n👼|baby angel\n👽|extraterrestrial alien\n👾|alien monster\n👿|imp\n💀|skull\n💁|information desk person\n💂|guardsman\n💃|dancer\n💄|lipstick\n💅|nail polish\n💆|face massage\n💇|haircut\n🕴️|man in business suit levitating\n🕵️|sleuth or spy\n🕶️|dark sunglasses\n🕷️|spider\n🕸️|spider web\n🕹️|joystick\n🕺|man dancing\n🤰|pregnant woman\n🤱|breast-feeding\n🤲|palms up together\n🤳|selfie\n🤴|prince\n🤵|man in tuxedo\n🤶|mother christmas\n🤷|shrug\n🤸|person doing cartwheel\n🤹|juggling\n🤺|fencer\n🧍|standing person\n🧎|kneeling person\n🧏|deaf person\n🧐|face with monocle\n🧑|adult\n🧒|child\n🧓|older adult\n🧔|bearded person\n🧕|person with headscarf\n🧖|person in steamy room\n🧗|person climbing\n🧘|person in lotus position\n🧙|mage\n🧚|fairy\n🧛|vampire\n🧜|merperson\n🧝|elf\n🧞|genie\n🧟|zombie","Money & finance":"🏦|bank\n💰|money bag\n💱|currency exchange\n💲|heavy dollar sign\n💳|credit card\n💴|banknote with yen sign\n💵|banknote with dollar sign\n💶|banknote with euro sign\n💷|banknote with pound sign\n💸|money with wings\n💹|chart with upwards trend and yen sign\n🧾|receipt","Home & places":"🏔️|snow capped mountain\n🏕️|camping\n🏖️|beach with umbrella\n🏗️|building construction\n🏘️|house buildings\n🏙️|cityscape\n🏚️|derelict house building\n🏛️|classical building\n🏜️|desert\n🏝️|desert island\n🏞️|national park\n🏟️|stadium\n🏠|house building\n🏡|house with garden\n🏢|office building\n🏣|japanese post office\n🏤|european post office\n🏥|hospital\n🏧|automated teller machine\n🏨|hotel\n🏩|love hotel\n🏪|convenience store\n🏫|school\n🏬|department store\n🏭|factory\n🏮|izakaya lantern\n🏯|japanese castle\n🏰|european castle\n🗺️|world map\n🗻|mount fuji\n🗼|tokyo tower\n🗽|statue of liberty\n🗾|silhouette of japan\n🗿|moyai\n🚽|toilet\n🚾|water closet\n🚿|shower\n🛀|bath\n🛁|bathtub\n🛂|passport control\n🛃|customs\n🛄|baggage claim\n🛅|left luggage\n🛋️|couch and lamp\n🛌|sleeping accommodation\n🛍️|shopping bags\n🛎️|bellhop bell\n🛏️|bed\n🛖|hut\n🛗|elevator","Transport":"🚀|rocket\n🚁|helicopter\n🚂|steam locomotive\n🚃|railway car\n🚄|high-speed train\n🚅|high-speed train with bullet nose\n🚆|train\n🚇|metro\n🚈|light rail\n🚉|station\n🚊|tram\n🚋|tram car\n🚌|bus\n🚍|oncoming bus\n🚎|trolleybus\n🚏|bus stop\n🚐|minibus\n🚑|ambulance\n🚒|fire engine\n🚓|police car\n🚔|oncoming police car\n🚕|taxi\n🚖|oncoming taxi\n🚗|automobile\n🚘|oncoming automobile\n🚙|recreational vehicle\n🚚|delivery truck\n🚛|articulated lorry\n🚜|tractor\n🚝|monorail\n🚞|mountain railway\n🚟|suspension railway\n🚠|mountain cableway\n🚡|aerial tramway\n🚢|ship\n🚣|rowboat\n🚤|speedboat\n🚥|horizontal traffic light\n🚦|vertical traffic light\n🚧|construction sign\n🚨|police cars revolving light\n🚩|triangular flag on post\n🚪|door\n🚫|no entry sign\n🚬|smoking symbol\n🚭|no smoking symbol\n🚮|put litter in its place symbol\n🚯|do not litter symbol\n🚰|potable water symbol\n🚱|non-potable water symbol\n🚲|bicycle\n🚳|no bicycles\n🚴|bicyclist\n🚵|mountain bicyclist\n🚶|pedestrian\n🚷|no pedestrians\n🚸|children crossing\n🚹|mens symbol\n🚺|womens symbol\n🚻|restroom\n🚼|baby symbol\n🛐|place of worship\n🛑|octagonal sign\n🛒|shopping trolley\n🛕|hindu temple\n🛞|wheel\n🛟|ring buoy\n🛠️|hammer and wrench\n🛡️|shield\n🛢️|oil drum\n🛣️|motorway\n🛤️|railway track\n🛥️|motor boat\n🛩️|small airplane\n🛫|airplane departure\n🛬|airplane arriving\n🛰️|satellite\n🛳️|passenger ship\n🛴|scooter\n🛵|motor scooter\n🛶|canoe\n🛷|sled\n🛸|flying saucer\n🛹|skateboard\n🛺|auto rickshaw\n🛻|pickup truck\n🛼|roller skate","Food & drink":"🌭|hot dog\n🌮|taco\n🌯|burrito\n🌰|chestnut\n🌱|seedling\n🌲|evergreen tree\n🌳|deciduous tree\n🌴|palm tree\n🌵|cactus\n🌶️|hot pepper\n🌷|tulip\n🌸|cherry blossom\n🌹|rose\n🌺|hibiscus\n🌻|sunflower\n🌼|blossom\n🌽|ear of maize\n🌾|ear of rice\n🌿|herb\n🍀|four leaf clover\n🍁|maple leaf\n🍂|fallen leaf\n🍃|leaf fluttering in wind\n🍄|mushroom\n🍅|tomato\n🍆|aubergine\n🍇|grapes\n🍈|melon\n🍉|watermelon\n🍊|tangerine\n🍋|lemon\n🍌|banana\n🍍|pineapple\n🍎|red apple\n🍏|green apple\n🍐|pear\n🍑|peach\n🍒|cherries\n🍓|strawberry\n🍔|hamburger\n🍕|slice of pizza\n🍖|meat on bone\n🍗|poultry leg\n🍘|rice cracker\n🍙|rice ball\n🍚|cooked rice\n🍛|curry and rice\n🍜|steaming bowl\n🍝|spaghetti\n🍞|bread\n🍟|french fries\n🍠|roasted sweet potato\n🍡|dango\n🍢|oden\n🍣|sushi\n🍤|fried shrimp\n🍥|fish cake with swirl design\n🍦|soft ice cream\n🍧|shaved ice\n🍨|ice cream\n🍩|doughnut\n🍪|cookie\n🍫|chocolate bar\n🍬|candy\n🍭|lollipop\n🍮|custard\n🍯|honey pot\n🍰|shortcake\n🍱|bento box\n🍲|pot of food\n🍳|cooking\n🍴|fork and knife\n🍵|teacup without handle\n🍶|sake bottle and cup\n🍷|wine glass\n🍸|cocktail glass\n🍹|tropical drink\n🍺|beer mug\n🍻|clinking beer mugs\n🍼|baby bottle\n🍽️|fork and knife with plate\n🍾|bottle with popping cork\n🍿|popcorn\n🥐|croissant\n🥑|avocado\n🥒|cucumber\n🥓|bacon\n🥔|potato\n🥕|carrot\n🥖|baguette bread\n🥗|green salad\n🥘|shallow pan of food\n🥙|stuffed flatbread\n🥚|egg\n🥛|glass of milk\n🥜|peanuts\n🥝|kiwifruit\n🥞|pancakes\n🥟|dumpling\n🥠|fortune cookie\n🥡|takeout box\n🥢|chopsticks\n🥣|bowl with spoon\n🥤|cup with straw\n🥥|coconut\n🥦|broccoli\n🥧|pie\n🥨|pretzel\n🥩|cut of meat\n🥪|sandwich\n🥫|canned food\n🥬|leafy green\n🥭|mango\n🥮|moon cake\n🥯|bagel\n🧀|cheese wedge\n🧁|cupcake\n🧂|salt shaker\n🧃|beverage box\n🧄|garlic\n🧅|onion\n🧆|falafel\n🧇|waffle\n🧈|butter\n🧉|mate drink\n🧊|ice cube\n🧋|bubble tea\n🫐|blueberries\n🫑|bell pepper\n🫒|olive\n🫓|flatbread\n🫔|tamale\n🫕|fondue\n🫖|teapot\n🫗|pouring liquid\n🫘|beans\n🫙|jar\n🫚|ginger root\n🫛|pea pod","Animals":"🐀|rat\n🐁|mouse\n🐂|ox\n🐃|water buffalo\n🐄|cow\n🐅|tiger\n🐆|leopard\n🐇|rabbit\n🐈|cat\n🐉|dragon\n🐊|crocodile\n🐋|whale\n🐌|snail\n🐍|snake\n🐎|horse\n🐏|ram\n🐐|goat\n🐑|sheep\n🐒|monkey\n🐓|rooster\n🐔|chicken\n🐕|dog\n🐖|pig\n🐗|boar\n🐘|elephant\n🐙|octopus\n🐚|spiral shell\n🐛|bug\n🐜|ant\n🐝|honeybee\n🐞|lady beetle\n🐟|fish\n🐠|tropical fish\n🐡|blowfish\n🐢|turtle\n🐣|hatching chick\n🐤|baby chick\n🐥|front-facing baby chick\n🐦|bird\n🐧|penguin\n🐨|koala\n🐩|poodle\n🐪|dromedary camel\n🐫|bactrian camel\n🐬|dolphin\n🐭|mouse face\n🐮|cow face\n🐯|tiger face\n🐰|rabbit face\n🐱|cat face\n🐲|dragon face\n🐳|spouting whale\n🐴|horse face\n🐵|monkey face\n🐶|dog face\n🐷|pig face\n🐸|frog face\n🐹|hamster face\n🐺|wolf face\n🐻|bear face\n🐼|panda face\n🐽|pig nose\n🐾|paw prints\n🐿️|chipmunk\n🦀|crab\n🦁|lion face\n🦂|scorpion\n🦃|turkey\n🦄|unicorn face\n🦅|eagle\n🦆|duck\n🦇|bat\n🦈|shark\n🦉|owl\n🦊|fox face\n🦋|butterfly\n🦌|deer\n🦍|gorilla\n🦎|lizard\n🦏|rhinoceros\n🦐|shrimp\n🦑|squid\n🦒|giraffe face\n🦓|zebra face\n🦔|hedgehog\n🦕|sauropod\n🦖|t-rex\n🦗|cricket\n🦘|kangaroo\n🦙|llama\n🦚|peacock\n🦛|hippopotamus\n🦜|parrot\n🦝|raccoon\n🦞|lobster\n🦟|mosquito\n🦠|microbe\n🦡|badger\n🦢|swan\n🦣|mammoth\n🦤|dodo\n🦥|sloth\n🦦|otter\n🦧|orangutan\n🦨|skunk\n🦩|flamingo\n🦪|oyster\n🦫|beaver\n🦬|bison\n🦭|seal\n🦮|guide dog\n🪰|fly\n🪱|worm\n🪲|beetle\n🪳|cockroach\n🪴|potted plant\n🪵|wood\n🪶|feather\n🪷|lotus\n🪸|coral\n🪹|empty nest\n🪺|nest with eggs\n🪻|hyacinth\n🪼|jellyfish\n🪽|wing\n🪿|goose","Nature & weather":"🌀|cyclone\n🌁|foggy\n🌂|closed umbrella\n🌃|night with stars\n🌄|sunrise over mountains\n🌅|sunrise\n🌆|cityscape at dusk\n🌇|sunset over buildings\n🌈|rainbow\n🌉|bridge at night\n🌊|water wave\n🌋|volcano\n🌌|milky way\n🌍|earth globe europe-africa\n🌎|earth globe americas\n🌏|earth globe asia-australia\n🌐|globe with meridians\n🌑|new moon symbol\n🌒|waxing crescent moon symbol\n🌓|first quarter moon symbol\n🌔|waxing gibbous moon symbol\n🌕|full moon symbol\n🌖|waning gibbous moon symbol\n🌗|last quarter moon symbol\n🌘|waning crescent moon symbol\n🌙|crescent moon\n🌚|new moon with face\n🌛|first quarter moon with face\n🌜|last quarter moon with face\n🌝|full moon with face\n🌞|sun with face\n🌟|glowing star\n🌠|shooting star\n🌡️|thermometer\n🌤️|white sun with small cloud\n🌥️|white sun behind cloud\n🌦️|white sun behind cloud with rain\n🌧️|cloud with rain\n🌨️|cloud with snow\n🌩️|cloud with lightning\n🌪️|cloud with tornado\n🌫️|fog\n🌬️|wind blowing face\n💐|bouquet","Activities & sport":"🎀|ribbon\n🎁|wrapped present\n🎂|birthday cake\n🎃|jack-o-lantern\n🎄|christmas tree\n🎅|father christmas\n🎆|fireworks\n🎇|firework sparkler\n🎈|balloon\n🎉|party popper\n🎊|confetti ball\n🎋|tanabata tree\n🎌|crossed flags\n🎍|pine decoration\n🎎|japanese dolls\n🎏|carp streamer\n🎐|wind chime\n🎑|moon viewing ceremony\n🎒|school satchel\n🎓|graduation cap\n🎖️|military medal\n🎗️|reminder ribbon\n🎙️|studio microphone\n🎚️|level slider\n🎛️|control knobs\n🎞️|film frames\n🎟️|admission tickets\n🎠|carousel horse\n🎡|ferris wheel\n🎢|roller coaster\n🎣|fishing pole and fish\n🎤|microphone\n🎥|movie camera\n🎦|cinema\n🎧|headphone\n🎨|artist palette\n🎩|top hat\n🎪|circus tent\n🎫|ticket\n🎬|clapper board\n🎭|performing arts\n🎮|video game\n🎯|direct hit\n🎰|slot machine\n🎱|billiards\n🎲|game die\n🎳|bowling\n🎴|flower playing cards\n🎵|musical note\n🎶|multiple musical notes\n🎷|saxophone\n🎸|guitar\n🎹|musical keyboard\n🎺|trumpet\n🎻|violin\n🎼|musical score\n🎽|running shirt with sash\n🎾|tennis racquet and ball\n🎿|ski and ski boot\n🏀|basketball and hoop\n🏁|chequered flag\n🏂|snowboarder\n🏃|runner\n🏄|surfer\n🏅|sports medal\n🏆|trophy\n🏇|horse racing\n🏈|american football\n🏉|rugby football\n🏊|swimmer\n🏸|badminton racquet and shuttlecock\n🏹|bow and arrow\n🏺|amphora\n🤼|wrestlers\n🤽|water polo\n🤾|handball\n🤿|diving mask\n🥀|wilted flower\n🥁|drum with drumsticks\n🥂|clinking glasses\n🥃|tumbler glass\n🥄|spoon\n🥅|goal net\n🥇|first place medal\n🥈|second place medal\n🥉|third place medal\n🥊|boxing glove\n🥋|martial arts uniform\n🥌|curling stone\n🥍|lacrosse stick and ball\n🥎|softball\n🥏|flying disc\n🧩|jigsaw puzzle piece\n🪀|yo-yo\n🪁|kite\n🪂|parachute\n🪃|boomerang\n🪄|magic wand\n🪅|pinata\n🪆|nesting dolls\n🪇|maracas\n🪈|flute","Office & devices":"💺|seat\n💻|personal computer\n💼|briefcase\n💽|minidisc\n💾|floppy disk\n💿|optical disc\n📀|dvd\n📁|file folder\n📂|open file folder\n📃|page with curl\n📄|page facing up\n📅|calendar\n📆|tear-off calendar\n📇|card index\n📈|chart with upwards trend\n📉|chart with downwards trend\n📊|bar chart\n📋|clipboard\n📌|pushpin\n📍|round pushpin\n📎|paperclip\n📏|straight ruler\n📐|triangular ruler\n📑|bookmark tabs\n📒|ledger\n📓|notebook\n📔|notebook with decorative cover\n📕|closed book\n📖|open book\n📗|green book\n📘|blue book\n📙|orange book\n📚|books\n📛|name badge\n📜|scroll\n📝|memo\n📞|telephone receiver\n📟|pager\n📠|fax machine\n📡|satellite antenna\n📢|public address loudspeaker\n📣|cheering megaphone\n📤|outbox tray\n📥|inbox tray\n📦|package\n📧|e-mail symbol\n📨|incoming envelope\n📩|envelope with downwards arrow above\n📪|closed mailbox with lowered flag\n📫|closed mailbox with raised flag\n📬|open mailbox with raised flag\n📭|open mailbox with lowered flag\n📮|postbox\n📯|postal horn\n📰|newspaper\n📱|mobile phone\n📲|mobile phone with rightwards arrow at left\n📳|vibration mode\n📴|mobile phone off\n📵|no mobile phones\n📶|antenna with bars\n📷|camera\n📸|camera with flash\n📹|video camera\n📺|television\n📻|radio\n📼|videocassette\n📽️|film projector\n📿|prayer beads\n🖥️|desktop computer\n🖨️|printer\n🖱️|three button mouse\n🖲️|trackball\n🖼️|frame with picture\n🗂️|card index dividers\n🗃️|card file box\n🗄️|file cabinet\n🗑️|wastebasket\n🗒️|spiral note pad\n🗓️|spiral calendar pad\n🗜️|compression\n🗝️|old key\n🗞️|rolled-up newspaper\n🗡️|dagger knife\n🗣️|speaking head in silhouette\n🗨️|left speech bubble\n🗯️|right anger bubble\n🗳️|ballot box with ballot","Objects":"💡|electric light bulb\n💢|anger symbol\n💣|bomb\n💤|sleeping symbol\n💥|collision symbol\n💦|splashing sweat symbol\n💧|droplet\n💨|dash symbol\n💩|pile of poo\n💪|flexed biceps\n💫|dizzy symbol\n💬|speech balloon\n💭|thought balloon\n💮|white flower\n💯|hundred points symbol\n🧠|brain\n🧡|orange heart\n🧢|billed cap\n🧣|scarf\n🧤|gloves\n🧥|coat\n🧦|socks\n🧧|red gift envelope\n🧨|firecracker\n🧪|test tube\n🧫|petri dish\n🧬|dna double helix\n🧭|compass\n🧮|abacus\n🧯|fire extinguisher\n🧰|toolbox\n🧱|brick\n🧲|magnet\n🧳|luggage\n🧴|lotion bottle\n🧵|spool of thread\n🧶|ball of yarn\n🧷|safety pin\n🧸|teddy bear\n🧹|broom\n🧺|basket\n🧻|roll of paper\n🧼|bar of soap\n🧽|sponge\n🧿|nazar amulet\n🩰|ballet shoes\n🩱|one-piece swimsuit\n🩲|briefs\n🩳|shorts\n🩴|thong sandal\n🩵|light blue heart\n🩶|grey heart\n🩷|pink heart\n🩸|drop of blood\n🩹|adhesive bandage\n🩺|stethoscope\n🩻|x-ray\n🩼|crutch\n🪐|ringed planet\n🪑|chair\n🪒|razor\n🪓|axe\n🪔|diya lamp\n🪕|banjo\n🪖|military helmet\n🪗|accordion\n🪘|long drum\n🪙|coin\n🪚|carpentry saw\n🪛|screwdriver\n🪜|ladder\n🪝|hook\n🪞|mirror\n🪟|window\n🪠|plunger\n🪡|sewing needle\n🪢|knot\n🪣|bucket\n🪤|mouse trap\n🪥|toothbrush\n🪦|headstone\n🪧|placard\n🪨|rock\n🪩|mirror ball\n🪪|identification card\n🪫|low battery\n🪬|hamsa\n🪭|folding hand fan\n🪮|hair pick\n🪯|khanda","Symbols":"↔️|left right arrow\n↕️|up down arrow\n↖️|north west arrow\n↗️|north east arrow\n↘️|south east arrow\n↙️|south west arrow\n↩️|leftwards arrow with hook\n↪️|rightwards arrow with hook\n☀️|black sun with rays\n☁️|cloud\n☂️|umbrella\n☃️|snowman\n☄️|comet\n☎️|black telephone\n☑️|ballot box with check\n☔|umbrella with rain drops\n☕|hot beverage\n☘️|shamrock\n☝️|white up pointing index\n☠️|skull and crossbones\n☢️|radioactive sign\n☣️|biohazard sign\n☦️|orthodox cross\n☪️|star and crescent\n☮️|peace symbol\n☯️|yin yang\n☸️|wheel of dharma\n☹️|white frowning face\n☺️|white smiling face\n♀️|female sign\n♂️|male sign\n♈|aries\n♉|taurus\n♊|gemini\n♋|cancer\n♌|leo\n♍|virgo\n♎|libra\n♏|scorpius\n♐|sagittarius\n♑|capricorn\n♒|aquarius\n♓|pisces\n♟️|black chess pawn\n♠️|black spade suit\n♣️|black club suit\n♥️|black heart suit\n♦️|black diamond suit\n♨️|hot springs\n♻️|black universal recycling symbol\n♾️|permanent paper sign\n♿|wheelchair symbol\n⚒️|hammer and pick\n⚓|anchor\n⚔️|crossed swords\n⚕️|staff of aesculapius\n⚖️|scales\n⚗️|alembic\n⚙️|gear\n⚛️|atom symbol\n⚜️|fleur-de-lis\n⚠️|warning sign\n⚡|high voltage sign\n⚧️|male with stroke and male and female sign\n⚪|medium white circle\n⚫|medium black circle\n⚰️|coffin\n⚱️|funeral urn\n⚽|soccer ball\n⚾|baseball\n⛄|snowman without snow\n⛅|sun behind cloud\n⛈️|thunder cloud and rain\n⛎|ophiuchus\n⛏️|pick\n⛑️|helmet with white cross\n⛓️|chains\n⛔|no entry\n⛩️|shinto shrine\n⛪|church\n⛰️|mountain\n⛱️|umbrella on ground\n⛲|fountain\n⛳|flag in hole\n⛴️|ferry\n⛵|sailboat\n⛷️|skier\n⛸️|ice skate\n⛹️|person with ball\n⛺|tent\n⛽|fuel pump\n✂️|black scissors\n✅|white heavy check mark\n✈️|airplane\n✉️|envelope\n✊|raised fist\n✋|raised hand\n✌️|victory hand\n✍️|writing hand\n✏️|pencil\n✒️|black nib\n✔️|heavy check mark\n✖️|heavy multiplication x\n✝️|latin cross\n✡️|star of david\n✨|sparkles\n✳️|eight spoked asterisk\n✴️|eight pointed black star\n❄️|snowflake\n❇️|sparkle\n❌|cross mark\n❎|negative squared cross mark\n❓|black question mark ornament\n❔|white question mark ornament\n❕|white exclamation mark ornament\n❗|heavy exclamation mark symbol\n❣️|heavy heart exclamation mark ornament\n❤️|heavy black heart\n➕|heavy plus sign\n➖|heavy minus sign\n➗|heavy division sign\n➡️|black rightwards arrow\n➰|curly loop\n➿|double curly loop\n⬅️|leftwards black arrow\n⬆️|upwards black arrow\n⬇️|downwards black arrow\n⬛|black large square\n⬜|white large square\n⭐|white medium star\n⭕|heavy large circle\n🅰️|negative squared latin capital letter a\n🅱️|negative squared latin capital letter b\n🅾️|negative squared latin capital letter o\n🅿️|negative squared latin capital letter p\n🆎|negative squared ab\n🆑|squared cl\n🆒|squared cool\n🆓|squared free\n🆔|squared id\n🆕|squared new\n🆖|squared ng\n🆗|squared ok\n🆘|squared sos\n🆙|squared up with exclamation mark\n🆚|squared vs\n🇦|regional indicator symbol letter a\n🇧|regional indicator symbol letter b\n🇨|regional indicator symbol letter c\n🇩|regional indicator symbol letter d\n🇪|regional indicator symbol letter e\n🇫|regional indicator symbol letter f\n🇬|regional indicator symbol letter g\n🇭|regional indicator symbol letter h\n🇮|regional indicator symbol letter i\n🇯|regional indicator symbol letter j\n🇰|regional indicator symbol letter k\n🇱|regional indicator symbol letter l\n🇲|regional indicator symbol letter m\n🇳|regional indicator symbol letter n\n🇴|regional indicator symbol letter o\n🇵|regional indicator symbol letter p\n🇶|regional indicator symbol letter q\n🇷|regional indicator symbol letter r\n🇸|regional indicator symbol letter s\n🇹|regional indicator symbol letter t\n🇺|regional indicator symbol letter u\n🇻|regional indicator symbol letter v\n🇼|regional indicator symbol letter w\n🇽|regional indicator symbol letter x\n🇾|regional indicator symbol letter y\n🇿|regional indicator symbol letter z\n🈁|squared katakana koko\n🈂️|squared katakana sa\n🈚|squared cjk unified ideograph-7121\n🈯|squared cjk unified ideograph-6307\n🈲|squared cjk unified ideograph-7981\n🈳|squared cjk unified ideograph-7a7a\n🈴|squared cjk unified ideograph-5408\n🈵|squared cjk unified ideograph-6e80\n🈶|squared cjk unified ideograph-6709\n🈷️|squared cjk unified ideograph-6708\n🈸|squared cjk unified ideograph-7533\n🈹|squared cjk unified ideograph-5272\n🈺|squared cjk unified ideograph-55b6\n🉐|circled ideograph advantage\n🉑|circled ideograph accept\n🔀|twisted rightwards arrows\n🔁|clockwise rightwards and leftwards open circle arrows\n🔂|clockwise rightwards and leftwards open circle arrows with circled one overlay\n🔃|clockwise downwards and upwards open circle arrows\n🔄|anticlockwise downwards and upwards open circle arrows\n🔅|low brightness symbol\n🔆|high brightness symbol\n🔇|speaker with cancellation stroke\n🔈|speaker\n🔉|speaker with one sound wave\n🔊|speaker with three sound waves\n🔋|battery\n🔌|electric plug\n🔍|left-pointing magnifying glass\n🔎|right-pointing magnifying glass\n🔏|lock with ink pen\n🔐|closed lock with key\n🔑|key\n🔒|lock\n🔓|open lock\n🔔|bell\n🔕|bell with cancellation stroke\n🔖|bookmark\n🔗|link symbol\n🔘|radio button\n🔙|back with leftwards arrow above\n🔚|end with leftwards arrow above\n🔛|on with exclamation mark with left right arrow above\n🔜|soon with rightwards arrow above\n🔝|top with upwards arrow above\n🔞|no one under eighteen symbol\n🔟|keycap ten\n🔠|input symbol for latin capital letters\n🔡|input symbol for latin small letters\n🔢|input symbol for numbers\n🔣|input symbol for symbols\n🔤|input symbol for latin letters\n🔥|fire\n🔦|electric torch\n🔧|wrench\n🔨|hammer\n🔩|nut and bolt\n🔪|hocho\n🔫|pistol\n🔬|microscope\n🔭|telescope\n🔮|crystal ball\n🔯|six pointed star with middle dot\n🔰|japanese symbol for beginner\n🔱|trident emblem\n🔲|black square button\n🔳|white square button\n🔴|large red circle\n🔵|large blue circle\n🔶|large orange diamond\n🔷|large blue diamond\n🔸|small orange diamond\n🔹|small blue diamond\n🔺|up-pointing red triangle\n🔻|down-pointing red triangle\n🔼|up-pointing small red triangle\n🔽|down-pointing small red triangle\n🕋|kaaba\n🕌|mosque\n🕍|synagogue\n🕎|menorah with nine branches\n🕐|clock face one oclock\n🕑|clock face two oclock\n🕒|clock face three oclock\n🕓|clock face four oclock\n🕔|clock face five oclock\n🕕|clock face six oclock\n🕖|clock face seven oclock\n🕗|clock face eight oclock\n🕘|clock face nine oclock\n🕙|clock face ten oclock\n🕚|clock face eleven oclock\n🕛|clock face twelve oclock\n🕜|clock face one-thirty\n🕝|clock face two-thirty\n🕞|clock face three-thirty\n🕟|clock face four-thirty\n🕠|clock face five-thirty\n🕡|clock face six-thirty\n🕢|clock face seven-thirty\n🕣|clock face eight-thirty\n🕤|clock face nine-thirty\n🕥|clock face ten-thirty\n🕦|clock face eleven-thirty\n🕧|clock face twelve-thirty\n🟠|large orange circle\n🟡|large yellow circle\n🟢|large green circle\n🟣|large purple circle\n🟤|large brown circle\n🟥|large red square\n🟦|large blue square\n🟧|large orange square\n🟨|large yellow square\n🟩|large green square\n🟪|large purple square\n🟫|large brown square\n🟰|heavy equals sign","Other":"⌚|watch\n⌛|hourglass\n⌨️|keyboard\n⏏️|eject symbol\n⏩|black right-pointing double triangle\n⏪|black left-pointing double triangle\n⏫|black up-pointing double triangle\n⏬|black down-pointing double triangle\n⏭️|black right-pointing double triangle with vertical bar\n⏮️|black left-pointing double triangle with vertical bar\n⏯️|black right-pointing triangle with double vertical bar\n⏰|alarm clock\n⏱️|stopwatch\n⏲️|timer clock\n⏳|hourglass with flowing sand\n⏸️|double vertical bar\n⏹️|black square for stop\n⏺️|black circle for record\nⓂ️|circled latin capital letter m\n▪️|black small square\n▫️|white small square\n▶️|black right-pointing triangle\n◀️|black left-pointing triangle\n◻️|white medium square\n◼️|black medium square\n◽|white medium small square\n◾|black medium small square\n⤴️|arrow pointing rightwards then curving upwards\n⤵️|arrow pointing rightwards then curving downwards\n〰️|wavy dash\n〽️|part alternation mark\n㊗️|circled ideograph congratulation\n㊙️|circled ideograph secret\n🀄|mahjong tile red dragon\n🃏|playing card black joker\n🏋️|weight lifter\n🏌️|golfer\n🏍️|racing motorcycle\n🏎️|racing car\n🏏|cricket bat and ball\n🏐|volleyball\n🏑|field hockey stick and ball\n🏒|ice hockey stick and puck\n🏓|table tennis paddle and ball\n🏳️|waving white flag\n🏴|waving black flag\n🏵️|rosette\n🏷️|label\n💈|barber pole\n💉|syringe\n💊|pill\n💋|kiss mark\n💌|love letter\n💍|ring\n💎|gem stone\n💏|kiss\n💑|couple with heart\n💒|wedding\n💓|beating heart\n💔|broken heart\n💕|two hearts\n💖|sparkling heart\n💗|growing heart\n💘|heart with arrow\n💙|blue heart\n💚|green heart\n💛|yellow heart\n💜|purple heart\n💝|heart with ribbon\n💞|revolving hearts\n💟|heart decoration\n💠|diamond shape with a dot inside\n🕉️|om symbol\n🕊️|dove of peace\n🕯️|candle\n🕰️|mantelpiece clock\n🕳️|hole\n🖇️|linked paperclips\n🖊️|lower left ballpoint pen\n🖋️|lower left fountain pen\n🖌️|lower left paintbrush\n🖍️|lower left crayon\n🖐️|raised hand with fingers splayed\n🖕|reversed hand with middle finger extended\n🖖|raised hand with part between middle and ring fingers\n🖤|black heart\n🛜|wireless\n🛝|playground slide\n🤌|pinched fingers\n🤍|white heart\n🤎|brown heart\n🤏|pinching hand\n🥻|sari\n🥼|lab coat\n🥽|goggles\n🥾|hiking boot\n🥿|flat shoe\n🦯|probing cane\n🦰|emoji component red hair\n🦱|emoji component curly hair\n🦲|emoji component bald\n🦳|emoji component white hair\n🦴|bone\n🦵|leg\n🦶|foot\n🦷|tooth\n🦸|superhero\n🦹|supervillain\n🦺|safety vest\n🦻|ear with hearing aid\n🦼|motorized wheelchair\n🦽|manual wheelchair\n🦾|mechanical arm\n🦿|mechanical leg\n🧌|troll\n🫀|anatomical heart\n🫁|lungs\n🫂|people hugging\n🫃|pregnant man\n🫄|pregnant person\n🫅|person with crown\n🫎|moose\n🫏|donkey\n🫰|hand with index finger and thumb crossed\n🫱|rightwards hand\n🫲|leftwards hand\n🫳|palm down hand\n🫴|palm up hand\n🫵|index pointing at the viewer\n🫶|heart hands\n🫷|leftwards pushing hand\n🫸|rightwards pushing hand"};
+
+/* ===== MONEY MODULE: icons (1,400+ built-in emoji + online icon sets) ===== */
+const EMOL=(()=>{const a=[];Object.keys(EMODB).forEach(g=>EMODB[g].split('\n').forEach(l=>{const i=l.indexOf('|');a.push({c:l.slice(0,i),n:l.slice(i+1),g})}));return a})();
+const EMOG=['All'].concat(Object.keys(EMODB));
+const IC_SETS=[['all','All modern sets (recommended)','lucide,tabler,ph,material-symbols,mdi,fluent,solar,iconoir,heroicons,mingcute,ri,bi'],['lucide','Lucide','lucide'],['tabler','Tabler','tabler'],['ph','Phosphor','ph'],['ms','Material Symbols','material-symbols'],['mdi','Material Design Icons','mdi'],['fluent','Fluent (Microsoft)','fluent'],['solar','Solar','solar'],['iconoir','Iconoir','iconoir'],['hero','Heroicons','heroicons'],['ri','Remix','ri'],['bi','Bootstrap','bi']];
+/* ---- safe SVG: only drawing shapes, no scripts, links or styles ---- */
+const SVG_OK=new Set('svg g path circle ellipse rect line polyline polygon defs clippath mask lineargradient radialgradient stop'.split(' ')),
+ SVG_AT=new Set('d fill stroke stroke-width stroke-linecap stroke-linejoin stroke-miterlimit stroke-dasharray stroke-dashoffset opacity fill-opacity stroke-opacity fill-rule clip-rule transform cx cy r rx ry x y x1 y1 x2 y2 width height points viewbox xmlns clip-path mask id offset stop-color stop-opacity gradienttransform gradientunits'.split(' ')),SVC=new Map();
+function mSvgClean(s){s=String(s||'');if(SVC.has(s))return SVC.get(s);let out='';
+ try{const d=new DOMParser().parseFromString(s,'image/svg+xml'),root=d.documentElement;
+  if(root&&root.nodeName.toLowerCase()=='svg'&&!d.querySelector('parsererror')){
+   const walk=n=>{[...n.childNodes].forEach(c=>{if(c.nodeType==1){if(!SVG_OK.has(c.nodeName.toLowerCase())){c.remove();return}
+     [...c.attributes].forEach(a=>{const k=a.name.toLowerCase(),v=a.value;if(!SVG_AT.has(k)||/javascript:|data:|<|&#/i.test(v)||(/url\(/i.test(v)&&!/^url\(#[\w-]+\)$/.test(v.trim())))c.removeAttribute(a.name)});walk(c)}else if(c.nodeType!=3)c.remove()})};
+   walk(root);root.removeAttribute('width');root.removeAttribute('height');root.setAttribute('fill','currentColor');root.setAttribute('aria-hidden','true');
+   if(!root.getAttribute('viewBox'))root.setAttribute('viewBox','0 0 24 24');out=new XMLSerializer().serializeToString(root)}}catch(e){}
+ if(out.length>6000)out='';SVC.set(s,out);return out}
+/* icon HTML for a category or account (custom SVG if it has one, otherwise the emoji) */
+function mI(o){if(!o)return'';return o.svg?(mSvgClean(o.svg)||esc(o.icon||'')):esc(o.icon||'')}
+/* ---- icon field used in the category and account forms ---- */
+function mIconField(idI,idS,o){return`<div class="icf"><button type="button" class="icp" id="${idI}-p" onclick="mIconPick('${idI}','${idS}')" aria-label="Choose an icon">${mI(o)}</button><div><b>Icon</b><br><button type="button" class="b g s" onclick="mIconPick('${idI}','${idS}')">Choose…</button></div><input type="hidden" id="${idI}" value="${esc(o.icon||'')}"><input type="hidden" id="${idS}" value="${esc(o.svg||'')}"></div>`}
+function mSetIcon(idI,idS,e,s){if(e!=null)$('#'+idI).value=e;$('#'+idS).value=s||'';const p=$('#'+idI+'-p');if(p)p.innerHTML=s?mSvgClean(s):esc($('#'+idI).value)}
+function mEmoRow(id,list){const sv=id.slice(0,-1)+'sv';return`<div class="emg">${list.map(x=>`<button type="button" class="emo" onclick="mSetIcon('${id}','${sv}','${x}','')">${x}</button>`).join('')}</div>`}
+/* ---- recent icons ---- */
+const RIK=K+'-icrec';let RIC=[];try{RIC=JSON.parse(localStorage.getItem(RIK)||'[]')}catch(e){}
+function mIpRecent(r){RIC=[r].concat(RIC.filter(z=>JSON.stringify(z)!=JSON.stringify(r))).slice(0,24);try{localStorage.setItem(RIK,JSON.stringify(RIC))}catch(e){}}
+/* ---- picker window ---- */
+function mIconPick(idI,idS){ui.ip={idI,idS,tab:'e',g:'All',q:'',n:240,set:'all',start:0,res:[],busy:0,msg:''};let o=$('#mipk');if(!o){o=document.createElement('div');o.id='mipk';o.className='noprint';document.body.appendChild(o);o.addEventListener('mousedown',e=>{if(e.target===o)mIpClose()})}o.style.display='flex';mIpDraw();setTimeout(()=>{const s=$('#mips');if(s)s.focus()},50)}
+function mIpClose(){const o=$('#mipk');if(o)o.style.display='none'}
+function mIpTab(t){ui.ip.tab=t;ui.ip.q='';ui.ip.n=240;ui.ip.res=[];ui.ip.msg='';mIpDraw();setTimeout(()=>{const s=$('#mips');if(s)s.focus()},30)}
+function mIpDraw(){const o=$('#mipk'),p=ui.ip;if(!o||!p)return;
+ const tabs=`<div class="mseg"><button class="b g s ${p.tab=='e'?'on in1':''}" onclick="mIpTab('e')">Emoji icons (${EMOL.length})</button><button class="b g s ${p.tab=='w'?'on in1':''}" onclick="mIpTab('w')">Online icon sets (200,000+)</button></div>`;
+ let body='';
+ if(p.tab=='e'){body=`<div class="mchips ipg">${EMOG.map(g=>`<button class="mchip ${p.g==g?'on':''}" onclick="ui.ip.g='${g.replace(/'/g,'')}';ui.ip.n=240;mIpDraw()">${g}</button>`).join('')}</div><div id="ipg" class="emg ipbig"></div>`}
+ else{body=`<div class="row" style="margin:0 0 8px"><label style="flex:1 1 220px">Icon set<select onchange="ui.ip.set=this.value;ui.ip.q&&mIpWebGo(0)">${IC_SETS.map(s=>`<option value="${s[0]}" ${p.set==s[0]?'selected':''}>${s[1]}</option>`).join('')}</select></label></div><p class="mut" style="margin:0 0 8px">Type what you are looking for in English (for example “cart”, “school”, “bus”, “tooth”). Press Enter to search. The icon you choose is saved inside the app, so it keeps working offline.</p><div id="ipw" class="emg ipbig"></div><div id="ipm" class="mut" style="margin-top:6px">${esc(p.msg)}</div>`}
+ const rec=RIC.length?`<div class="mut" style="margin:8px 0 2px;font-size:12px">Recently used</div><div class="emg">${RIC.map((r,i)=>`<button type="button" class="emo" onclick="mIpPickR(${i})">${r.s?mSvgClean(r.s):esc(r.e)}</button>`).join('')}</div>`:'';
+  o.innerHTML=`<div class="mpc"><div class="mph"><b>Choose an icon</b><button class="b g s" onclick="mIpClose()">Close</button></div>${tabs}<input id="mips" type="search" placeholder="${p.tab=='e'?'Search emoji, e.g. bus, school, cash…':'Search icons, e.g. shopping cart'}" value="${esc(p.q)}" oninput="mIpIn(this.value)" onkeydown="if(event.key=='Enter'&&ui.ip.tab=='w')mIpWebGo(0)" autocomplete="off">${body}${rec}</div>`;
+ if(p.tab=='e')mIpEmo();else mIpWebShow()}
+function mIpIn(v){const p=ui.ip;p.q=v;if(p.tab=='e'){p.n=240;mIpEmo()}else{clearTimeout(p.t);p.t=setTimeout(()=>{if(p.q.trim().length>1)mIpWebGo(0)},600)}}
+function mIpEmo(){const p=ui.ip,q=p.q.trim().toLowerCase().split(/\s+/).filter(Boolean),L=EMOL.filter(e=>(p.g=='All'||e.g==p.g)&&q.every(t=>e.n.includes(t))),g=$('#ipg');if(!g)return;
+ g.innerHTML=L.slice(0,p.n).map(e=>`<button type="button" class="emo" title="${esc(e.n)}" onclick="mIpPickE('${e.c}')">${e.c}</button>`).join('')+(L.length>p.n?`<button type="button" class="b g s" onclick="ui.ip.n+=240;mIpEmo()">Show more (${L.length-p.n})</button>`:'')+(L.length?'':'<span class="mut">No emoji match. Try another word, or use Online icon sets.</span>')}
+function mIpPickE(c){const p=ui.ip;mSetIcon(p.idI,p.idS,c,'');mIpRecent({e:c});mIpClose()}
+function mIpPickR(i){const r=RIC[i],p=ui.ip;if(!r)return;if(r.s)mSetIcon(p.idI,p.idS,$('#'+p.idI).value||'🔹',r.s);else mSetIcon(p.idI,p.idS,r.e,'');mIpClose()}
+const OIC={};
+async function mIcFetch(list){const by={};list.forEach(k=>{if(OIC[k])return;const[a,b]=k.split(':');if(a&&b)(by[a]=by[a]||[]).push(b)});
+ await Promise.all(Object.keys(by).map(async pf=>{try{const r=await fetch('https://api.iconify.design/'+encodeURIComponent(pf)+'.json?icons='+by[pf].map(encodeURIComponent).join(',')),j=await r.json(),W=j.width||16,H=j.height||16;
+  Object.keys(j.icons||{}).forEach(n=>{const ic=j.icons[n];OIC[pf+':'+n]=mSvgClean(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="${ic.left||0} ${ic.top||0} ${ic.width||W} ${ic.height||H}">${ic.body}</svg>`)})}catch(e){}}))}
+async function mIpWebGo(more){const p=ui.ip,q=p.q.trim();if(q.length<2||p.busy)return;p.busy=1;if(!more){p.start=0;p.res=[]}p.msg='Searching…';mIpWebShow();
+ try{const set=IC_SETS.find(s=>s[0]==p.set)||IC_SETS[0],r=await fetch('https://api.iconify.design/search?query='+encodeURIComponent(q)+'&limit=64&start='+p.start+'&prefixes='+set[2]),j=await r.json(),names=j.icons||[];
+  await mIcFetch(names);p.res=p.res.concat(names.filter(k=>OIC[k]));p.more=names.length>=64;p.start+=names.length;p.msg=p.res.length?'':'No icons found. Try a simpler English word.'}
+ catch(e){p.msg='Could not reach the icon website. Check your internet connection and try again.'}
+ p.busy=0;mIpWebShow()}
+function mIpWebShow(){const p=ui.ip,g=$('#ipw'),m=$('#ipm');if(!g||!p)return;
+ g.innerHTML=p.res.map(k=>`<button type="button" class="emo ipw" title="${esc(k)}" onclick="mIpPickW('${k}')">${OIC[k]}</button>`).join('')+(p.more&&!p.busy?`<button type="button" class="b g s" onclick="mIpWebGo(1)">Show more</button>`:'');if(m)m.textContent=p.msg||''}
+function mIpPickW(k){const p=ui.ip,s=OIC[k];if(!s)return;mSetIcon(p.idI,p.idS,$('#'+p.idI).value||'🔹',s);mIpRecent({s,e:'🔹'});mIpClose()}
+
+/* ===== MONEY MODULE: screens ===== */
+const MTABS=[['mh','Dashboard'],['mr','Records'],['ma','Accounts'],['mp','Reports'],['ms','Settings']],
+ MPAL=['--s1','--s2','--s3','--s4','--s5','--s6','--s7'],
+ EMO='🍽️ 🍱 🍕 🍔 🥛 ☕ 🍎 🥦 🍗 🛒 🛍️ 👕 👟 💄 💇 🧺 🏠 🏡 🏘️ 🛋️ 🔧 💡 💧 🔥 📶 📱 💻 📺 🎬 🎮 🎨 📚 ✏️ 🏫 🎓 💊 🏥 🩺 🦷 🚌 🚗 🏍️ 🚲 ⛽ 🅿️ ✈️ 🚆 🧳 🏖️ 🎁 🎂 🌙 🕌 🛕 🤲 👶 👧 👴 👵 👤 👨‍👩‍👧 🐶 🌿 🧹 🧼 🔑 🏦 💰 💵 💳 🪙 🐖 📈 📊 🧾 🛡️ ⏳ 🔄 ↔️ 🏆 🏛️ 🧑‍💼 💼 🧩 📦 ⭐ ❤️ 🎯'.split(' ');
+Object.assign(ui,{mode:'money',mtab:'mh',mm:mTd().slice(0,7),macc:'all',mpt:'-',mtc:'all',mrn:100,mcs:'-',
+ mrf:{acc:'all',type:'all',cat:'all',q:'',pre:'tm',from:'',to:''},mpf:{rt:'sum',acc:'all',type:'all',cat:'all',q:'',pre:'tm',from:'',to:'',all:0}});
+const mn=v=>String(v),inEx=s=>s=='+'?'inc':'exp';
+
+/* ---- mode switch and drawing ---- */
+function mSw(){const m=ui.mode=='money';document.body.classList.toggle('mm',m);if(!m)mFab(0)}
+function setMode(m){if(m==ui.mode)return;if(m=='money'&&!lose())return;ui.mode=m;draw()}
+function mGo(t){ui.mtab=t;mClose();draw()}
+function mDraw(){brand();mSw();navDraw();
+ const y0=window.scrollY,same=ui._mt==ui.mtab;ui._mt=ui.mtab;$('#m').innerHTML=M.acc.length||ui.mtab=='ms'?MVW[ui.mtab]():mEmpty();
+ window.scrollTo(0,same?y0:0);if(ui.mtab=='mp'&&M.acc.length)mRepDraw();mFab(1)}
+function mEmpty(){return`<div class="card"><h2>Set up your money records</h2><p>Import your expense database (the file <b>expense-data.json</b>), or start fresh with Cash, Debit Card and Bank Account.</p>
+ <div class="row"><label>Choose expense-data.json<input type="file" accept=".json,application/json" onchange="mImportFile(this)"></label><button class="b g" onclick="mDefaults();draw()">Start with default accounts</button></div></div>`}
+const mBox=(ttl,body,id)=>`<div class="card" ${id?`id="${id}"`:''}><h2>${ttl}</h2>${body}</div>`;
+function mChips(cur,fn){return`<div class="mchips" role="group" aria-label="Account">${[['all',mAllName(),'🗂️']].concat(M.acc.map(a=>[a.id,a.name,mI(a)])).map(([id,n,ic])=>`<button class="mchip ${cur==id?'on':''}" onclick="${fn}('${id}')">${ic} ${esc(n)}</button>`).join('')}</div>`}
+const mMonthRange=y2=>{const[y,m]=y2.split('-').map(Number);return[y2+'-01',y2+'-'+pad(dim(y,m))]};
+
+/* ---- add buttons ---- */
+function mBtns(){const b=M.pf.btn,st=c=>`background:${c};color:${lum(c)>.45?'#111':'#fff'}`,
+ e=`<button class="mab ${b.shape} ${b.size}" style="${st(b.exp)}" onclick="mEdit(null,'-')" aria-label="Add expense"><span>−</span>${b.lab?'<em>Expense</em>':''}</button>`,
+ i=`<button class="mab ${b.shape} ${b.size}" style="${st(b.inc)}" onclick="mEdit(null,'+')" aria-label="Add income"><span>+</span>${b.lab?'<em>Income</em>':''}</button>`;return b.order=='ie'?i+e:e+i}
+function mFab(on){let f=$('#mfab');if(!on||ui.mode!='money'||M.pf.btn.pos=='dash'||!M.acc.length){if(f)f.remove();return}
+ if(!f){f=document.createElement('div');f.id='mfab';f.className='noprint';document.body.appendChild(f)}f.className='noprint '+M.pf.btn.pos;f.innerHTML=mBtns()}
+
+/* ---- dashboard ---- */
+const MVW={mh(){const[y,m]=ui.mm.split('-').map(Number);let h=mChips(ui.macc,'mSetAcc')+`<div class="mnav"><button class="b g" onclick="mMon(-1)" aria-label="Previous month">◀</button><b>${mMonthName(ui.mm)}</b><button class="b g" onclick="mMon(1)" aria-label="Next month">▶</button></div>`;
+ if(ui.mm!=mTd().slice(0,7))h+=`<p style="margin:-6px 0 12px;text-align:center"><button class="b g s" onclick="ui.mm=mTd().slice(0,7);mDraw()">Back to this month</button></p>`;
+ M.pf.cards.forEach(([k,on])=>{if(on&&CARD[k])h+=CARD[k]()});return h},
+ mr:()=>mRecords(),ma:()=>mAccounts(),mp:()=>mReportsPage(),ms:()=>mSettings()};
+function mSetAcc(id){ui.macc=id;mDraw()}
+function mMon(n){ui.mm=mAddM(ui.mm,n);ui.mps=-1;mDraw()}
+const CARD={
+bal(){const nx=mAddM(ui.mm,1)+'-01',[f,t]=mMonthRange(ui.mm),s=mSum(mFilter({acc:ui.macc,from:f,to:t})),prev=mOpen(ui.macc,f),close=prev+s.n;
+ const per=ui.macc=='all'&&M.acc.length>1?`<p class="mut" style="margin:10px 0 0">Closing balance by account: ${M.acc.filter(a=>a.inc!==0).map(a=>`${mI(a)} ${esc(a.name)} <b class="${mOpen(a.id,nx)<0?'exp':''}">${mFmt(mOpen(a.id,nx))}</b>`).join(' &nbsp;·&nbsp; ')}</p>`:'';
+ return mBox('Monthly balance',`<div class="mtiles"><div class="mt"><small>Previous balance</small><b>${mFmt(prev)}</b></div><div class="mt"><small>Income</small><b class="inc">+${mFmt(s.i)}</b></div><div class="mt"><small>Expenses</small><b class="exp">−${mFmt(s.e)}</b></div>
+ <div class="mt"><small>Monthly balance (income − expenses)</small><b class="${s.n<0?'exp':'inc'}">${msg(s.n).replace('+','+')}</b></div><div class="mt big"><small>Closing balance (previous + monthly)</small><b class="${close<0?'exp':''}">${mFmt(close)}</b></div></div>${per}`)},
+btn(){return M.pf.btn.pos=='dash'?`<div class="card"><div class="mbtns">${mBtns()}</div></div>`:''},
+pie(){const ty=ui.mpt,[f,t]=mMonthRange(ui.mm),recs=mFilter({acc:ui.macc,from:f,to:t,type:ty}),by=mByCat(recs),tot=by.reduce((s,x)=>s+x.v,0),nm=ty=='-'?'Expenses':'Income',verb=ty=='-'?'spent':'received';
+ const tg=`<div class="mseg"><button class="b g s ${ty=='-'?'on ex1':''}" onclick="ui.mpt='-';ui.mps=-1;mDraw()">Expenses</button><button class="b g s ${ty=='+'?'on in1':''}" onclick="ui.mpt='+';ui.mps=-1;mDraw()">Income</button></div>`;
+ if(!tot)return mBox('Monthly summary by category',tg+`<p class="empty">No ${nm.toLowerCase()} recorded in ${mMonthName(ui.mm)} for ${esc(mAccName(ui.macc))}.</p>`);
+ const top=by.slice(0,7).map((x,i)=>({v:x.v,n:x.n,name:mC(x.c).name,icon:mC(x.c).icon,svg:mC(x.c).svg,col:`var(${MPAL[i]})`}));
+ if(by.length>7){const o=by.slice(7);top.push({v:o.reduce((s,x)=>s+x.v,0),n:o.reduce((s,x)=>s+x.n,0),name:'Other ('+o.length+' categories)',icon:'…',col:'var(--so)'})}
+ const pm=mAddM(ui.mm,-1),[pf,pt]=mMonthRange(pm),pv=mSum(mFilter({acc:ui.macc,from:pf,to:pt}))[ty=='-'?'e':'i'],pct=x=>(x*100/tot).toFixed(1).replace(/\.0$/,'')+'%';
+ let ex=`In ${mMonthName(ui.mm)} you ${verb} <b>${mFmt(tot)}</b> across ${by.length} categor${by.length>1?'ies':'y'} (${recs.filter(r=>r.ok!==0).length} records). `;
+ ex+=`<b>${esc(top[0].name)}</b> was the biggest share at ${pct(top[0].v)}`+(top[1]?`, followed by ${esc(top[1].name)} (${pct(top[1].v)})`+(top[2]&&top[2].icon!='…'?` and ${esc(top[2].name)} (${pct(top[2].v)})`:''):'')+'. ';
+ if(pv>0){const d=(tot-pv)*100/pv;ex+=`That is ${Math.abs(d).toFixed(0)}% ${d>=0?'more':'less'} than ${mMonthName(pm)} (${mFmt(pv)}).`}
+ ui.mpx=ex;return mBox('Monthly summary by category',tg+`<div class="mpie">${mDonut(top,tot,ty)}<div class="mleg" id="mleg">${top.map((x,i)=>`<button class="mlr" data-i="${i}" onclick="mPieSel(${i})"><i style="background:${x.col}"></i><span class="nm">${mI(x)} ${esc(x.name)}</span><span class="vl">${mFmt(x.v)}</span><span class="pc2">${pct(x.v)}</span></button>`).join('')}</div></div>
+ <div class="mex" id="mpd" aria-live="polite">${ex}</div><p class="mut" style="margin:8px 0 0">How to read: each slice is one category’s share of the month’s ${nm.toLowerCase()}. Tap a slice or a row for details. Slices under 5% are labelled in the list only, and the smallest categories are grouped as “Other”.</p>`)},
+last(){const L=mFilter({acc:ui.macc}).slice(0,10);return mBox('Last ten records',L.length?`<div>${L.map(r=>mRow(r,ui.macc=='all')).join('')}</div><p style="margin:10px 0 0"><button class="b g s" onclick="mGo('mr')">See all records</button></p>`:'<p class="empty">No records yet. Use the buttons to add your first expense or income.</p>')},
+bar(){const ty=ui.mpt,[f,t]=mMonthRange(ui.mm),by=mByCat(mFilter({acc:ui.macc,from:f,to:t,type:ty})).slice(0,12),mx=by[0]?by[0].v:1,col=ty=='-'?'var(--s1)':'var(--s3)';
+ return mBox('Monthly graph by category',`<p class="mut" style="margin:-4px 0 8px">${ty=='-'?'Expenses':'Income'} in ${mMonthName(ui.mm)}. Tap a bar to see that category over the last 12 months.</p>`+(by.length?by.map(x=>{const c=mC(x.c);return`<button class="mbr ${ui.mtc==x.c?'on':''}" data-c="${esc(x.c)}" onclick="mTrend('${x.c}')"><span class="nm">${mI(c)} ${esc(c.name)}</span><span class="tr"><i style="width:${Math.max(1,x.v*100/mx)}%;background:${col}"></i></span><span class="vl">${mFmt(x.v)}</span></button>`}).join(''):'<p class="empty">Nothing recorded this month.</p>')+
+ `<h3 style="margin-top:16px" id="mtt2"></h3><div id="mtr"></div>`)+(setTimeout(mTrendDraw,0),'')},
+bud(){if(!M.bud.length)return'';const[f,t]=mMonthRange(ui.mm),by=Object.fromEntries(mByCat(mFilter({acc:ui.macc,from:f,to:t,type:'-'})).map(x=>[x.c,x.v]));
+ return mBox('Monthly budgets',M.bud.map(b=>{const c=mC(b.c),sp=by[b.c]||0,p=b.amt?sp*100/b.amt:0,col=p>=100?'#d03b3b':p>=80?'#fab219':'#0ca30c',left=b.amt-sp;
+  return`<div class="mbu"><div class="h"><span>${mI(c)} ${esc(c.name)}</span><span><b>${mFmt(sp)}</b> of ${mFmt(b.amt)}</span></div><div class="mpb" role="img" aria-label="${p.toFixed(0)} percent used"><i style="width:${Math.min(100,p)}%;background:${col}"></i></div><small class="mut">${left>=0?mFmt(left)+' left':'Over budget by '+mFmt(-left)} (${p.toFixed(0)}% used)</small></div>`}).join('')+'<p class="mut" style="margin:6px 0 0">Edit budgets in Money → Settings.</p>')}};
+
+/* donut with direct labels */
+function mArc(cx,cy,r0,r1,a0,a1){if(a1-a0>=Math.PI*2-1e-4)a1=a0+Math.PI*2-1e-4;const X=(r,a)=>(cx+r*Math.cos(a)).toFixed(2),Y=(r,a)=>(cy+r*Math.sin(a)).toFixed(2),lg=a1-a0>Math.PI?1:0;
+ return`M${X(r1,a0)} ${Y(r1,a0)}A${r1} ${r1} 0 ${lg} 1 ${X(r1,a1)} ${Y(r1,a1)}L${X(r0,a1)} ${Y(r0,a1)}A${r0} ${r0} 0 ${lg} 0 ${X(r0,a0)} ${Y(r0,a0)}Z`}
+function mDonut(items,tot,ty){const cx=190,cy=122,R=78,r=48;let a=-Math.PI/2,p='',lab=[];
+ items.forEach((x,i)=>{const f=x.v/tot,a1=a+f*Math.PI*2,mid=(a+a1)/2;p+=`<path data-i="${i}" d="${mArc(cx,cy,r,R,a,a1)}" style="fill:${x.col}" stroke="var(--card)" stroke-width="2" onclick="mPieSel(${i})"><title>${esc(x.name)}: ${mFmt(x.v)} (${(f*100).toFixed(1)}%)</title></path>`;if(f>=.05)lab.push({mid,i,t:(x.name.length>15?x.name.slice(0,14)+'…':x.name)+' '+Math.round(f*100)+'%'});a=a1});
+ const sides=[[],[]];lab.forEach(l=>{const c=Math.cos(l.mid);l.x=cx+c*(R+8);l.y=cy+Math.sin(l.mid)*(R+8);l.ty=l.y;sides[c>=0?1:0].push(l)});
+ let s='';sides.forEach((sd,k)=>{sd.sort((u,v)=>u.ty-v.ty);for(let i=1;i<sd.length;i++)if(sd[i].ty-sd[i-1].ty<14)sd[i].ty=sd[i-1].ty+14;const ov=sd.length?sd[sd.length-1].ty-(2*cy-4):0;if(ov>0)sd.forEach(z=>z.ty-=ov);
+  sd.forEach(l=>{const dx=k?14:-14,ex=l.x+dx;s+=`<polyline points="${(cx+Math.cos(l.mid)*R).toFixed(1)},${(cy+Math.sin(l.mid)*R).toFixed(1)} ${l.x.toFixed(1)},${l.y.toFixed(1)} ${ex.toFixed(1)},${l.ty.toFixed(1)}" fill="none" stroke="var(--mut)" stroke-width="1"/><text x="${(ex+(k?3:-3)).toFixed(1)}" y="${(l.ty+4).toFixed(1)}" text-anchor="${k?'start':'end'}">${esc(l.t)}</text>`})});
+ return`<svg viewBox="0 0 380 244" role="img" aria-label="Pie chart of ${ty=='-'?'expenses':'income'} by category">${p}${s}<text class="ct" x="${cx}" y="${cy-2}" text-anchor="middle">${mFmt(tot,0)}</text><text class="cs" x="${cx}" y="${cy+14}" text-anchor="middle">${ty=='-'?'total spent':'total income'}</text></svg>`}
+function mPieSel(i){const on=ui.mps!=i;ui.mps=on?i:-1;document.querySelectorAll('.mpie path').forEach(p=>p.classList.toggle('dim',on&&p.dataset.i!=i));document.querySelectorAll('#mleg .mlr').forEach(b=>b.classList.toggle('on',on&&b.dataset.i==i));
+ if(on){const b=document.querySelector(`#mleg .mlr[data-i="${i}"]`);$('#mpd').innerHTML=`<b>${esc(b.querySelector('.nm').textContent)}</b>: ${esc(b.querySelector('.vl').textContent)} — ${esc(b.querySelector('.pc2').textContent)} of the total.`}else $('#mpd').innerHTML=ui.mpx}
+
+/* 12-month trend under the bar graph */
+function mTrend(id){ui.mtc=ui.mtc==id?'all':id;document.querySelectorAll('.mbr').forEach(b=>b.classList.toggle('on',b.dataset.c==ui.mtc));mTrendDraw()}
+function mTrendDraw(){const el=$('#mtr');if(!el)return;const ms=Array.from({length:12},(_,i)=>mAddM(ui.mm,i-11)),cat=ui.mtc,c=cat=='all'?null:mC(cat),
+ d=ms.map(m=>{const[f,t]=mMonthRange(m),s=mSum(mFilter({acc:ui.macc,from:f,to:t,cat}));return{m,i:s.i,e:s.e}}),sh=c?c.s:'';
+ const mx=Math.max(1,...d.map(x=>sh=='-'?x.e:sh=='+'?x.i:Math.max(x.i,x.e)));$('#mtt2').textContent=(c?c.icon+' '+c.name:'All categories')+' — last 12 months';
+ const bar=(v,col,lbl,m)=>`<i style="height:${v?Math.max(2,v*100/mx):0}%;background:${col}" title="${MN[+m.slice(5)-1]} ${m.slice(0,4)} · ${lbl}: ${mFmt(v)}"></i>`;
+ el.innerHTML=`<div class="mcols" role="img" aria-label="Monthly totals, last 12 months">${d.map(x=>`<div class="mcol">${sh!='+'?bar(x.e,'var(--s1)','Expenses',x.m):''}${sh!='-'?bar(x.i,'var(--s3)','Income',x.m):''}</div>`).join('')}</div>
+ <div class="mcl">${d.map(x=>`<span>${MN[+x.m.slice(5)-1]}${x.m.slice(5)=='01'?'<br>'+x.m.slice(2,4):''}</span>`).join('')}</div><div class="mkey">${sh!='+'?'<span><i style="background:var(--s1)"></i>Expenses</span>':''}${sh!='-'?'<span><i style="background:var(--s3)"></i>Income</span>':''}<span>Tallest bar = ${mFmt(mx,0)}</span></div>`}
+
+/* ---- records ---- */
+function mRow(r,showAcc){const c=mC(r.c),a=mA(r.a),tm=r.t?mFt(r.t):'';return`<button class="mrow" onclick="${r.lk?`mOpenLk('${r.lk}')`:`mEdit(${r.id})`}"><span class="mic" style="border-color:${a.color}">${mI(c)}</span><span class="mtx"><b>${esc(c.name)}${r.ok===0?'<span class="pend">pending</span>':''}${r.lk?'<span class="lkd">from Help Register</span>':''}</b><small>${[r.n,showAcc?a.name:'',mFd(r.d),tm].filter(Boolean).map(esc).join(' · ')}</small></span><span class="mam ${inEx(r.s)}">${r.s=='+'?'+':'−'}${mFmt(r.m)}</span></button>`}
+function mOpenLk(k){setMode('reg');go(k=='pay'?'pay':'jr')}
+function mCatOpts(sel){const g=(s,t)=>`<optgroup label="${t}">${mCats(s).map(c=>`<option value="${c.id}" ${c.id==sel?'selected':''}>${c.icon} ${esc(c.name)}</option>`).join('')}</optgroup>`;return`<option value="all">All categories</option>`+(M.pf.lk.pay?`<option value="@pay" ${sel=='@pay'?'selected':''}>🧹 Household help (from Help Register)</option>`:'')+g('-','Expense categories')+g('+','Income categories')}
+function mDF(id,val,cb){return`<span class="df"><input id="${id}" type="text" inputmode="numeric" value="${esc(val?mFd(val):'')}" placeholder="${M.pf.df}" onchange="${cb}(this)" autocomplete="off"><button type="button" class="b g s" onclick="mPick('${id}')" aria-label="Pick a date">📅</button><input type="date" id="${id}_p" class="hp" tabindex="-1" value="${val||''}" onchange="mPicked('${id}',this.value,'${cb}')"></span>`}
+function mTF(id,val){return`<span class="df"><input id="${id}" type="text" value="${esc(mFt(val))}" placeholder="${mFt('15:30')}" autocomplete="off" onchange="mTimeFix(this)"><button type="button" class="b g s" onclick="mPick('${id}')" aria-label="Pick a time">🕒</button><input type="time" id="${id}_p" class="hp" tabindex="-1" value="${val||''}" onchange="mPicked('${id}',this.value,'mTimeFix',1)"></span>`}
+function mPick(id){const p=$('#'+id+'_p');try{p.showPicker?p.showPicker():p.click()}catch(e){p.click()}}
+function mPicked(id,v,cb,isT){if(!v)return;const t=$('#'+id);t.value=isT?mFt(v):mFd(v);window[cb](t)}
+function mTimeFix(el){const v=mParseT(el.value);if(el.value&&!v){toast('Enter the time like '+mFt('15:30')+'.');return}if(v)el.value=mFt(v)}
+const mNoop=()=>{};
+function mSetF(k,f,v){const st=ui[k];if(f=='pre'&&v=='cu'){[st.from,st.to]=mRange(st.pre,st.from,st.to)}st[f]=v;if(f!='all')st.all=0;ui.mrn=100;mDraw()}
+function mRfD(el){mFDate('mrf',el)}function mPfD(el){mFDate('mpf',el)}
+function mFDate(k,el){const f=el.id.slice(-4)=='from'?'from':'to',v=mParseD(el.value);if(el.value.trim()&&!v){toast('Enter the date as '+M.pf.df+'.');el.value=ui[k][f]?mFd(ui[k][f]):'';return}ui[k][f]=v;ui[k].pre='cu';ui.mrn=100;mDraw()}
+function mFB(k,extra){const st=ui[k],[from,to]=mRange(st.pre,st.from,st.to);return`<div class="card noprint"><h2>${k=='mrf'?'Records':'Reports'}</h2>${extra||''}${mChips(st.acc,`mSetF.bind(null,'${k}','acc')`)}
+ <div class="row"><label>Type<select onchange="mSetF('${k}','type',this.value)"><option value="all">Income and expenses</option><option value="-" ${st.type=='-'?'selected':''}>Expenses only</option><option value="+" ${st.type=='+'?'selected':''}>Income only</option></select></label>
+ <label>Category<select onchange="mSetF('${k}','cat',this.value)">${mCatOpts(st.cat)}</select></label><label>Search<input type="search" value="${esc(st.q)}" placeholder="Details, category…" onchange="mSetF('${k}','q',this.value)"></label></div>
+ <div class="row" style="margin-top:10px"><label>Dates<select onchange="mSetF('${k}','pre',this.value)">${PRESETS.map(([v,n])=>`<option value="${v}" ${st.pre==v?'selected':''}>${n}</option>`).join('')}</select></label><label>From${mDF(k+'_from',from,k=='mrf'?'mRfD':'mPfD')}</label><label>To${mDF(k+'_to',to,k=='mrf'?'mRfD':'mPfD')}</label></div></div>`}
+function mRecords(){const st=ui.mrf,[from,to]=mRange(st.pre,st.from,st.to),recs=mFilter({acc:st.acc,from,to,type:st.type,cat:st.cat,q:st.q}),s=mSum(recs),day=new Map();
+ recs.forEach(r=>{if(r.ok!==0)day.set(r.d,(day.get(r.d)||0)+(r.s=='+'?r.m:-r.m))});let h='',cur='',n=0;
+ for(const r of recs){if(n>=ui.mrn)break;if(r.d!=cur){cur=r.d;h+=`<div class="mdh"><span>${mFd(r.d)} · ${WDN[new Date(r.d+'T00:00:00').getDay()]}</span><span>${msg(day.get(r.d)||0)}</span></div>`}h+=mRow(r,st.acc=='all');n++}
+ return mFB('mrf')+`<div class="card"><div class="sum"><span>${recs.length} records</span><span>Income <b class="inc">+${mFmt(s.i)}</b></span><span>Expenses <b class="exp">−${mFmt(s.e)}</b></span><span>Net <b class="${s.n<0?'exp':'inc'}">${msg(s.n)}</b></span></div>
+ ${h||'<p class="empty">No records match these filters.</p>'}${recs.length>n?`<p style="text-align:center;margin:12px 0 0"><button class="b g" onclick="ui.mrn+=200;mDraw()">Show more (${recs.length-n} left)</button></p>`:''}</div>`}
+
+/* ---- add / edit dialog ---- */
+function mEdit(id,sign){if(!M.acc.length)return toast('Add an account first.');const r=id==null?null:M.mv.find(x=>x.id==id);
+ ui.me=r?Object.assign({},r):{id:null,s:sign||'-',a:(ui.macc!='all'&&mA(ui.macc).id==ui.macc?ui.macc:(M.acc.some(a=>a.id==ui.mlast)?ui.mlast:M.acc[0].id)),c:null,m:'',d:mTd(),t:mNow(),n:'',ok:1};mDlg()}
+function mClose(){const d=$('#mdlg');if(d)d.remove();ui.me=null}
+function mCatGrid(q){const e=ui.me,l=mCats(e.s).filter(c=>!q||c.name.toLowerCase().includes(q.toLowerCase()));return l.map(c=>`<button type="button" class="mcb ${c.id==e.c?'on':''}" data-c="${c.id}" onclick="mPickCat('${c.id}')"><span>${mI(c)}</span><em>${esc(c.name)}</em></button>`).join('')||'<span class="mut">No matching category. Use “New category”.</span>'}
+function mDlg(){const e=ui.me;let d=$('#mdlg');if(!d){d=document.createElement('div');d.id='mdlg';d.className='noprint';document.body.appendChild(d);d.addEventListener('mousedown',ev=>{if(ev.target===d)mClose()})}
+ d.innerHTML=`<div class="mdc" role="dialog" aria-modal="true" aria-label="${e.id==null?'Add record':'Edit record'}"><div class="row" style="justify-content:space-between;align-items:center;margin-bottom:8px"><h2 style="margin:0">${e.id==null?'Add a record':'Edit record'}</h2><button class="b g s" onclick="mClose()" aria-label="Close">✕</button></div>
+ <div class="mseg"><button class="b g ex1 ${e.s=='-'?'on':''}" id="mty-" onclick="mType('-')">− Expense</button><button class="b g in1 ${e.s=='+'?'on':''}" id="mty+" onclick="mType('+')">+ Income</button></div>
+ <label>Amount<div class="mamt"><span>${esc(M.pf.cur)}</span><input id="mam" inputmode="decimal" placeholder="0.00" value="${e.m||''}" onkeydown="if(event.key=='Enter')mSaveRec()"></div></label>
+ <div class="mfld"><span class="mut">Account</span><div class="mchips" id="mdac">${M.acc.map(a=>`<button type="button" class="mchip ${a.id==e.a?'on':''}" data-a="${a.id}" onclick="mPickAcc('${a.id}')">${mI(a)} ${esc(a.name)}</button>`).join('')}</div></div>
+ <div class="mfld"><span class="mut">Category</span><input type="search" placeholder="Search categories…" oninput="$('#mcg').innerHTML=mCatGrid(this.value)" style="margin-bottom:6px"><div class="mcg" id="mcg">${mCatGrid('')}</div>
+ <p style="margin:6px 0"><button type="button" class="b g s" onclick="$('#mnc').hidden=!$('#mnc').hidden">＋ New category</button></p>
+ <div id="mnc" hidden class="mex" style="margin:0 0 8px"><div class="row"><label style="flex:2 1 140px">Name<input id="mncn"></label><label style="flex:0 1 70px">Icon<input id="mnci" value="${e.s=='-'?'📦':'💰'}"></label><button type="button" class="b s" onclick="mNewCat()">Add</button></div><div class="emg">${EMO.map(x=>`<button type="button" class="emo" onclick="$('#mnci').value='${x}'">${x}</button>`).join('')}</div></div></div>
+ <div class="row"><label>Date${mDF('mdd',e.d,'mNoop')}</label><label>Time${mTF('mtt',e.t)}</label></div>
+ <label style="margin-top:8px">Details (optional)<input id="mnn" value="${esc(e.n||'')}" list="mdl" autocomplete="off" onkeydown="if(event.key=='Enter')mSaveRec()"></label><datalist id="mdl"></datalist>
+ ${e.ok===0?`<label class="ck" style="margin-top:8px"><input type="checkbox" id="mok"> This pending record is now confirmed</label>`:''}${e.pic?`<p class="mut">📎 Photos in the old app: ${esc(e.pic)} (file names only)</p>`:''}
+ <div class="row" style="margin-top:14px"><button class="b" onclick="mSaveRec()">Save</button>${e.id==null?'<button class="b g" onclick="mSaveRec(1)">Save and add another</button>':`<button class="b d" onclick="mDel(${e.id})">Delete</button>`}<button class="b g" onclick="mClose()">Cancel</button></div></div>`;
+ mSuggest();setTimeout(()=>{const a=$('#mam');if(a&&e.id==null)a.focus()},50)}
+function mType(s){const e=ui.me;if(e.s==s)return;e.s=s;if(e.c&&mC(e.c).s!=s)e.c=null;$('#mty-').classList.toggle('on',s=='-');$('#mty+').classList.toggle('on',s=='+');$('#mcg').innerHTML=mCatGrid('');$('#mnci').value=s=='-'?'📦':'💰'}
+function mPickAcc(id){ui.me.a=id;document.querySelectorAll('#mdac .mchip').forEach(b=>b.classList.toggle('on',b.dataset.a==id))}
+function mPickCat(id){ui.me.c=id;document.querySelectorAll('#mcg .mcb').forEach(b=>b.classList.toggle('on',b.dataset.c==id));mSuggest()}
+function mSuggest(){const dl=$('#mdl');if(!dl)return;const c=ui.me.c,seen=new Set(),o=[];for(const r of mvAll()){if(c&&r.c!=c)continue;if(r.n&&!seen.has(r.n)){seen.add(r.n);o.push(r.n);if(o.length>=30)break}}dl.innerHTML=o.map(x=>`<option value="${esc(x)}">`).join('')}
+function mNewCat(){const n=$('#mncn').value.trim(),ic=$('#mnci').value.trim()||'📦',s=ui.me.s;if(!n)return toast('Type a name for the category.');if(M.cat.some(c=>c.s==s&&c.name.toLowerCase()==n.toLowerCase()))return toast('That category already exists.');
+ const c={id:'c'+M.nx++,name:n,s,icon:ic};M.cat.push(c);mSave();ui.me.c=c.id;$('#mcg').innerHTML=mCatGrid('');$('#mnc').hidden=true;$('#mncn').value=''}
+function mSaveRec(again){const e=ui.me,amt=parseFloat(String($('#mam').value).replace(/,/g,'')),d=mParseD($('#mdd').value),t=mParseT($('#mtt').value);
+ if(!(amt>0))return toast('Enter an amount above zero.');if(!e.c)return toast('Choose a category.');if(!d)return toast('Enter the date as '+M.pf.df+'.');if(!t)return toast('Enter the time like '+mFt('15:30')+'.');
+ const o={a:e.a,c:e.c,m:Math.round(amt*100)/100,s:e.s,d,t,n:$('#mnn').value.trim()};
+ if(e.id==null){o.id=M.nx++;o.ok=1;M.mv.push(o)}else{const r=M.mv.find(x=>x.id==e.id);if(!r)return;Object.assign(r,o);if($('#mok')&&$('#mok').checked)r.ok=1}
+ ui.mlast=o.a;mSave();toast('Saved');if(again){ui.me={id:null,s:e.s,a:e.a,c:null,m:'',d:o.d,t:mNow(),n:'',ok:1};mDlg()}else mClose();mDraw()}
+function mDel(id){if(!confirm('Delete this record?'))return;M.mv=M.mv.filter(x=>x.id!=id);mSave();mClose();toast('Deleted');mDraw()}
+document.addEventListener('keydown',e=>{if(e.key=='Escape'&&$('#mdlg'))mClose()});
+
+/* ---- accounts ---- */
+function mAccTot(id){const a=mA(id);let i=0,e=0,n=0;M.mv.forEach(r=>{if(r.a==id&&r.ok!==0){n++;if(r.s=='+')i+=r.m;else e+=r.m}});mvAll().forEach(r=>{if(r.lk&&r.a==id){n++;e+=r.m}});return{i,e,n,bal:(+a.ini||0)+i-e}}
+function mAccounts(){const all=M.acc.filter(a=>a.inc!==0),tt=all.reduce((s,a)=>{const t=mAccTot(a.id);return{i:s.i+t.i,e:s.e+t.e,b:s.b+t.bal,n:s.n+t.n}},{i:0,e:0,b:0,n:0});
+ let h=`<div class="card"><div class="row" style="justify-content:space-between;align-items:center"><div><h2 style="margin:0">🗂️ ${esc(mAllName())}</h2><span class="mut">All accounts that are included in the total</span></div><div class="pa"><button class="b g s" onclick="ui.mae=ui.mae=='all'?null:'all';mDraw()">Rename</button></div></div>
+ ${ui.mae=='all'?`<div class="row" style="margin-top:10px"><label>Name for the combined view<input id="man" value="${esc(mAllName())}"></label><button class="b" onclick="M.pf.allName=$('#man').value.trim()||'All Accounts';mSave();ui.mae=null;mDraw()">Save</button></div>`:''}
+ <div class="mtiles" style="margin-top:10px"><div class="mt big"><small>Total balance</small><b class="${tt.b<0?'exp':''}">${mFmt(tt.b)}</b></div><div class="mt"><small>Total income</small><b class="inc">+${mFmt(tt.i)}</b></div><div class="mt"><small>Total expenses</small><b class="exp">−${mFmt(tt.e)}</b></div></div></div>`;
+ M.acc.forEach(a=>{const t=mAccTot(a.id);h+=`<div class="card"><div class="row" style="justify-content:space-between;align-items:center"><div class="mtx"><h2 style="margin:0"><span class="mic" style="display:inline-flex;vertical-align:middle;border-color:${a.color};margin-right:6px">${mI(a)}</span>${esc(a.name)}${a.inc===0?' <span class="pend">not in total</span>':''}</h2><span class="mut">${esc(a.detail||'')}</span></div>
+  <div class="pa"><button class="b g s" onclick="ui.mrf.acc='${a.id}';ui.mrf.pre='all';ui.mtab='mr';draw()">Records</button><button class="b g s" onclick="ui.mae=ui.mae=='${a.id}'?null:'${a.id}';mDraw()">Edit</button></div></div>
+  <div class="mtiles" style="margin-top:10px"><div class="mt big"><small>Balance</small><b class="${t.bal<0?'exp':''}">${mFmt(t.bal)}</b></div><div class="mt"><small>Income</small><b class="inc">+${mFmt(t.i)}</b></div><div class="mt"><small>Expenses</small><b class="exp">−${mFmt(t.e)}</b></div></div>${ui.mae==a.id?mAccForm(a,t.n):''}</div>`});
+ return h+(ui.mae=='new'?`<div class="card"><h2>New account</h2>${mAccForm(null,0)}</div>`:`<p><button class="b" onclick="ui.mae='new';mDraw()">＋ Add an account</button></p>`)}
+function mAccForm(a,n){const o=a||{name:'',detail:'',icon:'🏦',color:'#334155',ini:0,inc:1};
+ return`<div class="mex"><div class="row"><label style="flex:2 1 180px">Account name<input id="mfn" value="${esc(o.name)}"></label><label style="flex:2 1 180px">Description<input id="mfd" value="${esc(o.detail||'')}"></label></div>
+ <div class="row" style="margin-top:8px">${mIconField('mfi','mfsv',o)}<label style="flex:0 1 90px">Colour<input id="mfc" type="color" value="${o.color}"></label><label style="flex:1 1 150px">Opening balance (${esc(M.pf.cur)})<input id="mfo" type="number" step="0.01" value="${o.ini||0}"></label></div>${mEmoRow('mfi','💵 💳 🏦 👛 🪙 💰 🏧 🧾 🏠 🐖 📱 🚗 🎓'.split(' '))}
+ <label class="ck" style="margin-top:8px"><input type="checkbox" id="mfk" ${o.inc===0?'':'checked'}> Include in ${esc(mAllName())}</label>
+ <div class="row" style="margin-top:10px"><button class="b" onclick="mAccSave('${a?a.id:''}')">Save</button><button class="b g" onclick="ui.mae=null;mDraw()">Cancel</button></div>
+ ${a&&M.acc.length>1?`<div class="row" style="margin-top:12px;border-top:1px solid var(--ln);padding-top:10px">${n?`<label>Move its ${n} records to<select id="mfm">${M.acc.filter(z=>z.id!=a.id).map(z=>`<option value="${z.id}">${esc(z.name)}</option>`).join('')}</select></label>`:''}<button class="b d" onclick="mAccDel('${a.id}')">Delete this account</button></div>`:''}</div>`}
+function mAccSave(id){const n=$('#mfn').value.trim();if(!n)return toast('Enter a name for the account.');if(M.acc.some(a=>a.id!=id&&a.name.toLowerCase()==n.toLowerCase()))return toast('Another account already has that name.');
+ const o={name:n,detail:$('#mfd').value.trim(),icon:$('#mfi').value.trim()||'🏦',svg:$('#mfsv').value||undefined,color:$('#mfc').value,ini:parseFloat($('#mfo').value)||0,inc:$('#mfk').checked?1:0};
+ if(id)Object.assign(mA(id),o);else M.acc.push(Object.assign({id:'a'+M.nx++},o));ui.mae=null;mSave();toast('Account saved');mDraw()}
+function mAccDel(id){const n=M.mv.filter(r=>r.a==id).length,to=$('#mfm')?$('#mfm').value:'';if(!confirm(n?`Move ${n} records to “${mA(to).name}” and delete “${mA(id).name}”?`:`Delete “${mA(id).name}”?`))return;
+ if(n){const dest=mA(to);dest.ini=(+dest.ini||0)+(+mA(id).ini||0);M.mv.forEach(r=>{if(r.a==id)r.a=to})}M.acc=M.acc.filter(a=>a.id!=id);if(ui.macc==id)ui.macc='all';if(ui.mrf.acc==id)ui.mrf.acc='all';if(ui.mpf.acc==id)ui.mpf.acc='all';if(M.pf.lk.acc==id)M.pf.lk.acc='';ui.mae=null;mSave();mDraw()}
+
+/* ===== MONEY MODULE: Google Drive backup (your own Google account, through your own Apps Script) ===== */
+const GDK=K+'-mgd';let GD={};try{GD=JSON.parse(localStorage.getItem(GDK)||'{}')}catch(e){}
+let gdT,gdBusy=0,gdDirty=false;
+const gdOn=()=>!!(GD.url&&GD.key),gdSaveCfg=()=>{try{localStorage.setItem(GDK,JSON.stringify(GD))}catch(e){}};
+async function gdApi(action,x){const c=new AbortController(),t=setTimeout(()=>c.abort(),45000);
+ try{const r=await fetch(GD.url,{method:'POST',body:JSON.stringify(Object.assign({key:GD.key,action},x)),signal:c.signal}),j=await r.json();if(!j.ok)throw new Error(j.error||'Request failed');return j}
+ catch(e){throw new Error(e.name=='AbortError'?'Timed out':e.message)}finally{clearTimeout(t)}}
+const gdWhen=t=>{if(!t)return'never';const d=new Date(t),p=n=>String(n).padStart(2,'0');return mFd(d.getFullYear()+'-'+p(d.getMonth()+1)+'-'+p(d.getDate()))+' '+mFt(p(d.getHours())+':'+p(d.getMinutes()))};
+function gdStatus(t,bad){GD.msg=t;GD.bad=bad?1:0;const e=$('#gds');if(e){e.textContent=t;e.style.color=bad?'var(--exp)':''}}
+/* called whenever money data changes */
+function mGdMark(){gdDirty=true;if(!gdOn()||!GD.auto)return;clearTimeout(gdT);gdT=setTimeout(()=>mGdBackup(true),60000)}
+async function mGdBackup(auto){if(!gdOn()){if(!auto)toast('Enter your Drive backup address and key first.');return false}
+ if(gdBusy)return false;if(!navigator.onLine){gdStatus('Offline. The backup will run when you are online.',1);return false}
+ if(!M.mv.length&&!M.acc.length){if(!auto)toast('There is nothing to back up yet.');return false}
+ gdBusy=1;gdStatus('Backing up to Google Drive…');
+ try{mFlush();const j=await gdApi('put',{data:mExport()});GD.last=Date.now();GD.count=M.mv.length;gdDirty=false;gdSaveCfg();gdStatus('Backed up '+gdWhen(GD.last)+' ('+M.mv.length+' records)'+(j.file?' · '+j.file:''));if(!auto)toast('Backed up to Google Drive');gdBusy=0;return true}
+ catch(e){gdStatus('Backup failed: '+e.message,1);if(!auto)toast('Backup failed: '+e.message);gdBusy=0;return false}}
+/* used when the app is closed with the Exit button */
+async function mGdFlush(){if(gdOn()&&GD.auto&&gdDirty){clearTimeout(gdT);await Promise.race([mGdBackup(true),new Promise(r=>setTimeout(r,8000))])}}
+function mGdSave(){const u=$('#gdu').value.trim(),k=$('#gdk').value.trim();if(!/^https:\/\/script\.google\.com\//.test(u)||!k)return toast('Paste the Web app address (it starts with https://script.google.com) and your secret key.');
+ GD.url=u;GD.key=k;GD.auto=$('#gda').checked?1:0;gdSaveCfg();toast('Drive backup settings saved');mDraw()}
+function mGdAuto(v){GD.auto=v?1:0;gdSaveCfg();if(v&&gdDirty)mGdMark()}
+async function mGdTest(){mGdSaveQuiet();if(!gdOn())return toast('Enter the address and key first.');gdStatus('Testing…');try{await gdApi('ping');gdStatus('Connected to your Google Drive ✓');toast('Connected ✓')}catch(e){gdStatus('Could not connect: '+e.message,1);toast('Could not connect: '+e.message)}}
+function mGdSaveQuiet(){const u=$('#gdu'),k=$('#gdk');if(u&&k&&/^https:\/\/script\.google\.com\//.test(u.value.trim())&&k.value.trim()){GD.url=u.value.trim();GD.key=k.value.trim();GD.auto=$('#gda').checked?1:0;gdSaveCfg()}}
+function mGdOff(){if(!confirm('Disconnect this device from Google Drive backup? Existing backups stay in your Drive.'))return;GD={};gdSaveCfg();clearTimeout(gdT);mDraw()}
+async function mGdList(){mGdSaveQuiet();if(!gdOn())return toast('Enter the address and key first.');gdStatus('Looking for backups…');
+ try{const j=await gdApi('list'),L=j.result||[];ui.gdl=L;gdStatus(L.length?L.length+' backups found in Drive':'No backups found yet');mDraw()}catch(e){gdStatus('Could not list backups: '+e.message,1)}}
+async function mGdRestore(mode){mGdSaveQuiet();if(!gdOn())return toast('Enter the address and key first.');
+ const name=($('#gdf')||{}).value||'latest';
+ if(mode=='replace'&&!confirm('This replaces ALL money data on this device with the Drive backup. Continue?'))return;
+ gdStatus('Downloading backup…');
+ try{const j=await gdApi('get',{name}),x=j.result;if(!x)throw new Error('No backup found');
+  const r=mImport(x,mode);gdStatus('Restored '+r.added+' records'+(r.skipped?' ('+r.skipped+' already here)':''));toast('Restored from Google Drive');ui.mtab='ms';draw()}
+ catch(e){gdStatus('Restore failed: '+e.message,1);toast('Restore failed: '+e.message)}}
+function mGdCard(){const L=ui.gdl||[];
+ return`<details class="card" ${fo('m-gd',1)}><summary>Back up to Google Drive</summary>
+ <p class="mut">Saves your expense data to your own Google Drive, in a folder called “Help Register Money Backup”. The latest copy is always kept, plus one copy per day for the last 30 days. One-time setup: follow SETUP-MONEY-BACKUP.txt (about 5 minutes), then enter the address and key below.</p>
+ <div class="row"><label style="flex:2 1 260px">Web app address<input id="gdu" value="${esc(GD.url||'')}" placeholder="https://script.google.com/macros/s/…/exec" autocomplete="off"></label><label style="flex:1 1 150px">Secret key<input id="gdk" type="password" value="${esc(GD.key||'')}" autocomplete="off"></label></div>
+ <label class="ck" style="margin-top:8px"><input type="checkbox" id="gda" ${GD.auto?'checked':''} onchange="mGdAuto(this.checked)"> Back up automatically about a minute after I make changes, and when I press Exit</label>
+ <div class="row" style="margin-top:10px"><button class="b" onclick="mGdSave()">Save settings</button><button class="b g" onclick="mGdTest()">Test connection</button><button class="b g" onclick="mGdBackup()" ${gdOn()?'':'disabled'}>Back up now</button>${gdOn()?'<button class="b d" onclick="mGdOff()">Disconnect</button>':''}</div>
+ <p id="gds" class="mut" style="margin:8px 0 0;${GD.bad?'color:var(--exp)':''}">${esc(GD.msg||(GD.last?'Last backup: '+gdWhen(GD.last):'No backup made yet.'))}</p>
+ ${gdOn()?`<h3 style="margin:14px 0 6px">Restore from Google Drive</h3><div class="row"><label style="flex:1 1 220px">Which backup<select id="gdf"><option value="latest">Latest backup</option>${L.map(f=>`<option value="${esc(f.name)}">${esc(f.name)} (${esc(String(f.updated||'').slice(0,16).replace('T',' '))})</option>`).join('')}</select></label><button class="b g" onclick="mGdList()">Show older backups</button></div>
+ <div class="row" style="margin-top:10px"><button class="b g" onclick="mGdRestore('add')">Restore: add missing records</button><button class="b d" onclick="mGdRestore('replace')">Restore: replace everything on this device</button></div>`:''}
+ </details>`}
+
+/* ===== MONEY MODULE: grouped navigation (Money first) ===== */
+const NAVG=[
+ ['money','💰','Money',[['mh','Dashboard'],['mr','Records'],['ma','Accounts']]],
+ ['events','📓','Events Journal',[['jr','Journal'],['pl','Planner']]],
+ ['house','🏠','Household',[['att','Attendance'],['pay','Payments'],['ppl','People']]],
+ ['hol','🏖️','Holiday',[['hol','Holidays']]],
+ ['rep','📊','Reports',[['mp','Money'],['rep','Household']]],
+ ['set','⚙️','Settings',[['ms','Money'],['set','Household']]]];
+const navCur=()=>ui.mode=='money'?ui.mtab:ui.tab,
+ navGrp=()=>NAVG.find(g=>g[3].some(s=>s[0]==navCur()))||NAVG[0];
+function navTo(k){const isM=['mh','mr','ma','mp','ms'].includes(k);
+ if(isM){if(ui.mode!='money'){if(!lose())return;ui.mode='money'}ui.mtab=k;mClose();draw();return}
+ if(ui.mode=='money'){ui.mode='reg';ui.tab=k;ui.edit=null;draw();return}go(k)}
+function navPick(g){const G=NAVG.find(x=>x[0]==g),m=(ui.nmem||{})[g];navTo(m&&G[3].some(s=>s[0]==m)?m:G[3][0][0])}
+function navDraw(){const cur=navCur(),G=navGrp(),n=window.plN?plN():0;ui.nmem=ui.nmem||{};ui.nmem[G[0]]=cur;
+ $('#nav').innerHTML=NAVG.map(g=>`<button class="${g[0]==G[0]?'on':''}" onclick="navPick('${g[0]}')" ${g[0]==G[0]?'aria-current="page"':''}><span class="ni">${g[1]}</span><span class="nl">${g[2]}</span>${g[0]=='events'&&n?` <span class="bd">${n}</span>`:''}</button>`).join('');
+ const s=$('#subnav');if(s)s.innerHTML=G[3].length>1?`<div class="mchips">${G[3].map(([k,t])=>`<button class="mchip ${k==cur?'on':''}" onclick="navTo('${k}')">${t}${k=='pl'&&n?` <span class="bd">${n}</span>`:''}</button>`).join('')}</div>`:''}
+
+/* ===== MONEY MODULE: reports ===== */
+const MREPS=[['sum','Summary (income, expenses, balance)'],['cat','By category'],['date','By date (day-wise)'],['wk','By week'],['mon','By month'],['fy','By financial year (Apr–Mar)'],['year','By calendar year'],['acc','By account'],['cxm','Category by month'],['led','Transaction ledger'],['top','Largest transactions'],['bud','Budget vs actual']];
+let MR=null;
+function mReportsPage(){return mFB('mpf',`<div class="row" style="margin-bottom:10px"><label>Report<select onchange="mSetF('mpf','rt',this.value)">${MREPS.map(([k,n])=>`<option value="${k}" ${ui.mpf.rt==k?'selected':''}>${n}</option>`).join('')}</select></label></div>`)+`<div class="card" id="mrep"></div>`}
+const mAddD=(s,n)=>{const d=new Date(s+'T00:00:00');d.setDate(d.getDate()+n);return iso(d)};
+const mWkStart=s=>{const d=new Date(s+'T00:00:00'),o=(d.getDay()-mWk()+7)%7;d.setDate(d.getDate()-o);return iso(d)};
+const mFY=s=>{const y=+s.slice(0,4),m=+s.slice(5,7);return m>=4?y+'-'+String(y+1).slice(2):(y-1)+'-'+String(y).slice(2)};
+function mRepDraw(){const el=$('#mrep');if(!el)return;const st=ui.mpf,[from,to]=mRange(st.pre,st.from,st.to),recs=mFilter({acc:st.acc,from,to,type:st.type,cat:st.cat,q:st.q}),pure=st.type=='all'&&st.cat=='all'&&!st.q,sm=mSum(recs),
+ first=recs.length?recs[recs.length-1].d:'',last=recs.length?recs[0].d:'',rf=from||first,rt=to||last,open=mOpen(st.acc,from||'0000'),tables=[],rtp=st.rt;
+ const days=rf&&rt?Math.max(1,Math.round((new Date(rt)-new Date(rf))/864e5)+1):1,nm=MREPS.find(x=>x[0]==rtp)[1].replace(/ \(.*/,''),where=mAccName(st.acc)+' · '+mRL(from,to)+(pure?'':' · filtered');
+ const ok=recs.filter(r=>r.ok!==0);
+ if(rtp=='sum'){const big=ok.filter(r=>r.s=='-').sort((a,b)=>b.m-a.m)[0];
+  tables.push({hd:['Item','Amount'],num:[1],rows:[pure?['Opening balance',open]:null,['Income',sm.i],['Expenses',sm.e],['Net (income − expenses)',sm.n],pure?['Closing balance',open+sm.n]:null,['Income records',mn(sm.ni)],['Expense records',mn(sm.ne)],['Average expense per day',sm.e/days],big?['Largest expense – '+mC(big.c).name+' ('+mFd(big.d)+')',big.m]:null].filter(Boolean)});
+  if(st.acc=='all')tables.push({title:'By account',hd:['Account',...(pure?['Opening']:[]),'Income','Expenses',...(pure?['Closing']:[])],num:pure?[1,2,3,4]:[1,2],rows:M.acc.filter(a=>a.inc!==0).map(a=>{const s=mSum(ok.filter(r=>r.a==a.id)),o=mOpen(a.id,from||'0000');return[a.icon+' '+a.name,...(pure?[o]:[]),s.i,s.e,...(pure?[o+s.n]:[])]})});
+  const by=mByCat(ok.filter(r=>r.s=='-')),tt=by.reduce((s,x)=>s+x.v,0);if(by.length)tables.push({title:'Top expense categories',hd:['Category','Amount','Share'],num:[1],pct:[2],barOf:2,rows:by.slice(0,10).map(x=>[mC(x.c).icon+' '+mC(x.c).name,x.v,tt?x.v*100/tt:0])})}
+ else if(rtp=='cat'){const mk=(sign,title)=>{const by=mByCat(ok.filter(r=>r.s==sign)),tot=by.reduce((s,x)=>s+x.v,0);return{title,hd:['Category','Records','Amount','Share'],num:[2],pct:[3],barOf:3,rows:by.map(x=>[mC(x.c).icon+' '+mC(x.c).name,mn(x.n),x.v,tot?x.v*100/tot:0]),tot:['Total',mn(by.reduce((s,x)=>s+x.n,0)),tot,100]}};
+  if(st.type!='+')tables.push(mk('-','Expenses by category'));if(st.type!='-')tables.push(mk('+','Income by category'))}
+ else if(['date','wk','mon','fy','year'].includes(rtp)){const kf={date:r=>r.d,wk:r=>mWkStart(r.d),mon:r=>r.d.slice(0,7),fy:r=>mFY(r.d),year:r=>r.d.slice(0,4)}[rtp],g=new Map();
+  ok.forEach(r=>{const k=kf(r),o=g.get(k)||{i:0,e:0,n:0};if(r.s=='+')o.i+=r.m;else o.e+=r.m;o.n++;g.set(k,o)});let bal=open;
+  const rows=[...g.keys()].sort().map(k=>{const o=g.get(k);bal+=o.i-o.e;const lab=rtp=='date'?mFd(k)+' · '+WDN[new Date(k+'T00:00:00').getDay()].slice(0,3):rtp=='wk'?mFd(k)+' → '+mFd(mAddD(k,6)):rtp=='mon'?mMonthName(k):rtp=='fy'?'FY '+k:k;return[lab,mn(o.n),o.i,o.e,o.i-o.e,...(pure?[bal]:[])]});
+  tables.push({hd:['Period','Records','Income','Expenses','Net',...(pure?['Closing balance']:[])],num:pure?[2,3,4,5]:[2,3,4],rows,tot:['Total',mn(sm.ni+sm.ne),sm.i,sm.e,sm.n,...(pure?[open+sm.n]:[])]})}
+ else if(rtp=='acc'){const set=st.acc=='all'?M.acc.filter(a=>a.inc!==0):[mA(st.acc)];tables.push({hd:['Account',...(pure?['Opening']:[]),'Income','Expenses','Net',...(pure?['Closing']:[]),'Records'],num:pure?[1,2,3,4,5]:[1,2,3],
+   rows:set.map(a=>{const s=mSum(ok.filter(r=>r.a==a.id)),o=mOpen(a.id,from||'0000');return[a.icon+' '+a.name,...(pure?[o]:[]),s.i,s.e,s.n,...(pure?[o+s.n]:[]),mn(s.ni+s.ne)]}),tot:['Total',...(pure?[open]:[]),sm.i,sm.e,sm.n,...(pure?[open+sm.n]:[]),mn(sm.ni+sm.ne)]})}
+ else if(rtp=='cxm'){let ms=[];if(rf&&rt){for(let m=rf.slice(0,7);m<=rt.slice(0,7);m=mAddM(m,1))ms.push(m)}let cut='';if(ms.length>13){cut=`Showing the last 13 of ${ms.length} months. Narrow the dates to see the others.`;ms=ms.slice(-13)}
+  const sign=st.type=='+'?'+':'-',by=new Map();ok.filter(r=>r.s==sign&&ms.includes(r.d.slice(0,7))).forEach(r=>{const o=by.get(r.c)||{t:0};o[r.d.slice(0,7)]=(o[r.d.slice(0,7)]||0)+r.m;o.t+=r.m;by.set(r.c,o)});
+  const L=[...by.entries()].sort((a,b)=>b[1].t-a[1].t),colT=ms.map(m=>L.reduce((s,[c,o])=>s+(o[m]||0),0));
+  tables.push({title:(sign=='-'?'Expenses':'Income')+' by category and month',hd:['Category',...ms.map(m=>MN[+m.slice(5)-1]+' '+m.slice(2,4)),'Total'],num:ms.map((_,i)=>i+1).concat([ms.length+1]),rows:L.map(([c,o])=>[mC(c).icon+' '+mC(c).name,...ms.map(m=>o[m]||0),o.t]),tot:['Total',...colT,colT.reduce((a,b)=>a+b,0)]});if(cut)tables.push({note:cut})}
+ else if(rtp=='led'){const asc=recs.slice().reverse(),one=st.acc!='all'&&pure;let bal=open;const lim=st.all?1e9:1500,rows=asc.map(r=>{if(r.ok!==0)bal+=r.s=='+'?r.m:-r.m;return[mFd(r.d),mFt(r.t),mA(r.a).name,mC(r.c).icon+' '+mC(r.c).name,(r.n||'')+(r.ok===0?' (pending)':''),r.s=='+'?r.m:'',r.s=='-'?r.m:'',...(one?[bal]:[])]});
+  tables.push({hd:['Date','Time','Account','Category','Details','Income','Expenses',...(one?['Balance']:[])],num:one?[5,6,7]:[5,6],rows,lim,tot:['Total','','','','',sm.i,sm.e,...(one?[open+sm.n]:[])]})}
+ else if(rtp=='top'){const mk=(s,n,t)=>({title:t,hd:['Date','Category','Details','Account','Amount'],num:[4],rows:ok.filter(r=>r.s==s).sort((a,b)=>b.m-a.m).slice(0,n).map(r=>[mFd(r.d),mC(r.c).icon+' '+mC(r.c).name,r.n||'',mA(r.a).name,r.m])});
+  if(st.type!='+')tables.push(mk('-',25,'25 largest expenses'));if(st.type!='-')tables.push(mk('+',10,'10 largest income entries'))}
+ else if(rtp=='bud'){let nmo=1;if(rf&&rt){nmo=0;for(let m=rf.slice(0,7);m<=rt.slice(0,7);m=mAddM(m,1))nmo++}const by=Object.fromEntries(mByCat(ok.filter(r=>r.s=='-')).map(x=>[x.c,x.v]));
+  tables.push({hd:['Category','Budget',...[`Spent`],'Left','Used'],num:[1,2,3],pct:[4],rows:M.bud.map(b=>{const bg=b.amt*nmo,sp=by[b.c]||0;return[mC(b.c).icon+' '+mC(b.c).name,bg,sp,bg-sp,bg?sp*100/bg:0]}),title:`Monthly budgets × ${nmo} month${nmo>1?'s':''}`});if(!M.bud.length)tables.push({note:'No budgets set. Add them in Money → Settings.'})}
+ MR={T:nm,where,tables};
+ const cell=(v,j,t)=>t.num&&t.num.includes(j)&&typeof v=='number'?mFmt(v):t.pct&&t.pct.includes(j)?(+v).toFixed(1)+'%'+(t.barOf==j?` <span class="rbar" style="width:${Math.round(Math.min(100,v)*.8)}px"></span>`:''):esc(v);
+ el.innerHTML=`<div class="rh">${S.logo?`<img src="${S.logo}" alt="">`:''}<b>${esc(S.label)}</b></div><h2>${esc(nm)}</h2><p class="mut">${esc(where)}</p>`+tables.map(t=>{if(t.note)return`<p class="mut">${esc(t.note)}</p>`;const lim=t.lim||1e9,cut=t.rows.length>lim;
+  return(t.title?`<h3 style="margin-top:16px">${esc(t.title)}</h3>`:'')+(t.rows.length?`<div class="tw mnum"><table><tr>${t.hd.map((h,j)=>`<th class="${t.num&&t.num.includes(j)||t.pct&&t.pct.includes(j)?'n':''}">${esc(h)}</th>`).join('')}</tr>${t.rows.slice(0,lim).map(r=>`<tr>${r.map((v,j)=>`<td class="${t.num&&t.num.includes(j)||t.pct&&t.pct.includes(j)?'n':''}">${cell(v,j,t)}</td>`).join('')}</tr>`).join('')}${t.tot?`<tr class="t">${t.tot.map((v,j)=>`<td class="${t.num&&t.num.includes(j)||t.pct&&t.pct.includes(j)?'n':''}">${cell(v,j,t)}</td>`).join('')}</tr>`:''}</table></div>${cut?`<p class="mut noprint">Showing the first ${lim} of ${t.rows.length} rows. <button class="b g s" onclick="ui.mpf.all=1;mDraw()">Show all rows</button> (the CSV always includes everything)</p>`:''}`:'<p class="empty">No records for these filters.</p>')}).join('')+
+  `<div class="row noprint" style="margin-top:14px"><button class="b" onclick="window.print()">Print or save as PDF</button><button class="b g" onclick="mCsvShow()">Show as CSV text</button><button class="b g" onclick="mCsvDl()">Download CSV</button></div><div id="mtx" class="noprint"></div>`}
+function mCsvText(){const q=c=>'"'+String(c==null?'':typeof c=='number'?c.toFixed(2):c).replace(/"/g,'""')+'"',L=[[MR.T],[MR.where],[]];MR.tables.forEach(t=>{if(t.note)return;if(t.title)L.push([t.title]);L.push(t.hd);t.rows.forEach(r=>L.push(r));if(t.tot)L.push(t.tot);L.push([])});return L.map(r=>r.map(q).join(',')).join('\r\n')}
+function mCsvShow(){$('#mtx').innerHTML=`<p class="mut">Copy this text and paste it into Excel or Google Sheets.</p><textarea id="mtb" rows="6" readonly>${esc(mCsvText())}</textarea><div class="row" style="margin-top:8px"><button class="b s" onclick="$('#mtb').select();try{document.execCommand('copy');toast('Copied')}catch(e){toast('Press Ctrl+C to copy')}">Copy</button></div>`}
+function mDownload(name,text,type){try{const b=new Blob([text],{type:type||'text/plain'}),a=document.createElement('a');a.href=URL.createObjectURL(b);a.download=name;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},1500);return true}catch(e){return false}}
+function mCsvDl(){if(!mDownload('report-'+mTd()+'.csv','﻿'+mCsvText(),'text/csv'))mCsvShow()}
+
+/* ===== MONEY MODULE: settings ===== */
+function mPF(k,v){M.pf[k]=['dec','fw'].includes(k)?+v:v;mSave();mDraw()}
+function mBtn(k,v){M.pf.btn[k]=v;mSave();mDraw()}
+function mLk(k,v){M.pf.lk[k]=v;mSave();mDraw()}
+const mSel=(k,cur,opts,fn)=>`<select onchange="${fn||'mPF'}('${k}',this.value)">${opts.map(([v,n])=>`<option value="${v}" ${String(cur)==String(v)?'selected':''}>${n}</option>`).join('')}</select>`;
+const CARDN={bal:'Monthly balance and previous balance',btn:'Buttons to add records (when placed in the dashboard)',pie:'Monthly summary pie chart',last:'Last ten records',bar:'Monthly graph by category',bud:'Monthly budgets'};
+function mCardMove(i,d){const c=M.pf.cards,j=i+d;if(j<0||j>=c.length)return;[c[i],c[j]]=[c[j],c[i]];mSave();mDraw()}
+function mCardOn(i,v){M.pf.cards[i][1]=v?1:0;mSave();mDraw()}
+function mSettings(){const b=M.pf.btn,sw=(k,cur,cols)=>`<div class="sw">${cols.map(c=>`<button class="swb ${cur.toLowerCase()==c?'on':''}" style="background:${c}" aria-label="Colour ${c}" onclick="mBtn('${k}','${c}')"></button>`).join('')}<label class="cp">Custom<input type="color" value="${cur}" onchange="mBtn('${k}',this.value)"></label></div>`;
+ const cc=ui.mcs,cl=mCats(cc),u=mUse();
+ return`<details class="card" ${fo('m-cat',1)}><summary>Categories</summary><div class="mseg"><button class="b g s ${cc=='-'?'on ex1':''}" onclick="ui.mcs='-';ui.mce=null;mDraw()">Expense categories (${mCats('-').length})</button><button class="b g s ${cc=='+'?'on in1':''}" onclick="ui.mcs='+';ui.mce=null;mDraw()">Income categories (${mCats('+').length})</button></div>
+ <div class="row"><button class="b" onclick="ui.mce='new';mDraw()">＋ Add ${cc=='-'?'an expense':'an income'} category</button><label style="flex:0 1 200px">Order<select onchange="mPF('csort',this.value)"><option value="use" ${M.pf.csort=='use'?'selected':''}>Most used first</option><option value="az" ${M.pf.csort=='az'?'selected':''}>A to Z</option></select></label></div>
+ ${ui.mce=='new'?mCatForm(null):''}${cl.map(c=>`<div class="mset"><span class="mic">${mI(c)}</span><span class="mtx"><b>${esc(c.name)}</b><small>${u[c.id]||0} records</small></span><div class="pa"><button class="b g s" onclick="ui.mce='${c.id}';mDraw()">Edit</button><button class="b d s" onclick="ui.mce='del:${c.id}';mDraw()">Delete</button></div></div>${ui.mce==c.id?mCatForm(c):ui.mce=='del:'+c.id?mCatDel(c,u[c.id]||0):''}`).join('')}</details>
+ <details class="card" ${fo('m-cur',1)}><summary>Currency format</summary><div class="row"><label>Symbol<input list="mcl" value="${esc(M.pf.cur)}" onchange="mPF('cur',this.value.trim()||'₹')" style="width:100%"></label><datalist id="mcl"><option value="₹"><option value="$"><option value="€"><option value="£"><option value="¥"><option value="AED"><option value="SAR"><option value="BDT"><option value="Rs."></datalist>
+ <label>Symbol position${mSel('cpos',M.pf.cpos,[['b','Before the amount (₹100)'],['a','After the amount (100 ₹)']])}</label><label>Decimals${mSel('dec',M.pf.dec,[[2,'2 (₹1,234.50)'],[0,'None (₹1,235)']])}</label><label>Digit grouping${mSel('grp',M.pf.grp,[['in','Indian (12,34,567)'],['int','International (1,234,567)'],['none','None (1234567)']])}</label></div>
+ <p class="mut">Preview: <b>${mFmt(1234567.5)}</b> &nbsp; <b>${mFmt(-4250)}</b> &nbsp; <b>${mFmt(99.9)}</b>. This also changes how amounts look in the Help Register.</p></details>
+ <details class="card" ${fo('m-dt',1)}><summary>Date and time format</summary><div class="row"><label>Date format${mSel('df',M.pf.df,MDFS.map(f=>[f,f+'  ('+f.replace(/yyyy|dd|mm|MMM/g,t=>({yyyy:'2026',dd:'13',mm:'11',MMM:'Nov'}[t]))+')']))}</label><label>Time format${mSel('tf',M.pf.tf,[['12','12-hour (03:30 pm)'],['24','24-hour (15:30)']])}</label><label>First day of the week${mSel('fw',M.pf.fw,[[1,'Monday'],[0,'Sunday'],[6,'Saturday']])}</label></div>
+ <p class="mut">Preview: <b>${mFd(mTd())}</b> at <b>${mFt(mNow())}</b>. Weeks start on ${WDN[M.pf.fw]}. These apply across the whole app.</p></details>
+ <details class="card" ${fo('m-btn',1)}><summary>Buttons, colours and layout</summary><h3>Add-record buttons</h3><div class="row"><label>Position${mSel('pos',b.pos,[['br','Floating, bottom right'],['bl','Floating, bottom left'],['bc','Floating, bottom centre'],['dash','Inside the dashboard']],'mBtn')}</label><label>Shape${mSel('shape',b.shape,[['pill','Pill'],['rounded','Rounded box'],['square','Square'],['circle','Circle (symbol only)']],'mBtn')}</label>
+ <label>Size${mSel('size',b.size,[['s','Small'],['m','Medium'],['l','Large']],'mBtn')}</label><label>Order${mSel('order',b.order,[['ei','Expense, then Income'],['ie','Income, then Expense']],'mBtn')}</label></div>
+ <label class="ck" style="margin-top:8px"><input type="checkbox" ${b.lab?'checked':''} onchange="mBtn('lab',this.checked?1:0)"> Show the words “Expense” and “Income” on the buttons</label>
+ <h3 style="margin-top:12px">Expense button colour</h3>${sw('exp',b.exp,['#d92d20','#c2410c','#be185d','#7c3aed','#334155'])}<h3>Income button colour</h3>${sw('inc',b.inc,['#15803d','#0e7c66','#1d4ed8','#a16207','#334155'])}
+ <div class="mbtns" style="padding:10px;border:1px dashed var(--ln);border-radius:12px"><span class="mut" style="width:100%;text-align:center">Preview</span>${mBtns()}</div>
+ <h3 style="margin-top:14px">App colour and theme</h3><div class="sw">${PRE.map(c=>`<button class="swb ${(LOOK.acc||PRE[0]).toLowerCase()==c?'on':''}" style="background:${c}" aria-label="Colour ${c}" onclick="setAcc('${c}')"></button>`).join('')}<label class="cp">Custom<input type="color" value="${LOOK.acc||PRE[0]}" onchange="setAcc(this.value)"></label></div>
+ <div class="row"><label>Theme<select onchange="setTheme(this.value);draw()"><option value="auto" ${LOOK.th=='auto'?'selected':''}>Automatic</option><option value="light" ${LOOK.th=='light'?'selected':''}>Light</option><option value="dark" ${LOOK.th=='dark'?'selected':''}>Dark</option></select></label></div>
+ <h3 style="margin-top:14px">Dashboard cards: show and order</h3>${M.pf.cards.map(([k,on],i)=>`<div class="mset"><label class="ck mtx"><input type="checkbox" ${on?'checked':''} onchange="mCardOn(${i},this.checked)"> ${CARDN[k]}</label><div class="pa"><button class="b g s" ${i?'':'disabled'} onclick="mCardMove(${i},-1)" aria-label="Move up">▲</button><button class="b g s" ${i<M.pf.cards.length-1?'':'disabled'} onclick="mCardMove(${i},1)" aria-label="Move down">▼</button></div></div>`).join('')}
+ <div class="row" style="margin-top:10px"><button class="b g s" onclick="M.pf.btn=MDEF().pf.btn;M.pf.cards=MDEF().pf.cards;mSave();mDraw();toast('Buttons and layout reset')">Reset buttons and layout</button></div></details>
+ <details class="card" ${fo('m-lk',1)}><summary>Payments from the Help Register</summary><p class="mut">Money paid to your helpers (Payments tab) and amounts written in the Journal can be counted as expenses here, so your reports show everything. They are read-only here: change them in the Help Register.</p>
+ <label class="ck"><input type="checkbox" ${M.pf.lk.pay?'checked':''} onchange="mLk('pay',this.checked?1:0)"> Include payments to people (Household help)</label><label class="ck" style="margin-top:6px"><input type="checkbox" ${M.pf.lk.jr?'checked':''} onchange="mLk('jr',this.checked?1:0)"> Include amounts from Journal entries</label>
+ <div class="row" style="margin-top:10px"><label>Charge them to account<select onchange="mLk('acc',this.value)">${M.acc.map(a=>`<option value="${a.id}" ${a.id==mDefAcc()?'selected':''}>${a.icon} ${esc(a.name)}</option>`).join('')}</select></label><label>Count only from this date (optional)${mDF('mlkf',M.pf.lk.from,'mLkD')}</label></div>
+ <p class="mut">Tip: if you already enter these same payments here as normal records, set a start date, or turn this off, so they are not counted twice.</p></details>
+ <details class="card" ${fo('m-bud',1)}><summary>Monthly budgets</summary>${M.bud.map((x,i)=>`<div class="mset"><span class="mtx"><b>${mI(mC(x.c))} ${esc(mC(x.c).name)}</b></span><input type="number" min="0" style="width:120px;margin:0" value="${x.amt}" onchange="M.bud[${i}].amt=+this.value||0;mSave();mDraw()" aria-label="Budget"><button class="b d s" onclick="M.bud.splice(${i},1);mSave();mDraw()">Remove</button></div>`).join('')||'<p class="mut">No budgets yet.</p>'}
+ <div class="row" style="margin-top:10px"><label>Category<select id="mbc">${mCats('-').filter(c=>!M.bud.some(x=>x.c==c.id)).map(c=>`<option value="${c.id}">${c.icon} ${esc(c.name)}</option>`).join('')}</select></label><label>Monthly amount<input id="mba" type="number" min="0"></label><button class="b" onclick="mBudAdd()">Add budget</button></div></details>
+ ${mGdCard()}
+ <details class="card" ${fo('m-data',1)}><summary>Import, backup and reset</summary><p class="mut">Your money records are stored on this device only. ${M.mv.length} records are saved here.</p>
+ <div class="row"><label>Import a data file (expense-data.json or a backup)<input type="file" accept=".json,application/json" onchange="mImportFile(this)"></label><label style="flex:0 1 240px">When importing${mSel('mim',ui.mim||(M.mv.length?'add':'replace'),[['replace','Replace all money data'],['add','Add only new records']],'mImMode')}</label></div>
+ <div class="row" style="margin-top:10px"><button class="b" onclick="mBackup()">Download backup file</button><button class="b g" onclick="mBackupText()">Show backup as text</button><button class="b d" onclick="mErase()">Erase all money data</button></div><div id="mtx"></div></details>`}
+function mCatForm(c){const o=c||{name:'',icon:ui.mcs=='-'?'📦':'💰'};return`<div class="mex"><div class="row"><label style="flex:2 1 180px">Name<input id="mcn" value="${esc(o.name)}"></label>${mIconField('mci','mcsv',o)}</div>${mEmoRow('mci',EMO)}
+ <div class="row" style="margin-top:10px"><button class="b" onclick="mCatSave('${c?c.id:''}')">Save</button><button class="b g" onclick="ui.mce=null;mDraw()">Cancel</button></div></div>`}
+function mCatSave(id){const n=$('#mcn').value.trim(),ic=$('#mci').value.trim()||'📦',sv=$('#mcsv').value||undefined,s=id?mC(id).s:ui.mcs;if(!n)return toast('Enter a name.');if(M.cat.some(c=>c.id!=id&&c.s==s&&c.name.toLowerCase()==n.toLowerCase()))return toast('That category already exists.');
+ if(id){const c=mC(id);c.name=n;c.icon=ic;c.svg=sv}else M.cat.push({id:'c'+M.nx++,name:n,s,icon:ic,svg:sv});ui.mce=null;mSave();toast('Category saved');mDraw()}
+function mCatDel(c,n){const others=M.cat.filter(z=>z.s==c.s&&z.id!=c.id);return`<div class="mex">${n?`<p style="margin:0 0 8px">${n} records use “${esc(c.name)}”. Move them to another category, then delete it.</p><div class="row"><label>Move to<select id="mcm">${others.map(z=>`<option value="${z.id}">${z.icon} ${esc(z.name)}</option>`).join('')}</select></label><button class="b d" onclick="mCatDo('${c.id}',1)">Move and delete</button><button class="b g" onclick="ui.mce=null;mDraw()">Cancel</button></div>`:`<div class="row"><span>Delete “${esc(c.name)}”?</span><button class="b d" onclick="mCatDo('${c.id}',0)">Delete</button><button class="b g" onclick="ui.mce=null;mDraw()">Cancel</button></div>`}</div>`}
+function mCatDo(id,mv){if(mv){const to=$('#mcm').value;if(!to)return toast('Choose a category to move the records to.');M.mv.forEach(r=>{if(r.c==id)r.c=to});M.bud.forEach(b=>{if(b.c==id)b.c=to})}M.bud=M.bud.filter(b=>b.c!=id);M.cat=M.cat.filter(c=>c.id!=id);ui.mce=null;mSave();toast('Category deleted');mDraw()}
+function mBudAdd(){const c=$('#mbc').value,a=+$('#mba').value;if(!c||!(a>0))return toast('Choose a category and enter an amount above zero.');M.bud.push({c,amt:a});mSave();mDraw()}
+function mLkD(el){const v=mParseD(el.value);if(el.value.trim()&&!v){toast('Enter the date as '+M.pf.df+'.');return}mLk('from',v)}
+function mImMode(k,v){ui.mim=v}
+function mImportFile(inp){const f=inp.files[0];if(!f)return;const r=new FileReader;r.onload=()=>mImportText(String(r.result));r.onerror=()=>toast('Could not read that file.');r.readAsText(f);inp.value=''}
+function mImportText(t){let x;try{x=JSON.parse(t.replace(/^﻿/,''))}catch(e){return toast('That file is not a valid data file.')}
+ const mode=M.mv.length||M.acc.length?(ui.mim||'add'):'replace';if(mode=='replace'&&M.mv.length&&!confirm('This replaces all money records on this device with the file’s contents. Continue?'))return;
+ try{const r=mImport(x,mode);toast(`Imported ${r.added} records`+(r.skipped?` (${r.skipped} already here)`:''));ui.mtab=ui.mtab=='ms'?'ms':'mh';draw()}catch(e){toast(e.message)}}
+function mBackup(){const t=JSON.stringify(mExport());if(!mDownload('money-backup-'+mTd()+'.json',t,'application/json'))mBackupText();else toast('Backup file created')}
+function mBackupText(){$('#mtx').innerHTML=`<p class="mut">Copy this text and keep it safe. You can import it later as a file saved with a .json ending.</p><textarea id="mtb" rows="6" readonly>${esc(JSON.stringify(mExport()))}</textarea><div class="row" style="margin-top:8px"><button class="b s" onclick="$('#mtb').select();try{document.execCommand('copy');toast('Copied')}catch(e){toast('Press Ctrl+C to copy')}">Copy</button></div>`}
+function mErase(){if(!confirm('Erase ALL money records, accounts and categories on this device? This cannot be undone. Make a backup first if unsure.'))return;if(!confirm('Really erase everything in Money?'))return;const p=M.pf;M=MDEF();M.pf=p;mSave();mFlush();toast('Money data erased');draw()}
+
+/* ---- start ---- */
+mSw();if(ui.mode=='money')draw();
+
+draw();
+</script></body></html>
