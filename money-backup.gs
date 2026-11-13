@@ -1,23 +1,25 @@
 /**
- * Help Register - Money backup to Google Drive.
+ * Help Register - MONEY sync and backup through Google Drive.   (script version m2)
+ * This is a different script from the Household one: its own web app address and its own key.
  * Paste this whole file into a new Google Apps Script project (see SETUP-MONEY-BACKUP.txt).
  * It stores your expense data as JSON files in YOUR Drive, in the folder below.
  */
-const KEY = 'my-household-7930';      // choose a long random phrase; enter the same in the app
+const KEY = 'CHANGE-THIS-TO-YOUR-OWN-SECRET-KEY';      // choose a long random phrase; enter the same in the app
 const FOLDER_NAME = 'Help Register Money Backup';
 const KEEP_DAYS = 30;                                  // how many daily copies to keep
+const VERSION = 'm2';
 
 /** Open the web app address in a browser: you should see a short "running" message. */
 function doGet() {
-  return ContentService.createTextOutput('Help Register Money script is running. Use the app to sync (this page needs no action).')
+  return ContentService.createTextOutput('Help Register MONEY script is running (version ' + VERSION + '). Use the app to sync (this page needs no action).')
     .setMimeType(ContentService.MimeType.TEXT);
 }
 
 function doPost(e) {
   try {
     const req = JSON.parse(e.postData.contents);
-    if (KEY === 'my-household-7930' || req.key !== KEY) return out({ ok: false, error: 'Wrong key' });
-    if (req.action === 'ping') return out({ ok: true });
+    if (KEY === 'CHANGE-THIS-TO-YOUR-OWN-SECRET-KEY' || req.key !== KEY) return out({ ok: false, error: 'Wrong key' });
+    if (req.action === 'ping') return out({ ok: true, version: VERSION });
 
     const lock = LockService.getScriptLock();
     lock.waitLock(20000);
