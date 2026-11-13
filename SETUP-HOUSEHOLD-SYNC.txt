@@ -1,0 +1,50 @@
+SETUP: SYNC YOUR HOUSEHOLD DATA THROUGH GOOGLE DRIVE (one time, about 5 minutes)
+================================================================================
+Household data (attendance, payments, people, journal, planner) syncs between your devices through YOUR own Google Drive,
+using a small script that runs in YOUR Google account. Nobody else can read it.
+This is a DIFFERENT script from the Money one (money-backup.gs). Make a separate Apps Script project for each,
+with a different secret key and a different web app address. Never paste one's address into the other.
+
+FIRST-TIME SETUP
+1. Open https://script.google.com and sign in with your Google account.
+2. Click "New project". Delete the sample code.
+3. Open the file household-sync.gs (in this repository), copy ALL of it and paste it into the editor.
+4. Near the top, replace  CHANGE-THIS-TO-YOUR-OWN-HOUSEHOLD-KEY  with a long secret phrase of your own.
+   Keep it private. You will type the same phrase in the app.
+5. Click Save. At the top choose the function "authorizeOnce" and click Run.
+   Google asks you to allow access to Drive: Review permissions > choose your account >
+   Advanced > "Go to (project name) (unsafe)" > Allow.
+   (It says "unsafe" only because you wrote the script yourself and Google has not reviewed it.)
+6. Click Deploy > New deployment. Click the gear icon > "Web app".
+      Execute as:         Me
+      Who has access:     Anyone
+   Click Deploy. Copy the "Web app" address. It must start with https://script.google.com/macros/s/ and end with /exec
+7. CHECK IT: paste that address into a browser. You should see
+   "Help Register HOUSEHOLD script is running (version h2)."
+   If you see a Google sign-in page or an error instead, go to TROUBLESHOOTING below.
+8. In the app: Settings > Household > "Sync across devices". Paste the address and your secret key,
+   press "Save and sync". The status at the top should change to "Synced".
+9. Repeat step 8 on every device with the SAME address and key.
+   If you already have household data on several devices, sync first from the device with the most complete data.
+   The others then merge into it (the newest change wins; deletions are remembered).
+
+UPDATING THE SCRIPT LATER
+Replace the code, keep your SAME key, then Deploy > Manage deployments > pencil (Edit) > Version: "New version" > Deploy.
+The address stays the same. Without "New version" the old code keeps running.
+
+TROUBLESHOOTING
+"Unexpected token '<'" or the app shows "Not synced" with a web page error
+  1. Deploy > Manage deployments > pencil > Version: New version > Deploy.
+  2. "Who has access" must be Anyone.
+  3. Use the address ending in /exec (not the editor address, not "/dev", and not the Money script address).
+  4. Open the address in a browser: it must show the "running" message without asking you to sign in.
+"Wrong key"  The key in the app is not exactly the same as the KEY line in the script (check for spaces).
+"Not synced - busy, will retry"  Another device saved at the same moment. Press Sync again.
+
+DRIVE FILES
+The script keeps its data in the Drive folder "Help Register Household Sync": household-latest.json, plus one safety copy
+per day (household-YYYY-MM-DD.json) for 30 days.
+
+SECURITY NOTES
+* "Anyone" only means the address can be called; every request must carry your secret key, otherwise it is refused.
+  Do not share the address and key, and do not commit your real key to GitHub.

@@ -33,6 +33,11 @@ Holiday, Reports (Money, Household) and Settings (Money, Household).
 Follow `SETUP-MONEY-BACKUP.txt` once (paste `money-backup.gs` into Google Apps Script), then enter the address and key in
 Settings > Money > Google Drive sync and backup. The header **Sync** button syncs Household, Money, or both.
 
+## Household sync through Google Drive
+Household uses its own script, separate from Money. Follow `SETUP-HOUSEHOLD-SYNC.txt` once (paste `household-sync.gs` into a
+new Google Apps Script project), then enter its address and key in Settings > Household > Sync across devices.
+Use a different key and address for each of the two scripts. Never commit your real keys or addresses to this repository.
+
 ## Icons
 Money > Settings > Categories > Edit > Choose... offers 1,400+ built-in emoji and a search of 200,000+ modern icons from open icon sets
 (Lucide, Tabler, Phosphor, Material, Fluent and more) through the Iconify website. Chosen icons are saved inside the app and work offline.

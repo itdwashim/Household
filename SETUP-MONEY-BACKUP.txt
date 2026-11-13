@@ -18,7 +18,7 @@ FIRST-TIME SETUP
       Execute as:         Me
       Who has access:     Anyone
    Click Deploy. Copy the "Web app" address. It must start with https://script.google.com/macros/s/ and end with /exec
-7. CHECK IT: paste that address into a browser. You should see the words "Help Register Money script is running."
+7. CHECK IT: paste that address into a browser. You should see "Help Register MONEY script is running (version m2)."
    If you see a Google sign-in page or an error instead, go to the TROUBLESHOOTING section below.
 8. In the app: Settings > Money > "Google Drive sync and backup (Money)".
    Paste the address and your secret key, tick "Sync automatically", press "Save settings",
