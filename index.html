@@ -188,7 +188,7 @@ nav button .bd{margin-left:4px}
 /* account tabs (underline style) - different from the pill menu below the header */
 .mtabs{display:flex;margin:0 0 12px;border-bottom:2px solid var(--ln);overflow-x:auto;-webkit-overflow-scrolling:touch}
 .mtab{flex:1 0 auto;background:none;border:0;border-bottom:3px solid transparent;margin-bottom:-2px;border-radius:0;padding:10px 14px;color:var(--mut);font:600 14px var(--fb);cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:6px;white-space:nowrap}
-.mtab.on{color:var(--pri);border-bottom-color:var(--pri);font-weight:700}
+.mtab.on{background:#fde047;color:#3b2f00;border-bottom-color:#ca8a04;border-radius:8px 8px 0 0;font-weight:800}
 .mtab svg{width:1.15em;height:1.15em}
 @media(max-width:700px){.mtab{padding:9px 5px;font-size:12px;gap:3px}}
 /* clock, weather and flag live in the title bar (all screens) */
@@ -226,6 +226,8 @@ header h1{font-size:15px;flex:1 1 0;min-width:0;overflow:hidden;text-overflow:el
 .mddi{display:flex;align-items:center;gap:5px;min-width:0;padding:6px 8px;border:0;border-bottom:1px solid var(--ln);border-radius:0;background:none;color:var(--ink);font:inherit;font-size:12.5px;line-height:1.25;text-align:left;cursor:pointer}
 .mddi .i{flex:none;font-size:14px}.mddi .n{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .mddi.on{background:var(--p,#e3f3ec);color:var(--pt,var(--pri));font-weight:700}
+.fsum{margin:0 0 10px;padding:7px 10px;border-radius:8px;background:var(--h,#fff4d6);color:var(--ht,#6b4d00);font-size:12.5px;line-height:1.35;display:flex;gap:8px;align-items:center;justify-content:space-between}.fsum button{flex:none}
+.mddh{grid-column:1/-1;padding:4px 8px;font-size:11px;font-weight:700;letter-spacing:.03em;text-transform:uppercase;color:var(--mut);background:var(--bg);border-bottom:1px solid var(--ln)}
 /* icon chooser */
 .icf{display:flex;align-items:center;gap:10px;flex:0 1 auto}
 .icp{width:48px;height:48px;border-radius:12px;border:1px solid var(--ln);background:var(--bg);font-size:26px;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;color:var(--ink);padding:0}
@@ -662,8 +664,8 @@ function rep(){const el=$('#rep');if(!el)return;const[y,m]=ym(ui.mon),t=ui.rt,pp
  el.innerHTML=`<div class="rh">${S.logo?`<img src="${S.logo}" alt="">`:''}<b>${esc(S.label)}</b></div><h2>${esc(T)}</h2><div class="tw"><table><tr>${hd.map((h,i)=>`<th class="${i>=hd.length-3&&t!='reg'&&t!='notes'&&t!='pl'&&t!='jr'?'n':''}">${esc(h)}</th>`).join('')}</tr>${rows.map(r=>`<tr>${r.map((c,i)=>`<td class="${i>=hd.length-3&&t!='reg'&&t!='notes'&&t!='pl'&&t!='jr'?'n':''}">${esc(c)}</td>`).join('')}</tr>`).join('')}${tot?`<tr class="t">${tot.map((c,i)=>`<td class="${i>=hd.length-3?'n':''}">${esc(c)}</td>`).join('')}</tr>`:''}</table></div>
  ${t=='reg'?'<p class="mut">P present, A absent, ½ half day, H holiday, – not marked.</p>':''}<div class="row noprint" style="margin-top:12px"><button class="b" onclick="window.print()">Print or save as PDF</button><button class="b g" onclick="csv()">Show as CSV</button></div><div id="tx" class="noprint"></div>`}
 function csv(){const q=c=>'"'+String(c).replace(/"/g,'""')+'"',a=[RD.T,RD.hd,...RD.rows];if(RD.tot)a.push(RD.tot);txt('Copy this text and paste it into Excel or Google Sheets.',a.map(r=>[].concat(r).map(q).join(',')).join('\n'))}
-let fitQ=0;function fitNums(){cancelAnimationFrame(fitQ);fitQ=requestAnimationFrame(()=>{document.querySelectorAll('.mt b').forEach(e=>{e.style.fontSize='';let f=parseFloat(getComputedStyle(e).fontSize);while(e.scrollWidth>e.clientWidth&&f>9){f-=.5;e.style.fontSize=f+'px'}})})}
-try{new MutationObserver(fitNums).observe(document.body,{childList:true,subtree:true});addEventListener('resize',fitNums);if(document.fonts&&document.fonts.ready)document.fonts.ready.then(fitNums)}catch(e){}
+let fitQ=0;function fitNums(){cancelAnimationFrame(fitQ);fitQ=requestAnimationFrame(()=>{document.querySelectorAll('.mt b').forEach(e=>{e.style.fontSize='';let f=parseFloat(getComputedStyle(e).fontSize);while(e.scrollWidth>e.clientWidth&&f>9){f-=.5;e.style.fontSize=f+'px'}});document.querySelectorAll('.mtabs').forEach(t=>{const on=t.querySelector('.mtab.on');if(on)t.scrollLeft=Math.max(0,on.offsetLeft-(t.clientWidth-on.offsetWidth)/2)})})}
+try{new MutationObserver(fitNums).observe(document.querySelector('main')||document.body,{childList:true,subtree:true});addEventListener('resize',fitNums);if(document.fonts&&document.fonts.ready)document.fonts.ready.then(fitNums)}catch(e){}
 look();draw();boot2();if(on()){setSt('Connecting…');pull();setInterval(pull,20000);document.addEventListener('visibilitychange',()=>{if(!document.hidden)pull()})}else setSt('This device only');
 </script><script>
 let DIP=null;
@@ -723,7 +725,7 @@ function mLinked(){const L=M.pf.lk,out=[],a=mDefAcc();if(!a)return out;
  if(L.pay)(S.pay||[]).forEach(p=>{if(!p.date||!(+p.amt>0)||(L.from&&p.date<L.from))return;const pe=S.people.find(x=>x.id==p.pid);out.push({id:'p'+p.id,a,c:'@pay',m:+p.amt,s:'-',d:p.date,t:'',n:(pe?pe.name:'Helper')+(p.note?' – '+p.note:''),ok:1,lk:'pay'})});
  if(L.jr)(S.jr||[]).forEach(j=>{if(!j.date||!(+j.amt>0)||(L.from&&j.date<L.from))return;out.push({id:'j'+j.id,a,c:'@jr:'+(j.cat||'Other'),m:+j.amt,s:'-',d:j.date,t:'',n:j.title||'',ok:1,lk:'jr'})});return out}
 let mvc=null,mvk='';
-function mvAll(){const k=MV+'|'+(S.ts||0)+'|'+JSON.stringify(M.pf.lk)+'|'+M.acc.length;if(k!==mvk){mvc=M.mv.concat(mLinked());mvc.sort((x,y)=>(y.d+(y.t||'')).localeCompare(x.d+(x.t||''))||(String(y.id)<String(x.id)?-1:1));mvk=k}return mvc}
+function mvAll(){const k=MV+'|'+M.mv.length+'|'+(S.ts||0)+'|'+JSON.stringify(M.pf.lk)+'|'+M.acc.length;if(k!==mvk){mvc=M.mv.concat(mLinked());mvc.sort((x,y)=>(y.d+(y.t||'')).localeCompare(x.d+(x.t||''))||(String(y.id)<String(x.id)?-1:1));mvk=k}return mvc}
 const mScope=sel=>new Set(sel=='all'?M.acc.filter(a=>a.inc!==0).map(a=>a.id):[sel]);
 function mFilter(f){const set=mScope(f.acc||'all'),q=(f.q||'').trim().toLowerCase();
  return mvAll().filter(r=>set.has(r.a)&&(!f.from||r.d>=f.from)&&(!f.to||r.d<=f.to)&&(!f.type||f.type=='all'||r.s==f.type)&&(!f.cat||f.cat=='all'||r.c==f.cat)&&(!q||(mC(r.c).name+' '+(r.n||'')+' '+mA(r.a).name+' '+r.m).toLowerCase().includes(q)))}
@@ -908,9 +910,24 @@ const mNoop=()=>{};
 function mSetF(k,f,v){const st=ui[k];if(f=='pre'&&v=='cu'){[st.from,st.to]=mRange(st.pre,st.from,st.to)}st[f]=v;if(f!='all')st.all=0;ui.mrn=100;mDraw()}
 function mRfD(el){mFDate('mrf',el)}function mPfD(el){mFDate('mpf',el)}
 function mFDate(k,el){const f=el.id.slice(-4)=='from'?'from':'to',v=mParseD(el.value);if(el.value.trim()&&!v){toast('Enter the date as '+M.pf.df+'.');el.value=ui[k][f]?mFd(ui[k][f]):'';return}ui[k][f]=v;ui[k].pre='cu';ui.mrn=100;mDraw()}
-function mFB(k,extra){const st=ui[k],[from,to]=mRange(st.pre,st.from,st.to);return`<div class="card noprint"><h2>${k=='mrf'?'Records':'Reports'}</h2>${extra||''}${mChips(st.acc,`mSetF.bind(null,'${k}','acc')`)}
+function mFcLabel(st){if(st.cat=='all')return'All categories';if(st.cat=='@pay')return'🧹 Household help';const c=mC(st.cat);return((c&&c.icon||'')+' '+(c&&c.name||'')).trim()||'All categories'}
+function mFcBtn(k,st){return`<button type="button" class="mdd" id="mfcb-${k}" aria-haspopup="listbox" aria-expanded="false" onclick="mFcToggle('${k}')"><span class="n">${esc(mFcLabel(st))}</span><span aria-hidden="true">▾</span></button>`}
+function mFcItems(k,sel){const it=(id,t)=>`<button type="button" class="mddi ${id==sel?'on':''}" role="option" onclick="mSetF('${k}','cat','${id}')"><span class="n">${t}</span></button>`,g=(s,t)=>`<div class="mddh">${t}</div>`+mCats(s).map(c=>it(c.id,`${esc(c.icon||'')} ${esc(c.name)}`)).join('');return it('all','All categories')+(M.pf.lk.pay?it('@pay','🧹 Household help'):'')+g('-','Expense categories')+g('+','Income categories')}
+function mFcToggle(k){const dl=$('#mfcl-'+k),bt=$('#mfcb-'+k);if(!dl)return;dl.hidden=!dl.hidden;bt.setAttribute('aria-expanded',String(!dl.hidden));if(!dl.hidden){const on=dl.querySelector('.mddi.on');if(on)on.scrollIntoView({block:'nearest'})}}
+function mFSum(k,st){const f=[];if(st.acc!='all'){const a=mA(st.acc);f.push('Account: '+(a?a.name:'?'))}if(st.type=='-')f.push('Expenses only');if(st.type=='+')f.push('Income only');if(st.cat!='all')f.push('Category: '+mFcLabel(st));if((st.q||'').trim())f.push('Search: “'+st.q.trim()+'”');
+ if(!f.length)return'';return`<div class="fsum"><span>Filters on: <b>${esc(f.join(' · '))}</b>${st.acc!='all'?'. The Dashboard counts all accounts, so totals can differ.':''}</span><button class="b g s" onclick="mClrF('${k}')">Show all</button></div>`}
+function mClrF(k){const st=ui[k];Object.assign(st,{acc:'all',type:'all',cat:'all',q:''});if('all' in st)st.all=0;ui.mrn=100;mDraw()}
+function mDataCheck(){const own=M.mv.filter(r=>r.ok!==0),lk=mvAll().filter(r=>r.lk&&r.ok!==0),sm=mSum(M.mv),ls=lk.reduce((t,r)=>t+r.m,0);
+ const ag={},cg={};M.acc.forEach(a=>ag[a.id]=a.name);M.cat.forEach(c=>cg[c.id]=c.s+c.name);
+ const keys=M.mv.map(r=>[ag[r.a],cg[r.c],r.m,r.s,r.d,r.t||'',r.n||'',r.ok===0?0:1].join('|')),dup=(()=>{const m=new Map();keys.forEach(k=>m.set(k,(m.get(k)||0)+1));let n=0;m.forEach(v=>{if(v>1)n+=v-1});return n})();
+ const fp=hsh(keys.slice().sort().join('\n')).toString(36).toUpperCase(),newest=M.mv.reduce((b,r)=>((r.d+(r.t||''))>b?(r.d+(r.t||'')):b),''),all='9999-12-31';
+ const per=M.acc.map(a=>`<tr><td>${esc(a.name)}${a.inc===0?' (not in total)':''}</td><td class="n">${mFmt(mOpen(a.id,all))}</td></tr>`).join('');
+ return`<p class="mut" style="margin:0 0 8px">Open this on every device you use. If the <b>fingerprint</b> or the numbers differ, the devices hold different records: press <b>Sync</b> in the title bar on each.</p>
+ <div class="tw"><table class="mnum"><tbody><tr><td>Fingerprint (your own records)</td><td class="n"><b>${fp}</b></td></tr><tr><td>Records (own / not yet confirmed)</td><td class="n">${own.length} / ${M.mv.length-own.length}</td></tr><tr><td>Income, all records</td><td class="n">${mFmt(sm.i)}</td></tr><tr><td>Expenses, all records</td><td class="n">${mFmt(sm.e)}</td></tr><tr><td>Household items counted as expenses</td><td class="n">${lk.length} items · ${mFmt(ls)}</td></tr><tr><td>Identical repeated records</td><td class="n">${dup}</td></tr><tr><td>Newest record</td><td class="n">${newest?esc(newest.slice(8,10)+'-'+newest.slice(5,7)+'-'+newest.slice(0,4)+' '+(newest.slice(10)||'')):'none'}</td></tr><tr><td>Last Money sync</td><td class="n">${GD&&GD.syncT?new Date(GD.syncT).toLocaleString('en-IN'):'never on this device'}</td></tr>${per}</tbody></table></div>
+ <p class="mut" style="margin:8px 0 0">The balance rows add up every record dated up to any day, plus the starting balance. “Identical repeated records” are genuine if you really bought the same thing twice at the same minute.</p>`}
+function mFB(k,extra){const st=ui[k],[from,to]=mRange(st.pre,st.from,st.to);return`<div class="card noprint"><h2>${k=='mrf'?'Records':'Reports'}</h2>${extra||''}${mChips(st.acc,`mSetF.bind(null,'${k}','acc')`)}${mFSum(k,st)}
  <div class="row"><label>Type<select onchange="mSetF('${k}','type',this.value)"><option value="all">Income and expenses</option><option value="-" ${st.type=='-'?'selected':''}>Expenses only</option><option value="+" ${st.type=='+'?'selected':''}>Income only</option></select></label>
- <label>Category<select onchange="mSetF('${k}','cat',this.value)">${mCatOpts(st.cat)}</select></label><label>Search<input type="search" value="${esc(st.q)}" placeholder="Details, category…" onchange="mSetF('${k}','q',this.value)"></label></div>
+ <label>Category${mDD()?mFcBtn(k,st):`<select onchange="mSetF('${k}','cat',this.value)">${mCatOpts(st.cat)}</select>`}</label><label>Search<input type="search" value="${esc(st.q)}" placeholder="Details, category…" onchange="mSetF('${k}','q',this.value)"></label></div>${mDD()?`<div class="mddl" id="mfcl-${k}" role="listbox" aria-label="Category" hidden>${mFcItems(k,st.cat)}</div>`:''}
  <div class="row" style="margin-top:10px"><label>Dates<select onchange="mSetF('${k}','pre',this.value)">${PRESETS.map(([v,n])=>`<option value="${v}" ${st.pre==v?'selected':''}>${n}</option>`).join('')}</select></label><label>From${mDF(k+'_from',from,k=='mrf'?'mRfD':'mPfD')}</label><label>To${mDF(k+'_to',to,k=='mrf'?'mRfD':'mPfD')}</label></div></div>`}
 function mRecords(){const st=ui.mrf,[from,to]=mRange(st.pre,st.from,st.to),recs=mFilter({acc:st.acc,from,to,type:st.type,cat:st.cat,q:st.q}),s=mSum(recs),day=new Map();
  recs.forEach(r=>{if(r.ok!==0)day.set(r.d,(day.get(r.d)||0)+(r.s=='+'?r.m:-r.m))});let h='',cur='',n=0;
@@ -1074,6 +1091,7 @@ function syApply(out){const fld=(o,p)=>{Object.keys(o).forEach(k=>{if(k!='id'&&!
  const del=M.mv.length-(keep.length-add);M.mv=keep;
  M.bud=out.bud.filter(p=>ci[p.c]).map(p=>({g:p.g,c:ci[p.c],amt:p.amt,u:p.u}));
  M.tb=out.tb;M.sy={};['acc','cat','mv','bud'].forEach(k=>out[k].forEach(p=>{M.sy[p.g]=hsh(syKey(p))}));
+ MV++;mvk='';
  return{add:add+A.add+C.add,del:del+A.del+C.del}}
 async function mSyncMoney(){if(!gdOn())throw new Error('Money sync is not set up yet.');if(msyBusy)throw new Error('Money sync is already running.');msyBusy=true;
  try{mFlush();
@@ -1194,6 +1212,7 @@ function mSettings(){const b=M.pf.btn,sw=(k,cur,cols)=>`<div class="sw">${cols.m
  <h3 style="margin-top:14px">Title bar</h3><label class="ck"><input type="checkbox" ${PF.clock?'checked':''} onchange="setPF('clock',this.checked?1:0)"> Show the clock</label><label class="ck" style="margin-top:6px"><input type="checkbox" ${PF.wx?'checked':''} onchange="setPF('wx',this.checked?1:0)"> Show the weather card</label><label class="ck" style="margin-top:6px"><input type="checkbox" ${PF.flag?'checked':''} onchange="setPF('flag',this.checked?1:0)"> Show the National Flag</label>
  <p class="mut" style="margin:8px 0 0">The clock, weather and flag appear in the title bar at the top. To choose the weather place or °C/°F, open Settings › Household.</p>
  <div class="row" style="margin-top:10px"><button class="b g s" onclick="resetLook()">Reset appearance</button></div><p class="mut">Appearance is saved on this device only, so your phone and computer can look different.</p></details>
+ <details class="card" ${fo('m-dc',0)}><summary>Data check (compare devices)</summary>${mDataCheck()}</details>
  <details class="card" ${fo('m-dt',1)}><summary>Date and time format</summary><div class="row"><label>Date format${mSel('df',M.pf.df,MDFS.map(f=>[f,f+'  ('+f.replace(/yyyy|dd|mm|MMM/g,t=>({yyyy:'2026',dd:'13',mm:'11',MMM:'Nov'}[t]))+')']))}</label><label>Time format${mSel('tf',M.pf.tf,[['12','12-hour (03:30 pm)'],['24','24-hour (15:30)']])}</label><label>First day of the week${mSel('fw',M.pf.fw,[[1,'Monday'],[0,'Sunday'],[6,'Saturday']])}</label></div>
  <p class="mut">Preview: <b>${mFd(mTd())}</b> at <b>${mFt(mNow())}</b>. Weeks start on ${WDN[M.pf.fw]}. These apply across the whole app.</p></details>
  <details class="card" ${fo('m-btn',1)}><summary>Buttons, colours and layout</summary><h3>Add-record buttons</h3><div class="row"><label>Position${mSel('pos',b.pos,[['br','Floating, bottom right'],['bl','Floating, bottom left'],['bc','Floating, bottom centre'],['dash','Inside the dashboard']],'mBtn')}</label><label>Shape${mSel('shape',b.shape,[['pill','Pill'],['rounded','Rounded box'],['square','Square'],['circle','Circle (symbol only)']],'mBtn')}</label>
