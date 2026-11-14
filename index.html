@@ -168,7 +168,7 @@ body.mm #dash{display:none!important}
 .mnum td.n,.mnum th.n{text-align:right;font-variant-numeric:tabular-nums}
 .rbar{display:inline-block;height:9px;border-radius:4px;background:var(--s1);vertical-align:middle;min-width:1px}
 .mfld{display:flex;flex-direction:column;gap:2px}
-@media print{#modesw,#mfab,#mdlg,.mchips,.mnav{display:none!important}}
+@media print{#modesw,#mfab,#mdlg,.mchips,.mtabs,.mnav,#hd{display:none!important}}
 @media(max-width:700px){#modesw{padding:8px 10px 0}.mtiles{grid-template-columns:repeat(2,1fr)}.mt b{font-size:17px}}
 button.b.g:hover,button.b.d:hover{background:var(--bg)}
 /* grouped navigation */
@@ -185,6 +185,27 @@ nav button .bd{margin-left:4px}
  nav button .bd{position:absolute;margin:0;transform:translate(14px,-4px)}
  nav button{position:relative}
 }
+/* account tabs (underline style) - different from the pill menu below the header */
+.mtabs{display:flex;margin:0 0 12px;border-bottom:2px solid var(--ln);overflow-x:auto;-webkit-overflow-scrolling:touch}
+.mtab{flex:1 0 auto;background:none;border:0;border-bottom:3px solid transparent;margin-bottom:-2px;border-radius:0;padding:10px 14px;color:var(--mut);font:600 14px "Trebuchet MS",Verdana,system-ui,sans-serif;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:6px;white-space:nowrap}
+.mtab.on{color:var(--pri);border-bottom-color:var(--pri);font-weight:700}
+.mtab svg{width:1.15em;height:1.15em}
+@media(max-width:700px){.mtab{padding:9px 5px;font-size:12px;gap:3px}}
+/* clock, weather and flag inside the title bar (desktop) */
+#dash.hdw{padding:0 14px}
+@media(min-width:701px){
+#hd{flex:1 1 auto;display:flex;align-items:center;justify-content:center;gap:14px;min-width:0;margin:0 8px}
+#hd .clk{color:var(--ink);gap:8px;flex:0 0 auto}
+#hd .clk svg{width:46px;height:46px}
+#hd .dg{color:var(--on,#fff)}#hd .dg b{font-size:15px}#hd .dg small{color:inherit;opacity:.85;font-size:11px}
+#hd .wx{flex:0 1 auto;min-width:0;flex-wrap:nowrap;padding:5px 12px;gap:10px;border-radius:12px}
+#hd .wx .wi{font-size:26px}#hd .wt b{font-size:19px}#hd .wt small{font-size:11px}
+#hd .wm{flex:0 1 auto;min-width:0}#hd .wd1{font-size:12px;white-space:nowrap}
+#hd .wd2{font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:340px}
+#hd .wd2+.wd2{display:none}
+#hd #flag{width:66px!important;height:auto!important;flex:0 0 auto}
+}
+@media(min-width:701px) and (max-width:1150px){#hd .wd2{display:none}}
 /* icon chooser */
 .icf{display:flex;align-items:center;gap:10px;flex:0 1 auto}
 .icp{width:48px;height:48px;border-radius:12px;border:1px solid var(--ln);background:var(--bg);font-size:26px;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;color:var(--ink);padding:0}
@@ -481,10 +502,14 @@ async function geoSearch(){const q=$('#wq').value.trim(),o=$('#wr');if(!q)return
 function pickLoc(i){const r=WR[i];PF.loc={lat:r.latitude,lon:r.longitude,name:r.name+(r.admin1?', '+r.admin1:'')};savePF();dashInit();draw();toast('Weather location set')}
 function myLoc(){if(!navigator.geolocation)return toast('Location is not available on this device.');toast('Finding your location…');navigator.geolocation.getCurrentPosition(p=>{PF.loc={lat:+p.coords.latitude.toFixed(3),lon:+p.coords.longitude.toFixed(3),name:'My location'};savePF();dashInit();draw();toast('Weather location set')},()=>toast('Could not get your location. Allow location access, or search for your city.'),{timeout:15000})}
 function dashInit(){const d=$('#dash');if(!d)return;clearInterval(dashT);cancelAnimationFrame(flagRaf);
- d.style.display=(PF.clock||PF.flag||PF.wx)?'':'none';
- d.innerHTML=(PF.clock||PF.flag?`<div class="dtop">${PF.clock?clockHTML():'<span></span>'}${PF.flag?'<canvas id="flag" role="img" aria-label="Flag of India"></canvas>':'<span></span>'}</div>`:'')+(PF.wx?'<div id="wx" class="wx" onclick="wxClick()"></div>':'')+'<div id="sp"></div>';
+ const wide=matchMedia('(min-width:701px)').matches,hb=$('header'),old=$('#hd'),any=PF.clock||PF.flag||PF.wx;if(old)old.remove();
+ const pc=PF.clock?clockHTML():'',pw=PF.wx?'<div id="wx" class="wx" onclick="wxClick()"></div>':'',pf=PF.flag?'<canvas id="flag" role="img" aria-label="Flag of India"></canvas>':'';
+ d.classList.toggle('hdw',!!(wide&&hb&&any));
+ if(wide&&hb&&any){const h=document.createElement('div');h.id='hd';h.innerHTML=pc+pw+pf;hb.insertBefore(h,$('#sy'));d.style.display='';d.innerHTML='<div id="sp"></div>'}
+ else{d.style.display=any?'':'none';d.innerHTML=(PF.clock||PF.flag?`<div class="dtop">${PF.clock?pc:'<span></span>'}${PF.flag?pf:'<span></span>'}</div>`:'')+pw+'<div id="sp"></div>'}
  if(PF.clock)tick();if(PF.flag)flagStart();if(PF.wx){wxDraw();wxFetch()}spDraw();
  dashT=setInterval(()=>{if(PF.clock)tick();if(PF.wx&&new Date().getSeconds()==0)wxDraw()},1000)}
+try{matchMedia('(min-width:701px)').addEventListener('change',()=>dashInit())}catch(e){}
 
 // ===== confetti on special days =====
 function confetti(force){if(!force&&matchMedia('(prefers-reduced-motion: reduce)').matches)return;const cv=document.createElement('canvas');cv.style.cssText='position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:70';document.body.appendChild(cv);
@@ -744,7 +769,7 @@ function mDraw(){brand();mSw();navDraw();
 function mEmpty(){return`<div class="card"><h2>Set up your money records</h2><p>Import your expense database (the file <b>expense-data.json</b>), or start fresh with Cash, Debit Card and Bank Account.</p>
  <div class="row"><label>Choose expense-data.json<input type="file" accept=".json,application/json" onchange="mImportFile(this)"></label><button class="b g" onclick="mDefaults();draw()">Start with default accounts</button></div></div>`}
 const mBox=(ttl,body,id)=>`<div class="card" ${id?`id="${id}"`:''}><h2>${ttl}</h2>${body}</div>`;
-function mChips(cur,fn){return`<div class="mchips" role="group" aria-label="Account">${[['all',mAllName(),'🗂️']].concat(M.acc.map(a=>[a.id,a.name,mI(a)])).map(([id,n,ic])=>`<button class="mchip ${cur==id?'on':''}" onclick="${fn}('${id}')">${ic} ${esc(n)}</button>`).join('')}</div>`}
+function mChips(cur,fn){return`<div class="mtabs" role="tablist" aria-label="Account">${[['all',mAllName(),'🗂️']].concat(M.acc.map(a=>[a.id,a.name,mI(a)])).map(([id,n,ic])=>`<button class="mtab ${cur==id?'on':''}" role="tab" aria-selected="${cur==id}" onclick="${fn}('${id}')">${ic} ${esc(n)}</button>`).join('')}</div>`}
 const mMonthRange=y2=>{const[y,m]=y2.split('-').map(Number);return[y2+'-01',y2+'-'+pad(dim(y,m))]};
 
 /* ---- add buttons ---- */
@@ -834,13 +859,16 @@ function mRecords(){const st=ui.mrf,[from,to]=mRange(st.pre,st.from,st.to),recs=
 function mEdit(id,sign){if(!M.acc.length)return toast('Add an account first.');const r=id==null?null:M.mv.find(x=>x.id==id);
  ui.me=r?Object.assign({},r):{id:null,s:sign||'-',a:(ui.macc!='all'&&mA(ui.macc).id==ui.macc?ui.macc:(M.acc.some(a=>a.id==ui.mlast)?ui.mlast:M.acc[0].id)),c:null,m:'',d:mTd(),t:mNow(),n:'',ok:1};mDlg()}
 function mClose(){const d=$('#mdlg');if(d)d.remove();ui.me=null}
+const mDD=()=>matchMedia('(max-width:700px)').matches;
+function mCatDrop(){const e=ui.me;return'<option value="">Choose a category…</option>'+mCats(e.s).map(c=>`<option value="${c.id}" ${c.id==e.c?'selected':''}>${esc(c.icon||'')} ${esc(c.name)}</option>`).join('')}
+function mCatRefresh(){const sl=$('#mcsel');if(sl)sl.innerHTML=mCatDrop();else{const g=$('#mcg');if(g)g.innerHTML=mCatGrid('')}}
 function mCatGrid(q){const e=ui.me,l=mCats(e.s).filter(c=>!q||c.name.toLowerCase().includes(q.toLowerCase()));return l.map(c=>`<button type="button" class="mcb ${c.id==e.c?'on':''}" data-c="${c.id}" onclick="mPickCat('${c.id}')"><span>${mI(c)}</span><em>${esc(c.name)}</em></button>`).join('')||'<span class="mut">No matching category. Use “New category”.</span>'}
 function mDlg(){const e=ui.me;let d=$('#mdlg');if(!d){d=document.createElement('div');d.id='mdlg';d.className='noprint';document.body.appendChild(d);d.addEventListener('mousedown',ev=>{if(ev.target===d)mClose()})}
  d.innerHTML=`<div class="mdc" role="dialog" aria-modal="true" aria-label="${e.id==null?'Add record':'Edit record'}"><div class="row" style="justify-content:space-between;align-items:center;margin-bottom:8px"><h2 style="margin:0">${e.id==null?'Add a record':'Edit record'}</h2><button class="b g s" onclick="mClose()" aria-label="Close">✕</button></div>
  <div class="mseg"><button class="b g ex1 ${e.s=='-'?'on':''}" id="mty-" onclick="mType('-')">− Expense</button><button class="b g in1 ${e.s=='+'?'on':''}" id="mty+" onclick="mType('+')">+ Income</button></div>
  <label>Amount<div class="mamt"><span>${esc(M.pf.cur)}</span><input id="mam" inputmode="decimal" placeholder="0.00" value="${e.m||''}" onkeydown="if(event.key=='Enter')mSaveRec()"></div></label>
  <div class="mfld"><span class="mut">Account</span><div class="mchips" id="mdac">${M.acc.map(a=>`<button type="button" class="mchip ${a.id==e.a?'on':''}" data-a="${a.id}" onclick="mPickAcc('${a.id}')">${mI(a)} ${esc(a.name)}</button>`).join('')}</div></div>
- <div class="mfld"><span class="mut">Category</span><input type="search" placeholder="Search categories…" oninput="$('#mcg').innerHTML=mCatGrid(this.value)" style="margin-bottom:6px"><div class="mcg" id="mcg">${mCatGrid('')}</div>
+ <div class="mfld"><span class="mut">Category</span>${mDD()?`<select id="mcsel" aria-label="Category" onchange="mPickCat(this.value)">${mCatDrop()}</select><div id="mcg" hidden></div>`:`<input type="search" placeholder="Search categories…" oninput="$('#mcg').innerHTML=mCatGrid(this.value)" style="margin-bottom:6px"><div class="mcg" id="mcg">${mCatGrid('')}</div>`}
  <p style="margin:6px 0"><button type="button" class="b g s" onclick="$('#mnc').hidden=!$('#mnc').hidden">＋ New category</button></p>
  <div id="mnc" hidden class="mex" style="margin:0 0 8px"><div class="row"><label style="flex:2 1 140px">Name<input id="mncn"></label><label style="flex:0 1 70px">Icon<input id="mnci" value="${e.s=='-'?'📦':'💰'}"></label><button type="button" class="b s" onclick="mNewCat()">Add</button></div><div class="emg">${EMO.map(x=>`<button type="button" class="emo" onclick="$('#mnci').value='${x}'">${x}</button>`).join('')}</div></div></div>
  <div class="row"><label>Date${mDF('mdd',e.d,'mNoop')}</label><label>Time${mTF('mtt',e.t)}</label></div>
@@ -848,12 +876,12 @@ function mDlg(){const e=ui.me;let d=$('#mdlg');if(!d){d=document.createElement('
  ${e.ok===0?`<label class="ck" style="margin-top:8px"><input type="checkbox" id="mok"> This pending record is now confirmed</label>`:''}${e.pic?`<p class="mut">📎 Photos in the old app: ${esc(e.pic)} (file names only)</p>`:''}
  <div class="row" style="margin-top:14px"><button class="b" onclick="mSaveRec()">Save</button>${e.id==null?'<button class="b g" onclick="mSaveRec(1)">Save and add another</button>':`<button class="b d" onclick="mDel(${e.id})">Delete</button>`}<button class="b g" onclick="mClose()">Cancel</button></div></div>`;
  mSuggest();setTimeout(()=>{const a=$('#mam');if(a&&e.id==null)a.focus()},50)}
-function mType(s){const e=ui.me;if(e.s==s)return;e.s=s;if(e.c&&mC(e.c).s!=s)e.c=null;$('#mty-').classList.toggle('on',s=='-');$('#mty+').classList.toggle('on',s=='+');$('#mcg').innerHTML=mCatGrid('');$('#mnci').value=s=='-'?'📦':'💰'}
+function mType(s){const e=ui.me;if(e.s==s)return;e.s=s;if(e.c&&mC(e.c).s!=s)e.c=null;document.getElementById('mty-').classList.toggle('on',s=='-');document.getElementById('mty+').classList.toggle('on',s=='+');mCatRefresh();$('#mnci').value=s=='-'?'📦':'💰'}
 function mPickAcc(id){ui.me.a=id;document.querySelectorAll('#mdac .mchip').forEach(b=>b.classList.toggle('on',b.dataset.a==id))}
-function mPickCat(id){ui.me.c=id;document.querySelectorAll('#mcg .mcb').forEach(b=>b.classList.toggle('on',b.dataset.c==id));mSuggest()}
+function mPickCat(id){id=id||null;ui.me.c=id;const sl=$('#mcsel');if(sl)sl.value=id||'';document.querySelectorAll('#mcg .mcb').forEach(b=>b.classList.toggle('on',b.dataset.c==id));mSuggest()}
 function mSuggest(){const dl=$('#mdl');if(!dl)return;const c=ui.me.c,seen=new Set(),o=[];for(const r of mvAll()){if(c&&r.c!=c)continue;if(r.n&&!seen.has(r.n)){seen.add(r.n);o.push(r.n);if(o.length>=30)break}}dl.innerHTML=o.map(x=>`<option value="${esc(x)}">`).join('')}
 function mNewCat(){const n=$('#mncn').value.trim(),ic=$('#mnci').value.trim()||'📦',s=ui.me.s;if(!n)return toast('Type a name for the category.');if(M.cat.some(c=>c.s==s&&c.name.toLowerCase()==n.toLowerCase()))return toast('That category already exists.');
- const c={id:'c'+M.nx++,name:n,s,icon:ic};M.cat.push(c);mSave();ui.me.c=c.id;$('#mcg').innerHTML=mCatGrid('');$('#mnc').hidden=true;$('#mncn').value=''}
+ const c={id:'c'+M.nx++,name:n,s,icon:ic};M.cat.push(c);mSave();ui.me.c=c.id;mCatRefresh();$('#mnc').hidden=true;$('#mncn').value=''}
 function mSaveRec(again){const e=ui.me,amt=parseFloat(String($('#mam').value).replace(/,/g,'')),d=mParseD($('#mdd').value),t=mParseT($('#mtt').value);
  if(!(amt>0))return toast('Enter an amount above zero.');if(!e.c)return toast('Choose a category.');if(!d)return toast('Enter the date as '+M.pf.df+'.');if(!t)return toast('Enter the time like '+mFt('15:30')+'.');
  const o={a:e.a,c:e.c,m:Math.round(amt*100)/100,s:e.s,d,t,n:$('#mnn').value.trim()};
