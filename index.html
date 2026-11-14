@@ -3,24 +3,24 @@
 <title>Household Help Register</title>
 <link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#0e7c66"><link rel="icon" href="icons/icon-192.png"><link rel="apple-touch-icon" href="icons/apple-touch-icon.png"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes">
 <style>
-:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);--bg:#f3f6f4;--card:#fff;--ink:#16302b;--mut:#5d716c;--ln:#d5e0db;--pri:#0e7c66;--pri2:#0a5e4d;--p:#d7f0e4;--pt:#0b6b3f;--a:#fbe0d6;--at:#a8380f;--h:#fdeec4;--ht:#7a5400;--hol:#dce7fb;--holt:#2c4f9e}
+:root{--fb:"Trebuchet MS",Verdana,system-ui,sans-serif;--fh:Georgia,serif;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);--bg:#f3f6f4;--card:#fff;--ink:#16302b;--mut:#5d716c;--ln:#d5e0db;--pri:#0e7c66;--pri2:#0a5e4d;--p:#d7f0e4;--pt:#0b6b3f;--a:#fbe0d6;--at:#a8380f;--h:#fdeec4;--ht:#7a5400;--hol:#dce7fb;--holt:#2c4f9e}
 @media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f1a17;--card:#17261f;--ink:#e6f1ed;--mut:#9bb0a9;--ln:#2a3d36;--pri:#3cc4a3;--pri2:#2aa085;--p:#173d2c;--pt:#7be0aa;--a:#46241a;--at:#ff9b78;--h:#40340f;--ht:#f2cf6b;--hol:#1d2c4d;--holt:#9fbcf7}}
 :root[data-theme="dark"]{--bg:#0f1a17;--card:#17261f;--ink:#e6f1ed;--mut:#9bb0a9;--ln:#2a3d36;--pri:#3cc4a3;--pri2:#2aa085;--p:#173d2c;--pt:#7be0aa;--a:#46241a;--at:#ff9b78;--h:#40340f;--ht:#f2cf6b;--hol:#1d2c4d;--holt:#9fbcf7}
-*{box-sizing:border-box}html,body{margin:0}body{background:var(--bg);color:var(--ink);font:15px/1.5 "Trebuchet MS",Verdana,system-ui,sans-serif}
+*{box-sizing:border-box}html,body{margin:0}body{background:var(--bg);color:var(--ink);font:15px/1.5 var(--fb);font-variant-numeric:lining-nums}
 header{display:flex;align-items:center;gap:12px;padding:14px 16px;background:var(--pri);color:var(--on,#fff)}
 header img{height:44px;width:44px;object-fit:contain;background:#fff;border-radius:10px;padding:3px}
-header h1{font:700 20px/1.2 Georgia,serif;margin:0}
+header h1{font:700 20px/1.2 var(--fh);margin:0}
 nav{display:flex;gap:4px;overflow-x:auto;padding:8px 10px;background:var(--card);border-bottom:1px solid var(--ln);position:sticky;top:env(safe-area-inset-top,0px);z-index:3}
-nav button{flex:0 0 auto;border:0;background:none;color:var(--mut);font:600 14px "Trebuchet MS",Verdana,system-ui,sans-serif;padding:8px 13px;border-radius:999px;cursor:pointer}
+nav button{flex:0 0 auto;border:0;background:none;color:var(--mut);font:600 14px var(--fb);padding:8px 13px;border-radius:999px;cursor:pointer}
 nav button.on{background:var(--pri);color:var(--on,#fff)}
 main{max-width:980px;margin:0 auto;padding:14px}
 .card{background:var(--card);border:1px solid var(--ln);border-radius:12px;padding:14px;margin-bottom:14px}
-h2{font:700 18px Georgia,serif;margin:0 0 10px}h3{margin:0 0 8px;font-size:15px}
+h2{font:700 18px var(--fh);margin:0 0 10px}h3{margin:0 0 8px;font-size:15px}
 .row{display:flex;flex-wrap:wrap;gap:10px;align-items:end}
 label{display:block;font-size:13px;color:var(--mut);flex:1 1 150px}
 input,select,textarea{width:100%;margin-top:3px;padding:9px;border:1px solid var(--ln);border-radius:8px;background:var(--bg);color:var(--ink);font:inherit}
 input[type=checkbox]{width:auto;margin:0 6px 0 0}
-button.b{border:0;background:var(--pri);color:var(--on,#fff);border-radius:9px;padding:9px 15px;font:600 14px "Trebuchet MS",Verdana,system-ui,sans-serif;cursor:pointer}
+button.b{border:0;background:var(--pri);color:var(--on,#fff);border-radius:9px;padding:9px 15px;font:600 14px var(--fb);cursor:pointer}
 button.b:hover{background:var(--pri2)}button.g{background:none;color:var(--pg,var(--pri));border:1px solid var(--pg,var(--pri))}button.d{background:none;color:var(--at);border:1px solid var(--at)}
 button.s{padding:5px 10px;font-size:13px}
 button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid #f2a900;outline-offset:1px}
@@ -35,13 +35,13 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid 
 #toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:9px 16px;border-radius:999px;font-size:14px;display:none;z-index:9}
 .logo-prev{height:64px;width:64px;object-fit:contain;border:1px solid var(--ln);border-radius:10px;background:#fff}
 .rh{display:none}
-.ex{margin-left:10px;background:none;border:1px solid var(--on,#fff);color:var(--on,#fff);border-radius:8px;padding:6px 12px;font:600 13px "Trebuchet MS",Verdana,system-ui,sans-serif;cursor:pointer}.ex.x{background:#d92d20;border-color:#d92d20;color:#fff}.ex.x:hover{background:#b42318;border-color:#b42318}
+.ex{margin-left:10px;background:none;border:1px solid var(--on,#fff);color:var(--on,#fff);border-radius:8px;padding:6px 12px;font:600 13px var(--fb);cursor:pointer}.ex.x{background:#d92d20;border-color:#d92d20;color:#fff}.ex.x:hover{background:#b42318;border-color:#b42318}
 .sw{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:8px 0 12px}.swb{width:38px;height:38px;border-radius:50%;border:3px solid var(--card);box-shadow:0 0 0 1px var(--ln);cursor:pointer;padding:0}.swb.on{box-shadow:0 0 0 3px var(--ink)}.cp{flex:0 0 auto;display:flex;align-items:center;gap:8px}.cp input{width:44px;height:38px;padding:0;margin:0;border:0;background:none}
 .row>button{flex:0 0 auto}.card>.tw:not(:first-child){margin-top:16px;clear:both;position:relative}.ck{display:flex;align-items:center;gap:8px;flex:none;font-size:14px}.ck input{margin:0;flex:none}
 label{text-transform:capitalize}.ck{text-transform:none}th{text-transform:capitalize}
-details.card>summary{cursor:pointer;list-style:none;display:flex;align-items:center;justify-content:space-between;gap:10px;font:700 18px Georgia,serif;user-select:none;-webkit-user-select:none;min-height:32px}
+details.card>summary{cursor:pointer;list-style:none;display:flex;align-items:center;justify-content:space-between;gap:10px;font:700 18px var(--fh);user-select:none;-webkit-user-select:none;min-height:32px}
 details.card>summary::-webkit-details-marker{display:none}
-details.card>summary::after{content:'Show ▾';font:600 12px "Trebuchet MS",Verdana,system-ui,sans-serif;color:var(--pg,var(--pri));border:1px solid var(--pg,var(--pri));border-radius:999px;padding:4px 11px;flex:none}
+details.card>summary::after{content:'Show ▾';font:600 12px var(--fb);color:var(--pg,var(--pri));border:1px solid var(--pg,var(--pri));border-radius:999px;padding:4px 11px;flex:none}
 details.card[open]>summary::after{content:'Hide ▴'}details.card[open]>summary{margin-bottom:10px}
 summary:focus-visible{outline:3px solid #f2a900;outline-offset:2px}
 .edb{background:var(--h);color:var(--ht);border-radius:9px;padding:8px 12px;font-size:13px;font-weight:700;margin:10px 0}
@@ -50,7 +50,7 @@ summary:focus-visible{outline:3px solid #f2a900;outline-offset:2px}
 .chip{display:inline-block;border:1px solid;border-radius:999px;padding:0 9px;font-size:12px;font-weight:700}.pa{flex-wrap:wrap;justify-content:flex-end}
 #dash{max-width:980px;margin:0 auto;padding:12px 14px 0}
 .dtop{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:12px}
-.clk{display:flex;align-items:center;gap:10px;color:var(--ink)}.dg{display:flex;flex-direction:column;line-height:1.15}.dg b{font:700 22px Georgia,serif}.dg small{color:var(--mut);font-size:12px}
+.clk{display:flex;align-items:center;gap:10px;color:var(--ink)}.dg{display:flex;flex-direction:column;line-height:1.15}.dg b{font:700 22px var(--fh)}.dg small{color:var(--mut);font-size:12px}
 #flag{display:block}
 .wx{display:flex;flex-wrap:wrap;align-items:center;gap:14px;padding:12px 16px;border-radius:14px;color:#fff;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.18)}
 .wx .wi{font-size:38px;line-height:1}.wt b{display:block;font-size:30px;line-height:1.05}.wt small{font-size:13px}
@@ -60,7 +60,7 @@ summary:focus-visible{outline:3px solid #f2a900;outline-offset:2px}
 #lk{position:fixed;inset:0;z-index:100;background:var(--bg);display:none;align-items:center;justify-content:center;padding:20px}
 .lkb{width:100%;max-width:320px;text-align:center}.lkl{font-size:40px}.lkb h2{margin:6px 0}
 .dots{display:flex;justify-content:center;gap:14px;margin:16px 0}.dots i{width:16px;height:16px;border-radius:50%;border:2px solid var(--pri)}.dots i.f{background:var(--pri)}
-.pad{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.pad button{height:64px;border-radius:50%;border:1px solid var(--ln);background:var(--card);color:var(--ink);font:600 24px "Trebuchet MS",Verdana,system-ui,sans-serif;cursor:pointer}.pad button:active{background:var(--pri);color:var(--on,#fff)}
+.pad{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.pad button{height:64px;border-radius:50%;border:1px solid var(--ln);background:var(--card);color:var(--ink);font:600 24px var(--fb);cursor:pointer}.pad button:active{background:var(--pri);color:var(--on,#fff)}
 .lkf{margin-top:18px;background:none;border:0;color:var(--mut);text-decoration:underline;cursor:pointer;font-size:13px}
 @media print{#dash,#lk{display:none!important}}
 .ex:disabled{opacity:.6;cursor:wait}.ex:hover{background:rgba(128,128,128,.25)}
@@ -86,13 +86,13 @@ table{min-width:420px}
 :root[data-theme="dark"]{--s1:#3987e5;--s2:#d95926;--s3:#199e70;--s4:#c98500;--s5:#d55181;--s6:#008300;--s7:#9085e9;--exp:#ff9b8a;--inc:#62d68f}
 body.mm #dash{display:none!important}
 #modesw{max-width:980px;margin:0 auto;padding:10px 14px 0;display:flex;gap:8px}
-#modesw button{flex:1;border:1px solid var(--ln);background:var(--card);color:var(--mut);border-radius:12px;padding:10px;font:700 15px "Trebuchet MS",Verdana,system-ui,sans-serif;cursor:pointer}
+#modesw button{flex:1;border:1px solid var(--ln);background:var(--card);color:var(--mut);border-radius:12px;padding:10px;font:700 15px var(--fb);cursor:pointer}
 #modesw button.on{background:var(--pri);color:var(--on,#fff);border-color:var(--pri)}
 .mchips{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 12px}
-.mchip{border:1px solid var(--ln);background:var(--card);color:var(--ink);border-radius:999px;padding:6px 12px;font:600 13px "Trebuchet MS",Verdana,system-ui,sans-serif;cursor:pointer;display:inline-flex;align-items:center;gap:6px}
+.mchip{border:1px solid var(--ln);background:var(--card);color:var(--ink);border-radius:999px;padding:6px 12px;font:600 13px var(--fb);cursor:pointer;display:inline-flex;align-items:center;gap:6px}
 .mchip.on{background:var(--pri);border-color:var(--pri);color:var(--on,#fff)}
 .mnav{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:12px}
-.mnav b{font:700 18px Georgia,serif;text-align:center;flex:1}
+.mnav b{font:700 18px var(--fh);text-align:center;flex:1}
 .mnav button{min-width:44px}
 .mtiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px}
 .mt{background:var(--bg);border:1px solid var(--ln);border-radius:10px;padding:10px 12px}
@@ -114,7 +114,7 @@ body.mm #dash{display:none!important}
 .pend{font-size:11px;background:var(--h);color:var(--ht);border-radius:6px;padding:0 6px;margin-left:4px;font-weight:700}
 .lkd{font-size:11px;background:var(--hol);color:var(--holt);border-radius:6px;padding:0 6px;margin-left:4px;font-weight:700}
 /* add buttons */
-.mab{border:0;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:8px;font:700 15px "Trebuchet MS",Verdana,system-ui,sans-serif;box-shadow:0 2px 8px rgba(0,0,0,.25);padding:12px 20px;min-height:46px}
+.mab{border:0;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:8px;font:700 15px var(--fb);box-shadow:0 2px 8px rgba(0,0,0,.25);padding:12px 20px;min-height:46px}
 .mab span{font-size:22px;line-height:1}.mab em{font-style:normal}
 .mab.pill{border-radius:999px}.mab.rounded{border-radius:14px}.mab.square{border-radius:3px}
 .mab.circle{border-radius:50%;width:56px;height:56px;padding:0}.mab.circle em{display:none}
@@ -127,8 +127,8 @@ body.mm #dash{display:none!important}
 /* pie + bars */
 .mpie{display:flex;flex-wrap:wrap;gap:14px;align-items:flex-start}
 .mpie svg{flex:1 1 320px;max-width:460px;height:auto;overflow:visible}
-.mpie svg text{fill:var(--ink);font:11px "Trebuchet MS",Verdana,sans-serif}
-.mpie svg .ct{font:700 15px Georgia,serif}.mpie svg .cs{fill:var(--mut);font-size:10px}
+.mpie svg text{fill:var(--ink);font:11px var(--fb)}
+.mpie svg .ct{font:700 15px var(--fh)}.mpie svg .cs{fill:var(--mut);font-size:10px}
 .mpie svg path{cursor:pointer;transition:opacity .15s}.mpie svg path.dim{opacity:.35}
 .mleg{flex:1 1 260px;min-width:0}
 .mlr{display:flex;align-items:center;gap:8px;width:100%;background:none;border:0;border-top:1px solid var(--ln);padding:7px 2px;color:var(--ink);font:inherit;cursor:pointer;text-align:left}
@@ -155,9 +155,9 @@ body.mm #dash{display:none!important}
 #mdlg .mdc{background:var(--card);color:var(--ink);border-radius:14px;width:100%;max-width:560px;padding:14px;margin:auto 0}
 .mseg{display:flex;gap:6px;margin-bottom:10px}.mseg button{flex:1}
 .mseg button.on.ex1{background:var(--exp);border-color:var(--exp);color:#fff}.mseg button.on.in1{background:var(--inc);border-color:var(--inc);color:#fff}
-.mamt{display:flex;align-items:center;gap:8px;font:700 26px Georgia,serif;margin:4px 0 8px}.mamt input{font:700 26px Georgia,serif;margin:0}
+.mamt{display:flex;align-items:center;gap:8px;font:700 26px var(--fh);margin:4px 0 8px}.mamt input{font:700 26px var(--fh);margin:0}
 .mcg{display:grid;grid-template-columns:repeat(auto-fill,minmax(86px,1fr));gap:6px;max-height:260px;overflow-y:auto;padding:2px}
-.mcb{border:1px solid var(--ln);background:var(--bg);color:var(--ink);border-radius:10px;padding:7px 4px;font:12px "Trebuchet MS",Verdana,sans-serif;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px;text-align:center;min-height:62px}
+.mcb{border:1px solid var(--ln);background:var(--bg);color:var(--ink);border-radius:10px;padding:7px 4px;font:12px var(--fb);cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px;text-align:center;min-height:62px}
 .mcb span{font-size:22px;line-height:1.1}.mcb em{font-style:normal;line-height:1.15;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;word-break:break-word}
 .mcb.on{border-color:var(--pri);box-shadow:0 0 0 2px var(--pri);background:var(--card)}
 .df{display:flex;gap:6px;align-items:center;position:relative}.df input[type=text]{flex:1;min-width:0}.df .hp{position:absolute;right:0;bottom:0;width:1px;height:1px;opacity:0;pointer-events:none;border:0;padding:0}
@@ -187,13 +187,12 @@ nav button .bd{margin-left:4px}
 }
 /* account tabs (underline style) - different from the pill menu below the header */
 .mtabs{display:flex;margin:0 0 12px;border-bottom:2px solid var(--ln);overflow-x:auto;-webkit-overflow-scrolling:touch}
-.mtab{flex:1 0 auto;background:none;border:0;border-bottom:3px solid transparent;margin-bottom:-2px;border-radius:0;padding:10px 14px;color:var(--mut);font:600 14px "Trebuchet MS",Verdana,system-ui,sans-serif;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:6px;white-space:nowrap}
+.mtab{flex:1 0 auto;background:none;border:0;border-bottom:3px solid transparent;margin-bottom:-2px;border-radius:0;padding:10px 14px;color:var(--mut);font:600 14px var(--fb);cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:6px;white-space:nowrap}
 .mtab.on{color:var(--pri);border-bottom-color:var(--pri);font-weight:700}
 .mtab svg{width:1.15em;height:1.15em}
 @media(max-width:700px){.mtab{padding:9px 5px;font-size:12px;gap:3px}}
-/* clock, weather and flag inside the title bar (desktop) */
-#dash.hdw{padding:0 14px}
-@media(min-width:701px){
+/* clock, weather and flag live in the title bar (all screens) */
+#dash.hdw{padding:0 14px}#dash #sp:not(:empty){margin-top:10px}
 #hd{flex:1 1 auto;display:flex;align-items:center;justify-content:center;gap:14px;min-width:0;margin:0 8px}
 #hd .clk{color:var(--ink);gap:8px;flex:0 0 auto}
 #hd .clk svg{width:46px;height:46px}
@@ -203,9 +202,22 @@ nav button .bd{margin-left:4px}
 #hd .wm{flex:0 1 auto;min-width:0}#hd .wd1{font-size:12px;white-space:nowrap}
 #hd .wd2{font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:340px}
 #hd .wd2+.wd2{display:none}
+#hd .ds{display:none}
 #hd #flag{width:66px!important;height:auto!important;flex:0 0 auto}
-}
 @media(min-width:701px) and (max-width:1150px){#hd .wd2{display:none}}
+@media(max-width:700px){
+header{padding:7px 10px;gap:6px 8px;flex-wrap:wrap}header img{height:30px;width:30px}
+header h1{font-size:15px;flex:1 1 0;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sy{margin-left:0;max-width:74px;font-size:10px;line-height:1.15;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.ex{margin-left:0;padding:4px 10px;font-size:12px}
+#hd{order:10;flex:1 1 100%;justify-content:space-between;gap:8px;margin:0}
+#hd .clk{gap:5px}#hd .clk svg{width:34px;height:34px}#hd .dg b{font-size:13px}#hd .dg small{display:none}
+#hd .wx{flex:1 1 0;min-width:0;padding:3px 8px;gap:6px;border-radius:9px;justify-content:center}
+#hd .wx .wi{font-size:20px}#hd .wt b{font-size:15px}#hd .wt small{display:none}
+#hd .wm{flex:1 1 0}#hd .wd1{font-size:10.5px}#hd .wd2{font-size:10px;max-width:100%}
+#hd .dl{display:none}#hd .ds{display:inline}
+#hd #flag{width:44px!important}
+}
 /* icon chooser */
 .icf{display:flex;align-items:center;gap:10px;flex:0 1 auto}
 .icp{width:48px;height:48px;border-radius:12px;border:1px solid var(--ln);background:var(--bg);font-size:26px;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;color:var(--ink);padding:0}
@@ -215,7 +227,7 @@ svg{vertical-align:-.18em}
 .mic svg{width:22px;height:22px}.icp svg{width:28px;height:28px}
 #mipk{position:fixed;inset:0;z-index:60;background:rgba(0,0,0,.55);display:none;align-items:flex-start;justify-content:center;overflow-y:auto;padding:12px}
 #mipk .mpc{background:var(--card);color:var(--ink);border-radius:14px;width:100%;max-width:620px;padding:14px;margin:auto 0}
-#mipk .mph{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;font:700 18px Georgia,serif}
+#mipk .mph{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;font:700 18px var(--fh)}
 #mipk input[type=search]{width:100%;margin:10px 0;padding:10px;font-size:16px;border:1px solid var(--ln);border-radius:10px;background:var(--bg);color:var(--ink)}
 #mipk .ipg{flex-wrap:nowrap;overflow-x:auto;padding-bottom:4px}
 #mipk .ipg .mchip{flex:0 0 auto}
@@ -225,9 +237,37 @@ svg{vertical-align:-.18em}
 /* sync window */
 #msy{position:fixed;inset:0;z-index:70;background:rgba(0,0,0,.55);display:none;align-items:flex-start;justify-content:center;overflow-y:auto;padding:12px}
 #msy .mpc{background:var(--card);color:var(--ink);border-radius:14px;width:100%;max-width:480px;padding:16px;margin:auto 0}
-#msy .mph{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;font:700 18px Georgia,serif}
+#msy .mph{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;font:700 18px var(--fh)}
 .syr{display:flex;justify-content:space-between;gap:10px;align-items:center;padding:10px 0;border-top:1px solid var(--ln)}
 .syr span{display:flex;flex-direction:column;font-size:15px}.syr small{color:var(--mut);font-size:12px;font-weight:400}.syr em{font-style:normal;font-size:13px;text-align:right;max-width:55%}
+/* compact phone layout */
+@media(max-width:700px){
+main{padding:8px 8px calc(76px + env(safe-area-inset-bottom,0px))}
+.card{padding:9px 10px;margin-bottom:8px;border-radius:10px}
+h2{font-size:16px;margin:0 0 6px}h3{font-size:14px;margin:0 0 5px}
+input,select,textarea{padding:8px 10px;font-size:15px}
+label{flex:1 1 44%;min-width:0}
+.row{gap:6px}
+.mpie svg{max-height:215px;width:100%}
+button.b{padding:7px 12px;font-size:13px}
+.mtiles{grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
+.mt{padding:6px 8px}.mt small{font-size:11px;line-height:1.2}.mt b{font-size:14px;margin-top:1px}
+.mt b{white-space:nowrap;overflow-wrap:normal}
+@media(max-width:380px){.mtiles{grid-template-columns:repeat(2,minmax(0,1fr))}.mtiles .mt.big:nth-child(5){grid-column:1/-1}}
+.mt.big{grid-column:1/-1}.mt.big b{font-size:19px}
+.mtiles .mt.big:nth-child(5){grid-column:span 2}
+.mtiles:has(> .mt:nth-child(3):last-child){grid-template-columns:repeat(2,minmax(0,1fr))}
+.mnav{margin-bottom:8px}
+[data-nf=verdana] .mt.big b,[data-nf=mono] .mt.big b{font-size:17px}[data-ff=mono] .mt.big b{font-size:16px}[data-ff=easy] .mt.big b,[data-ff=casual] .mt.big b{font-size:17px}[data-ff=mono] .mt small,[data-ff=easy] .mt small{font-size:10px}
+.mrow{padding:6px 2px;gap:8px}.mic{width:32px;height:32px;font-size:17px}.mic svg{width:18px;height:18px}
+.mtx b{font-size:13.5px}.mtx small{font-size:11.5px}
+.mlr,.mbr{padding:5px 2px}
+.mtabs{margin-bottom:8px}
+#subnav{padding:6px 8px 0}#subnav .mchip{padding:5px 11px;font-size:13px}
+table{min-width:0}th{padding:4px 6px;font-size:11.5px}td{padding:4px 6px;font-size:12px}
+.mchip{padding:5px 10px;font-size:12.5px}
+.mdc{padding:12px}
+}
 </style></head><body>
 <header><img id="hl" alt="" style="display:none"><h1 id="hn"></h1><span class="sy" id="sy">Connecting…</span><button class="ex" id="sb" onclick="window.syncMenu?syncMenu():syncNow()" title="Sync Household and Money">Sync</button><button class="ex" id="lkb" onclick="showLock()" title="Lock the app" hidden>🔒 Lock</button><button class="ex" id="ib" onclick="installApp()" hidden>Install app</button><button class="ex x" onclick="exitApp()" title="Save and exit">Exit</button></header>
 <section id="dash" class="noprint"></section><div id="subnav" class="noprint"></div>
@@ -243,19 +283,31 @@ const DEF=()=>({label:'Household Help Register',logo:'',people:[],att:{},pay:[],
 let S;try{S=Object.assign(DEF(),JSON.parse(localStorage.getItem(K)||'{}'))}catch(e){S=DEF()}
 const now=new Date(),ui={tab:'att',pid:'',mon:now.getFullYear()+'-'+pad(now.getMonth()+1),ry:now.getFullYear(),rt:'month',rp:'all',edit:null};
 const LK=K+'-look',PRE=['#0e7c66','#1d4ed8','#6d28d9','#be185d','#c2410c','#0f766e','#334155','#b91c1c','#a16207'];
-let LOOK={th:'auto',acc:'',fs:15};try{Object.assign(LOOK,JSON.parse(localStorage.getItem(LK)||'{}'))}catch(e){}
+const FONTS=[['def','Default (Trebuchet, serif headings)','"Trebuchet MS",Verdana,system-ui,sans-serif','Georgia,serif'],['sans','Clean (device default)','system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif','system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif'],['easy','Easy to read (Verdana)','Verdana,Geneva,Tahoma,sans-serif','Verdana,Geneva,Tahoma,sans-serif'],['serif','Classic serif (Georgia)','Georgia,"Times New Roman",serif','Georgia,"Times New Roman",serif'],['mono','Typewriter (monospace)','"Courier New",ui-monospace,monospace','"Courier New",ui-monospace,monospace'],['casual','Casual (handwriting style)','"Comic Sans MS","Comic Neue","Segoe Print",casual,cursive','"Comic Sans MS","Comic Neue","Segoe Print",casual,cursive']];
+const NUMF=[['lining','Equal-height digits (recommended)',['Roboto','Noto Sans','Arial','Segoe UI','Helvetica Neue','DejaVu Sans'],['Roboto Bold','Roboto-Bold','Noto Sans Bold','NotoSans-Bold','Arial Bold','Arial-BoldMT','Segoe UI Bold','Segoe UI-Bold','HelveticaNeue-Bold','Helvetica Neue Bold','DejaVu Sans Bold']],['verdana','Verdana (wide and very clear)',['Verdana','DejaVu Sans'],['Verdana Bold','Verdana-Bold','DejaVu Sans Bold']],['mono','Monospace (every digit same width)',['Roboto Mono','DejaVu Sans Mono','Courier New','Liberation Mono','Menlo','Consolas'],['Roboto Mono Bold','RobotoMono-Bold','DejaVu Sans Mono Bold','Courier New Bold','CourierNewPS-BoldMT','Liberation Mono Bold','Menlo Bold','Consolas Bold']],['same','Same as the app font',[],[]]];
+let LOOK={th:'auto',acc:'',fs:15,ff:'def',nf:'lining'};try{Object.assign(LOOK,JSON.parse(localStorage.getItem(LK)||'{}'))}catch(e){}
 const lum=h=>{const n=parseInt(h.slice(1),16),f=v=>{v/=255;return v<=.03928?v/12.92:Math.pow((v+.055)/1.055,2.4)};return .2126*f(n>>16)+.7152*f(n>>8&255)+.0722*f(n&255)},
 mix=(h,t,a)=>{const n=parseInt(h.slice(1),16);return'#'+[n>>16,n>>8&255,n&255].map(v=>Math.round(v+(t-v)*a).toString(16).padStart(2,'0')).join('')};
 function look(){const r=document.documentElement,L=LOOK,st=r.style;if(L.th=='auto')r.removeAttribute('data-theme');else r.dataset.theme=L.th;
  const dark=L.th=='dark'||(L.th=='auto'&&matchMedia('(prefers-color-scheme: dark)').matches);
  if(L.acc){let a=L.acc;if(dark&&lum(a)<.12)a=mix(a,255,.35);st.setProperty('--pri',a);st.setProperty('--pri2',mix(a,0,.22));st.setProperty('--pg',dark?mix(L.acc,255,.45):a);st.setProperty('--on',lum(a)>.45?'#111':'#fff')}
  else['--pri','--pri2','--pg','--on'].forEach(v=>st.removeProperty(v));
+ r.dataset.ff=L.ff||'def';const F=FONTS.find(f=>f[0]==L.ff)||FONTS[0],N=NUMF.find(n=>n[0]==(L.nf||'lining'))||NUMF[0];r.dataset.nf=N[0];
+ let nsx=document.getElementById('numfont');if(!nsx){nsx=document.createElement('style');nsx.id='numfont';document.head.appendChild(nsx)}
+ const ur='unicode-range:U+0030-0039,U+20B9',lc=a=>a.map(n=>'local("'+n+'")').join(',');
+ nsx.textContent=N[2].length?'@font-face{font-family:"AppNum";font-weight:100 600;src:'+lc(N[2])+';'+ur+'}@font-face{font-family:"AppNum";font-weight:700 900;src:'+lc(N[3].concat(N[2]))+';'+ur+'}':'';
+ const pre=N[2].length?'"AppNum",':'';st.setProperty('--fb',pre+F[2]);st.setProperty('--fh',pre+F[3]);
  document.body.style.fontSize=(L.fs||15)+'px'}
 function savLook(){try{localStorage.setItem(LK,JSON.stringify(LOOK))}catch(e){}look()}
 function setTheme(v){LOOK.th=v;savLook()}
 function setFs(v){LOOK.fs=+v;savLook()}
 function setAcc(c){LOOK.acc=c;savLook();draw()}
-function resetLook(){LOOK={th:'auto',acc:'',fs:15};savLook();draw();toast('Appearance reset')}
+function setFont(v){LOOK.ff=v;savLook();draw()}
+function fontSel(){return`<label>Font<select onchange="setFont(this.value)">${FONTS.map(f=>`<option value="${f[0]}" ${(LOOK.ff||'def')==f[0]?'selected':''}>${f[1]}</option>`).join('')}</select></label>`}
+function fontPrev(){return`<p class="mut" style="margin:6px 0 0">Preview: <b>The quick brown fox — ₹1,234,567.80 — 14-11-2026 — 0123456789</b>. “Numbers font” changes only the digits and the ₹ sign, so every digit has the same height. Fonts come from your device, so a phone and a computer may look slightly different.</p>`}
+function setNum(v){LOOK.nf=v;savLook();draw()}
+function numSel(){return`<label>Numbers font<select onchange="setNum(this.value)">${NUMF.map(n=>`<option value="${n[0]}" ${(LOOK.nf||'lining')==n[0]?'selected':''}>${n[1]}</option>`).join('')}</select></label>`}
+function resetLook(){LOOK={th:'auto',acc:'',fs:15,ff:'def',nf:'lining'};savLook();draw();toast('Appearance reset')}
 try{matchMedia('(prefers-color-scheme: dark)').addEventListener('change',look)}catch(e){}
 const FZ=(()=>{try{return JSON.parse(localStorage.getItem(K+'-fold')||'{}')}catch(e){return{}}})();
 const fo=(id,d)=>((FZ[id]===undefined?d:FZ[id])?'open ':'')+`ontoggle="fz('${id}',this.open)"`;
@@ -349,7 +401,7 @@ hol(){const y=ui.ry,L=S.hol.filter(h=>h.date.slice(0,4)==y).sort((a,b)=>a.date.l
 rep(){setTimeout(rep,0);return `<div class="card noprint"><h2>Reports</h2><div class="row"><label>Report<select onchange="ui.rt=this.value;rep()" id="rt">${[['month','Monthly statement (everyone)'],['year','Yearly summary'],['ledger','Payment ledger'],['reg','Attendance register'],['notes','Attendance notes'],['pl','Chores and events'],['jr','Journal']].map(([k,n])=>`<option value="${k}" ${k==ui.rt?'selected':''}>${n}</option>`).join('')}</select></label>${psel('rp',ui.rp,1)}<label>Month<input type="month" value="${ui.mon}" onchange="ui.mon=this.value||ui.mon;ui.ry=+ui.mon.slice(0,4);rep()"></label><label>Year<input type="number" value="${ui.ry}" onchange="ui.ry=+this.value;rep()"></label></div></div><div class="card" id="rep"></div>`},
 set(){return `<details class="card" ${fo('s-logo',1)}><summary>App name and logo</summary><div class="row"><label>Label shown at the top<input id="sl" value="${esc(S.label)}"></label><button class="b" onclick="S.label=$('#sl').value.trim()||'Household Help Register';S.lbt=Date.now();save();brand();toast('Label saved')">Save label</button></div>
  <div class="row" style="margin-top:14px">${S.logo?`<img class="logo-prev" src="${S.logo}" alt="Logo">`:'<span class="mut">No logo yet.</span>'}<label>Choose a logo image<input type="file" accept="image/*" onchange="logo(this)"></label>${S.logo?'<button class="b d" onclick="S.logo=\'\';S.lbt=Date.now();save();draw()">Remove logo</button>':''}</div></details>
- <details class="card" ${fo('s-look',1)}><summary>Appearance</summary><div class="row"><label>Theme<select onchange="setTheme(this.value)"><option value="auto" ${LOOK.th=='auto'?'selected':''}>Automatic (follow my device)</option><option value="light" ${LOOK.th=='light'?'selected':''}>Light</option><option value="dark" ${LOOK.th=='dark'?'selected':''}>Dark</option></select></label><label>Text size<select onchange="setFs(this.value)">${[[14,'Small'],[15,'Normal'],[17,'Large'],[19,'Extra large']].map(([v,n])=>`<option value="${v}" ${(LOOK.fs||15)==v?'selected':''}>${n}</option>`).join('')}</select></label></div>
+ <details class="card" ${fo('s-look',1)}><summary>Appearance</summary><div class="row"><label>Theme<select onchange="setTheme(this.value)"><option value="auto" ${LOOK.th=='auto'?'selected':''}>Automatic (follow my device)</option><option value="light" ${LOOK.th=='light'?'selected':''}>Light</option><option value="dark" ${LOOK.th=='dark'?'selected':''}>Dark</option></select></label><label>Text size<select onchange="setFs(this.value)">${[[14,'Small'],[15,'Normal'],[17,'Large'],[19,'Extra large']].map(([v,n])=>`<option value="${v}" ${(LOOK.fs||15)==v?'selected':''}>${n}</option>`).join('')}</select></label>${fontSel()}${numSel()}</div>${fontPrev()}
  <h3 style="margin-top:14px">Colour</h3><div class="sw">${PRE.map(c=>`<button class="swb ${(LOOK.acc||PRE[0]).toLowerCase()==c?'on':''}" style="background:${c}" aria-label="Colour ${c}" onclick="setAcc('${c}')"></button>`).join('')}<label class="cp">Custom<input type="color" value="${LOOK.acc||PRE[0]}" onchange="setAcc(this.value)"></label></div>
  <div class="row"><button class="b g s" onclick="resetLook()">Reset to default</button></div><p class="mut">Appearance is saved on this device only, so your phone and computer can look different.</p></details>
  <details class="card" ${fo('s-dash',1)}><summary>Dashboard, clock and weather</summary>
@@ -491,7 +543,7 @@ async function wxFetch(force){if(!PF.wx||!PF.loc)return;let c=null;try{c=JSON.pa
  if(!force&&c&&c.k==wxK()&&Date.now()-c.t<9e5)return;
  try{const u=`https://api.open-meteo.com/v1/forecast?latitude=${PF.loc.lat}&longitude=${PF.loc.lon}&current=temperature_2m,apparent_temperature,relative_humidity_2m,weather_code,wind_speed_10m,is_day&daily=temperature_2m_max,temperature_2m_min,precipitation_probability_max&timezone=auto&temperature_unit=${PF.unit=='f'?'fahrenheit':'celsius'}`,j=await(await fetch(u)).json();if(!j.current)throw 0;localStorage.setItem(wxKey,JSON.stringify({k:wxK(),t:Date.now(),d:j}))}catch(e){}
  wxDraw()}
-function wxDraw(){const e=$('#wx');if(!e)return;const dt=new Date().toLocaleDateString('en-IN',{weekday:'long',day:'numeric',month:'long',year:'numeric'});let c=null;try{c=JSON.parse(localStorage.getItem(wxKey)||'null')}catch(x){}
+function wxDraw(){const e=$('#wx');if(!e)return;const dt0=new Date(),dtl=dt0.toLocaleDateString('en-IN',{weekday:'long',day:'numeric',month:'long',year:'numeric'}),dts=dt0.toLocaleDateString('en-IN',{weekday:'short',day:'numeric',month:'short'}),dt=`<span class="dl">${dtl}</span><span class="ds">${dts}</span>`;let c=null;try{c=JSON.parse(localStorage.getItem(wxKey)||'null')}catch(x){}
  if(!PF.loc){e.className='wx w-cloud';e.innerHTML=`<div class="wm"><div class="wd1">📅 ${dt}</div><div class="wd2">📍 Tap here to set your location and see the weather</div></div>`;return}
  if(!c||c.k!=wxK()){e.className='wx w-cloud';e.innerHTML=`<div class="wm"><div class="wd1">📅 ${dt}</div><div class="wd2">⏳ Getting the weather for ${esc(PF.loc.name)}… (needs internet)</div></div>`;return}
  const j=c.d,cu=j.current,[tx,ic,cl]=WMO(cu.weather_code),night=cu.is_day===0,u=PF.unit=='f'?'°F':'°C',R=v=>Math.round(v);
@@ -503,14 +555,12 @@ async function geoSearch(){const q=$('#wq').value.trim(),o=$('#wr');if(!q)return
 function pickLoc(i){const r=WR[i];PF.loc={lat:r.latitude,lon:r.longitude,name:r.name+(r.admin1?', '+r.admin1:'')};savePF();dashInit();draw();toast('Weather location set')}
 function myLoc(){if(!navigator.geolocation)return toast('Location is not available on this device.');toast('Finding your location…');navigator.geolocation.getCurrentPosition(p=>{PF.loc={lat:+p.coords.latitude.toFixed(3),lon:+p.coords.longitude.toFixed(3),name:'My location'};savePF();dashInit();draw();toast('Weather location set')},()=>toast('Could not get your location. Allow location access, or search for your city.'),{timeout:15000})}
 function dashInit(){const d=$('#dash');if(!d)return;clearInterval(dashT);cancelAnimationFrame(flagRaf);
- const wide=matchMedia('(min-width:701px)').matches,hb=$('header'),old=$('#hd'),any=PF.clock||PF.flag||PF.wx;if(old)old.remove();
+ const hb=$('header'),old=$('#hd'),any=PF.clock||PF.flag||PF.wx;if(old)old.remove();
  const pc=PF.clock?clockHTML():'',pw=PF.wx?'<div id="wx" class="wx" onclick="wxClick()"></div>':'',pf=PF.flag?'<canvas id="flag" role="img" aria-label="Flag of India"></canvas>':'';
- d.classList.toggle('hdw',!!(wide&&hb&&any));
- if(wide&&hb&&any){const h=document.createElement('div');h.id='hd';h.innerHTML=pc+pw+pf;hb.insertBefore(h,$('#sy'));d.style.display='';d.innerHTML='<div id="sp"></div>'}
- else{d.style.display=any?'':'none';d.innerHTML=(PF.clock||PF.flag?`<div class="dtop">${PF.clock?pc:'<span></span>'}${PF.flag?pf:'<span></span>'}</div>`:'')+pw+'<div id="sp"></div>'}
+ if(hb&&any){const h=document.createElement('div');h.id='hd';h.innerHTML=pc+pw+pf;hb.insertBefore(h,$('#sy'))}
+ d.classList.add('hdw');d.style.display='';d.innerHTML='<div id="sp"></div>';
  if(PF.clock)tick();if(PF.flag)flagStart();if(PF.wx){wxDraw();wxFetch()}spDraw();
  dashT=setInterval(()=>{if(PF.clock)tick();if(PF.wx&&new Date().getSeconds()==0)wxDraw()},1000)}
-try{matchMedia('(min-width:701px)').addEventListener('change',()=>dashInit())}catch(e){}
 
 // ===== confetti on special days =====
 function confetti(force){if(!force&&matchMedia('(prefers-reduced-motion: reduce)').matches)return;const cv=document.createElement('canvas');cv.style.cssText='position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:70';document.body.appendChild(cv);
@@ -604,6 +654,8 @@ function rep(){const el=$('#rep');if(!el)return;const[y,m]=ym(ui.mon),t=ui.rt,pp
  el.innerHTML=`<div class="rh">${S.logo?`<img src="${S.logo}" alt="">`:''}<b>${esc(S.label)}</b></div><h2>${esc(T)}</h2><div class="tw"><table><tr>${hd.map((h,i)=>`<th class="${i>=hd.length-3&&t!='reg'&&t!='notes'&&t!='pl'&&t!='jr'?'n':''}">${esc(h)}</th>`).join('')}</tr>${rows.map(r=>`<tr>${r.map((c,i)=>`<td class="${i>=hd.length-3&&t!='reg'&&t!='notes'&&t!='pl'&&t!='jr'?'n':''}">${esc(c)}</td>`).join('')}</tr>`).join('')}${tot?`<tr class="t">${tot.map((c,i)=>`<td class="${i>=hd.length-3?'n':''}">${esc(c)}</td>`).join('')}</tr>`:''}</table></div>
  ${t=='reg'?'<p class="mut">P present, A absent, ½ half day, H holiday, – not marked.</p>':''}<div class="row noprint" style="margin-top:12px"><button class="b" onclick="window.print()">Print or save as PDF</button><button class="b g" onclick="csv()">Show as CSV</button></div><div id="tx" class="noprint"></div>`}
 function csv(){const q=c=>'"'+String(c).replace(/"/g,'""')+'"',a=[RD.T,RD.hd,...RD.rows];if(RD.tot)a.push(RD.tot);txt('Copy this text and paste it into Excel or Google Sheets.',a.map(r=>[].concat(r).map(q).join(',')).join('\n'))}
+let fitQ=0;function fitNums(){cancelAnimationFrame(fitQ);fitQ=requestAnimationFrame(()=>{document.querySelectorAll('.mt b').forEach(e=>{e.style.fontSize='';let f=parseFloat(getComputedStyle(e).fontSize);while(e.scrollWidth>e.clientWidth&&f>9){f-=.5;e.style.fontSize=f+'px'}})})}
+try{new MutationObserver(fitNums).observe(document.body,{childList:true,subtree:true});addEventListener('resize',fitNums);if(document.fonts&&document.fonts.ready)document.fonts.ready.then(fitNums)}catch(e){}
 look();draw();boot2();if(on()){setSt('Connecting…');pull();setInterval(pull,20000);document.addEventListener('visibilitychange',()=>{if(!document.hidden)pull()})}else setSt('This device only');
 </script><script>
 let DIP=null;
@@ -805,8 +857,8 @@ pie(){const ty=ui.mpt,[f,t]=mMonthRange(ui.mm),recs=mFilter({acc:ui.macc,from:f,
  ui.mpx=ex;return mBox('Monthly summary by category',tg+`<div class="mpie">${mDonut(top,tot,ty)}<div class="mleg" id="mleg">${top.map((x,i)=>`<button class="mlr" data-i="${i}" onclick="mPieSel(${i})"><i style="background:${x.col}"></i><span class="nm">${mI(x)} ${esc(x.name)}</span><span class="vl">${mFmt(x.v)}</span><span class="pc2">${pct(x.v)}</span></button>`).join('')}</div></div>
  <div class="mex" id="mpd" aria-live="polite">${ex}</div><p class="mut" style="margin:8px 0 0">How to read: each slice is one category’s share of the month’s ${nm.toLowerCase()}. Tap a slice or a row for details. Slices under 5% are labelled in the list only, and the smallest categories are grouped as “Other”.</p>`)},
 last(){const L=mFilter({acc:ui.macc}).slice(0,10);return mBox('Last ten records',L.length?`<div>${L.map(r=>mRow(r,ui.macc=='all')).join('')}</div><p style="margin:10px 0 0"><button class="b g s" onclick="mGo('mr')">See all records</button></p>`:'<p class="empty">No records yet. Use the buttons to add your first expense or income.</p>')},
-bar(){const ty=ui.mpt,[f,t]=mMonthRange(ui.mm),by=mByCat(mFilter({acc:ui.macc,from:f,to:t,type:ty})).slice(0,12),mx=by[0]?by[0].v:1,col=ty=='-'?'var(--s1)':'var(--s3)';
- return mBox('Monthly graph by category',`<p class="mut" style="margin:-4px 0 8px">${ty=='-'?'Expenses':'Income'} in ${mMonthName(ui.mm)}. Tap a bar to see that category over the last 12 months.</p>`+(by.length?by.map(x=>{const c=mC(x.c);return`<button class="mbr ${ui.mtc==x.c?'on':''}" data-c="${esc(x.c)}" onclick="mTrend('${x.c}')"><span class="nm">${mI(c)} ${esc(c.name)}</span><span class="tr"><i style="width:${Math.max(1,x.v*100/mx)}%;background:${col}"></i></span><span class="vl">${mFmt(x.v)}</span></button>`}).join(''):'<p class="empty">Nothing recorded this month.</p>')+
+bar(){const ty=ui.mpt,[f,t]=mMonthRange(ui.mm),by=mByCat(mFilter({acc:ui.macc,from:f,to:t,type:ty})).slice(0,12),mx=by[0]?by[0].v:1;
+ return mBox('Monthly graph by category',`<p class="mut" style="margin:-4px 0 8px">${ty=='-'?'Expenses':'Income'} in ${mMonthName(ui.mm)}. Deeper colour = higher amount. Tap a bar to see that category over the last 12 months.</p>`+(by.length?by.map(x=>{const c=mC(x.c);return`<button class="mbr ${ui.mtc==x.c?'on':''}" data-c="${esc(x.c)}" onclick="mTrend('${x.c}')"><span class="nm">${mI(c)} ${esc(c.name)}</span><span class="tr"><i style="width:${Math.max(1,x.v*100/mx)}%;background:${mShade(x.v/mx,ty)}"></i></span><span class="vl">${mFmt(x.v)}</span></button>`}).join(''):'<p class="empty">Nothing recorded this month.</p>')+
  `<h3 style="margin-top:16px" id="mtt2"></h3><div id="mtr"></div>`)+(setTimeout(mTrendDraw,0),'')},
 bud(){if(!M.bud.length)return'';const[f,t]=mMonthRange(ui.mm),by=Object.fromEntries(mByCat(mFilter({acc:ui.macc,from:f,to:t,type:'-'})).map(x=>[x.c,x.v]));
  return mBox('Monthly budgets',M.bud.map(b=>{const c=mC(b.c),sp=by[b.c]||0,p=b.amt?sp*100/b.amt:0,col=p>=100?'#d03b3b':p>=80?'#fab219':'#0ca30c',left=b.amt-sp;
@@ -825,13 +877,15 @@ function mPieSel(i){const on=ui.mps!=i;ui.mps=on?i:-1;document.querySelectorAll(
  if(on){const b=document.querySelector(`#mleg .mlr[data-i="${i}"]`);$('#mpd').innerHTML=`<b>${esc(b.querySelector('.nm').textContent)}</b>: ${esc(b.querySelector('.vl').textContent)} — ${esc(b.querySelector('.pc2').textContent)} of the total.`}else $('#mpd').innerHTML=ui.mpx}
 
 /* 12-month trend under the bar graph */
+function mDark(){return LOOK.th=='dark'||(LOOK.th!='light'&&matchMedia('(prefers-color-scheme: dark)').matches)}
+function mShade(t,ty){t=Math.pow(Math.max(0,Math.min(1,t)),.85);const d=mDark(),A=ty=='-'?(d?[104,58,58]:[252,205,205]):(d?[48,96,70]:[190,240,208]),B=ty=='-'?(d?[245,70,70]:[120,20,20]):(d?[34,205,100]:[14,82,44]);return'rgb('+A.map((a,i)=>Math.round(a+(B[i]-a)*t)).join(',')+')'}
 function mTrend(id){ui.mtc=ui.mtc==id?'all':id;document.querySelectorAll('.mbr').forEach(b=>b.classList.toggle('on',b.dataset.c==ui.mtc));mTrendDraw()}
 function mTrendDraw(){const el=$('#mtr');if(!el)return;const ms=Array.from({length:12},(_,i)=>mAddM(ui.mm,i-11)),cat=ui.mtc,c=cat=='all'?null:mC(cat),
  d=ms.map(m=>{const[f,t]=mMonthRange(m),s=mSum(mFilter({acc:ui.macc,from:f,to:t,cat}));return{m,i:s.i,e:s.e}}),sh=c?c.s:'';
  const mx=Math.max(1,...d.map(x=>sh=='-'?x.e:sh=='+'?x.i:Math.max(x.i,x.e)));$('#mtt2').textContent=(c?c.icon+' '+c.name:'All categories')+' — last 12 months';
  const bar=(v,col,lbl,m)=>`<i style="height:${v?Math.max(2,v*100/mx):0}%;background:${col}" title="${MN[+m.slice(5)-1]} ${m.slice(0,4)} · ${lbl}: ${mFmt(v)}"></i>`;
- el.innerHTML=`<div class="mcols" role="img" aria-label="Monthly totals, last 12 months">${d.map(x=>`<div class="mcol">${sh!='+'?bar(x.e,'var(--s1)','Expenses',x.m):''}${sh!='-'?bar(x.i,'var(--s3)','Income',x.m):''}</div>`).join('')}</div>
- <div class="mcl">${d.map(x=>`<span>${MN[+x.m.slice(5)-1]}${x.m.slice(5)=='01'?'<br>'+x.m.slice(2,4):''}</span>`).join('')}</div><div class="mkey">${sh!='+'?'<span><i style="background:var(--s1)"></i>Expenses</span>':''}${sh!='-'?'<span><i style="background:var(--s3)"></i>Income</span>':''}<span>Tallest bar = ${mFmt(mx,0)}</span></div>`}
+ el.innerHTML=`<div class="mcols" role="img" aria-label="Monthly totals, last 12 months">${d.map(x=>`<div class="mcol">${sh!='+'?bar(x.e,'var(--exp)','Expenses',x.m):''}${sh!='-'?bar(x.i,'var(--s3)','Income',x.m):''}</div>`).join('')}</div>
+ <div class="mcl">${d.map(x=>`<span>${MN[+x.m.slice(5)-1]}${x.m.slice(5)=='01'?'<br>'+x.m.slice(2,4):''}</span>`).join('')}</div><div class="mkey">${sh!='+'?'<span><i style="background:var(--exp)"></i>Expenses</span>':''}${sh!='-'?'<span><i style="background:var(--s3)"></i>Income</span>':''}<span>Tallest bar = ${mFmt(mx,0)}</span></div>`}
 
 /* ---- records ---- */
 function mRow(r,showAcc){const c=mC(r.c),a=mA(r.a),tm=r.t?mFt(r.t):'';return`<button class="mrow" onclick="${r.lk?`mOpenLk('${r.lk}')`:`mEdit(${r.id})`}"><span class="mic" style="border-color:${a.color}">${mI(c)}</span><span class="mtx"><b>${esc(c.name)}${r.ok===0?'<span class="pend">pending</span>':''}${r.lk?'<span class="lkd">from Help Register</span>':''}</b><small>${[r.n,showAcc?a.name:'',mFd(r.d),tm].filter(Boolean).map(esc).join(' · ')}</small></span><span class="mam ${inEx(r.s)}">${r.s=='+'?'+':'−'}${mFmt(r.m)}</span></button>`}
@@ -1123,6 +1177,11 @@ function mSettings(){const b=M.pf.btn,sw=(k,cur,cols)=>`<div class="sw">${cols.m
  <details class="card" ${fo('m-cur',1)}><summary>Currency format</summary><div class="row"><label>Symbol<input list="mcl" value="${esc(M.pf.cur)}" onchange="mPF('cur',this.value.trim()||'₹')" style="width:100%"></label><datalist id="mcl"><option value="₹"><option value="$"><option value="€"><option value="£"><option value="¥"><option value="AED"><option value="SAR"><option value="BDT"><option value="Rs."></datalist>
  <label>Symbol position${mSel('cpos',M.pf.cpos,[['b','Before the amount (₹100)'],['a','After the amount (100 ₹)']])}</label><label>Decimals${mSel('dec',M.pf.dec,[[2,'2 (₹1,234.50)'],[0,'None (₹1,235)']])}</label><label>Digit grouping${mSel('grp',M.pf.grp,[['in','Indian (12,34,567)'],['int','International (1,234,567)'],['none','None (1234567)']])}</label></div>
  <p class="mut">Preview: <b>${mFmt(1234567.5)}</b> &nbsp; <b>${mFmt(-4250)}</b> &nbsp; <b>${mFmt(99.9)}</b>. This also changes how amounts look in the Help Register.</p></details>
+ <details class="card" ${fo('m-ap',1)}><summary>Appearance</summary><div class="row"><label>Theme<select onchange="setTheme(this.value);draw()"><option value="auto" ${LOOK.th=='auto'?'selected':''}>Automatic (follow my device)</option><option value="light" ${LOOK.th=='light'?'selected':''}>Light</option><option value="dark" ${LOOK.th=='dark'?'selected':''}>Dark</option></select></label><label>Text size<select onchange="setFs(this.value);draw()">${[[13,'Extra small'],[14,'Small'],[15,'Normal'],[17,'Large'],[19,'Extra large']].map(([v,n])=>`<option value="${v}" ${(LOOK.fs||15)==v?'selected':''}>${n}</option>`).join('')}</select></label>${fontSel()}${numSel()}</div>${fontPrev()}
+ <h3 style="margin-top:14px">Colour</h3><div class="sw">${PRE.map(c=>`<button class="swb ${(LOOK.acc||PRE[0]).toLowerCase()==c?'on':''}" style="background:${c}" aria-label="Colour ${c}" onclick="setAcc('${c}')"></button>`).join('')}<label class="cp">Custom<input type="color" value="${LOOK.acc||PRE[0]}" onchange="setAcc(this.value)"></label></div>
+ <h3 style="margin-top:14px">Title bar</h3><label class="ck"><input type="checkbox" ${PF.clock?'checked':''} onchange="setPF('clock',this.checked?1:0)"> Show the clock</label><label class="ck" style="margin-top:6px"><input type="checkbox" ${PF.wx?'checked':''} onchange="setPF('wx',this.checked?1:0)"> Show the weather card</label><label class="ck" style="margin-top:6px"><input type="checkbox" ${PF.flag?'checked':''} onchange="setPF('flag',this.checked?1:0)"> Show the National Flag</label>
+ <p class="mut" style="margin:8px 0 0">The clock, weather and flag appear in the title bar at the top. To choose the weather place or °C/°F, open Settings › Household.</p>
+ <div class="row" style="margin-top:10px"><button class="b g s" onclick="resetLook()">Reset appearance</button></div><p class="mut">Appearance is saved on this device only, so your phone and computer can look different.</p></details>
  <details class="card" ${fo('m-dt',1)}><summary>Date and time format</summary><div class="row"><label>Date format${mSel('df',M.pf.df,MDFS.map(f=>[f,f+'  ('+f.replace(/yyyy|dd|mm|MMM/g,t=>({yyyy:'2026',dd:'13',mm:'11',MMM:'Nov'}[t]))+')']))}</label><label>Time format${mSel('tf',M.pf.tf,[['12','12-hour (03:30 pm)'],['24','24-hour (15:30)']])}</label><label>First day of the week${mSel('fw',M.pf.fw,[[1,'Monday'],[0,'Sunday'],[6,'Saturday']])}</label></div>
  <p class="mut">Preview: <b>${mFd(mTd())}</b> at <b>${mFt(mNow())}</b>. Weeks start on ${WDN[M.pf.fw]}. These apply across the whole app.</p></details>
  <details class="card" ${fo('m-btn',1)}><summary>Buttons, colours and layout</summary><h3>Add-record buttons</h3><div class="row"><label>Position${mSel('pos',b.pos,[['br','Floating, bottom right'],['bl','Floating, bottom left'],['bc','Floating, bottom centre'],['dash','Inside the dashboard']],'mBtn')}</label><label>Shape${mSel('shape',b.shape,[['pill','Pill'],['rounded','Rounded box'],['square','Square'],['circle','Circle (symbol only)']],'mBtn')}</label>
@@ -1130,8 +1189,6 @@ function mSettings(){const b=M.pf.btn,sw=(k,cur,cols)=>`<div class="sw">${cols.m
  <label class="ck" style="margin-top:8px"><input type="checkbox" ${b.lab?'checked':''} onchange="mBtn('lab',this.checked?1:0)"> Show the words “Expense” and “Income” on the buttons</label>
  <h3 style="margin-top:12px">Expense button colour</h3>${sw('exp',b.exp,['#d92d20','#c2410c','#be185d','#7c3aed','#334155'])}<h3>Income button colour</h3>${sw('inc',b.inc,['#15803d','#0e7c66','#1d4ed8','#a16207','#334155'])}
  <div class="mbtns" style="padding:10px;border:1px dashed var(--ln);border-radius:12px"><span class="mut" style="width:100%;text-align:center">Preview</span>${mBtns()}</div>
- <h3 style="margin-top:14px">App colour and theme</h3><div class="sw">${PRE.map(c=>`<button class="swb ${(LOOK.acc||PRE[0]).toLowerCase()==c?'on':''}" style="background:${c}" aria-label="Colour ${c}" onclick="setAcc('${c}')"></button>`).join('')}<label class="cp">Custom<input type="color" value="${LOOK.acc||PRE[0]}" onchange="setAcc(this.value)"></label></div>
- <div class="row"><label>Theme<select onchange="setTheme(this.value);draw()"><option value="auto" ${LOOK.th=='auto'?'selected':''}>Automatic</option><option value="light" ${LOOK.th=='light'?'selected':''}>Light</option><option value="dark" ${LOOK.th=='dark'?'selected':''}>Dark</option></select></label></div>
  <h3 style="margin-top:14px">Dashboard cards: show and order</h3>${M.pf.cards.map(([k,on],i)=>`<div class="mset"><label class="ck mtx"><input type="checkbox" ${on?'checked':''} onchange="mCardOn(${i},this.checked)"> ${CARDN[k]}</label><div class="pa"><button class="b g s" ${i?'':'disabled'} onclick="mCardMove(${i},-1)" aria-label="Move up">▲</button><button class="b g s" ${i<M.pf.cards.length-1?'':'disabled'} onclick="mCardMove(${i},1)" aria-label="Move down">▼</button></div></div>`).join('')}
  <div class="row" style="margin-top:10px"><button class="b g s" onclick="M.pf.btn=MDEF().pf.btn;M.pf.cards=MDEF().pf.cards;mSave();mDraw();toast('Buttons and layout reset')">Reset buttons and layout</button></div></details>
  <details class="card" ${fo('m-lk',1)}><summary>Payments from the Help Register</summary><p class="mut">Money paid to your helpers (Payments tab) and amounts written in the Journal can be counted as expenses here, so your reports show everything. They are read-only here: change them in the Help Register.</p>

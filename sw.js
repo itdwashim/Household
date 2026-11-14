@@ -1,5 +1,5 @@
 // Offline cache for the app shell. Bump VERSION when you replace index.html.
-const VERSION = 'v7';
+const VERSION = 'v9';
 const CACHE = 'help-register-' + VERSION;
 const SHELL = ['./', './index.html', './manifest.webmanifest',
   './icons/icon-192.png', './icons/icon-512.png',
