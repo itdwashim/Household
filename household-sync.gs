@@ -7,7 +7,7 @@
 const KEY = 'CHANGE-THIS-TO-YOUR-OWN-HOUSEHOLD-KEY';   // long random phrase; type the same in Settings > Household > Sync across devices
 const FOLDER_NAME = 'Help Register Household Sync';
 const KEEP_DAYS = 30;                                  // daily safety copies to keep
-const VERSION = 'h2';
+const VERSION = 'h3';
 
 /** Open the web app address in a browser: you should see this "running" message. */
 function doGet() {
@@ -43,6 +43,7 @@ function doPost(e) {
         prune_(folder);
         return out({ ok: true });
       }
+      if (req.action === 'bput' || req.action === 'blist' || req.action === 'bget') return backup_(folder, req);
       return out({ ok: false, error: 'Unknown action' });
     } finally {
       lock.releaseLock();
@@ -77,5 +78,37 @@ function prune_(folder) {
   files.sort((a, b) => (a.getName() < b.getName() ? 1 : -1));
   files.slice(KEEP_DAYS).forEach(f => f.setTrashed(true));
 }
+/* ---- Combined / Household backups kept as files in Drive (used by "Backup and restore" in the app) ---- */
+function backupName_(n) { return n === 'all' || n === 'household' ? n : null; }
+function backup_(folder, req) {
+  const n = backupName_(req.name);
+  if (!n) return out({ ok: false, error: 'Unknown backup name' });
+  const re = new RegExp('^backup-' + n + '-(\\d{4}-\\d{2}-\\d{2})\\.json$');
+  if (req.action === 'bput') {
+    if (!req.data || typeof req.data !== 'object') return out({ ok: false, error: 'Nothing to save' });
+    const text = JSON.stringify(req.data);
+    const day = Utilities.formatDate(new Date(), Session.getScriptTimeZone(), 'yyyy-MM-dd');
+    write_(folder, 'backup-' + n + '-latest.json', text);
+    write_(folder, 'backup-' + n + '-' + day + '.json', text);      // one safety copy per day
+    const files = [], it = folder.getFiles();
+    while (it.hasNext()) { const f = it.next(); if (re.test(f.getName())) files.push(f); }
+    files.sort((a, b) => (a.getName() < b.getName() ? 1 : -1));
+    files.slice(KEEP_DAYS).forEach(f => f.setTrashed(true));
+    return out({ ok: true, file: 'backup-' + n + '-' + day + '.json' });
+  }
+  if (req.action === 'blist') {
+    const list = [], it = folder.getFiles();
+    while (it.hasNext()) { const f = it.next(), m = re.exec(f.getName()); if (m) list.push({ name: m[1], updated: f.getLastUpdated().toISOString() }); }
+    list.sort((a, b) => (a.name < b.name ? 1 : -1));
+    return out({ ok: true, result: list });
+  }
+  const want = String(req.file || 'latest');
+  const fname = want === 'latest' ? 'backup-' + n + '-latest.json' : (/^\d{4}-\d{2}-\d{2}$/.test(want) ? 'backup-' + n + '-' + want + '.json' : null);
+  if (!fname) return out({ ok: false, error: 'Bad file name' });
+  const it2 = folder.getFilesByName(fname);
+  if (!it2.hasNext()) return out({ ok: false, error: 'Backup not found' });
+  return out({ ok: true, result: JSON.parse(it2.next().getBlob().getDataAsString()) });
+}
+
 /** Run once from the editor (Run > authorizeOnce) so Google asks you to allow Drive access. */
 function authorizeOnce() { getFolder_(); }

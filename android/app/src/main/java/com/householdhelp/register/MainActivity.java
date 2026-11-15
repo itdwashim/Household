@@ -65,6 +65,7 @@ public class MainActivity extends Activity {
             }
         });
         web.addJavascriptInterface(new AuthBridge(), "AndroidAuth");
+        web.addJavascriptInterface(new FileBridge(this), "AndroidFiles");
         web.loadUrl("https://appassets.androidplatform.net/index.html");
     }
 

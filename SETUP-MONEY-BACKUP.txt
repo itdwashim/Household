@@ -18,7 +18,7 @@ FIRST-TIME SETUP
       Execute as:         Me
       Who has access:     Anyone
    Click Deploy. Copy the "Web app" address. It must start with https://script.google.com/macros/s/ and end with /exec
-7. CHECK IT: paste that address into a browser. You should see "Help Register MONEY script is running (version m2)."
+7. CHECK IT: paste that address into a browser. You should see "Help Register MONEY script is running (version m3)."
    If you see a Google sign-in page or an error instead, go to the TROUBLESHOOTING section below.
 8. In the app: Settings > Money > "Google Drive sync and backup (Money)".
    Paste the address and your secret key, tick "Sync automatically", press "Save settings",
@@ -58,3 +58,10 @@ SECURITY NOTES
 * "Anyone" only means the address can be called; every request must carry your secret key, otherwise it is refused.
   Do not share the address and key.
 * To change the key later: change KEY in the script, deploy a New version, then update the key in the app on each device.
+
+COMBINED BACKUP (version m3 and newer)
+Settings > Money (and Settings > Household) has "Backup and restore everything (Money + Household)". It saves ONE file with all your
+Money and Household records to Google Drive (backup-all-*.json, 30 daily copies in the same folder) or to a file on this device,
+and restores both from it. If you set up the script earlier: paste the NEW money-backup.gs over the old code (keep your own KEY line),
+then Deploy > Manage deployments > pencil > Version: New version > Deploy. Open the address in a browser: it must say version m3.
+

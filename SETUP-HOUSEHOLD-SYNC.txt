@@ -20,7 +20,7 @@ FIRST-TIME SETUP
       Who has access:     Anyone
    Click Deploy. Copy the "Web app" address. It must start with https://script.google.com/macros/s/ and end with /exec
 7. CHECK IT: paste that address into a browser. You should see
-   "Help Register HOUSEHOLD script is running (version h2)."
+   "Help Register HOUSEHOLD script is running (version h3)."
    If you see a Google sign-in page or an error instead, go to TROUBLESHOOTING below.
 8. In the app: Settings > Household > "Sync across devices". Paste the address and your secret key,
    press "Save and sync". The status at the top should change to "Synced".
@@ -48,3 +48,12 @@ per day (household-YYYY-MM-DD.json) for 30 days.
 SECURITY NOTES
 * "Anyone" only means the address can be called; every request must carry your secret key, otherwise it is refused.
   Do not share the address and key, and do not commit your real key to GitHub.
+
+BACKUPS TO GOOGLE DRIVE (version h3 and newer)
+Settings > Household > Backup and restore has "Back up Household to Google Drive" and "Show backup copies".
+Settings > Household (and Settings > Money) also has "Backup and restore everything (Money + Household)": one file with ALL your
+Money and ALL your Household records. Restoring it, from Drive or from a file on this device, brings both back together.
+Backups are kept in the same Drive folder as your sync files: backup-household-*.json and backup-all-*.json (30 daily copies).
+If you set up the script earlier: paste the NEW household-sync.gs over the old code (keep your own KEY line),
+then Deploy > Manage deployments > pencil > Version: New version > Deploy. Open the address in a browser: it must say version h3.
+

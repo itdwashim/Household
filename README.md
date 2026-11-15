@@ -38,6 +38,11 @@ Household uses its own script, separate from Money. Follow `SETUP-HOUSEHOLD-SYNC
 new Google Apps Script project), then enter its address and key in Settings > Household > Sync across devices.
 Use a different key and address for each of the two scripts. Never commit your real keys or addresses to this repository.
 
+## Backup and restore everything
+Settings has "Backup and restore everything (Money + Household)": one file with all Money and Household records, saved to Google Drive
+(through your own Google script) or to the phone/computer, and restored in one go. On Android, files are saved in Downloads > Help Register.
+After updating the two script files (money-backup.gs, household-sync.gs), deploy each as a New version.
+
 ## Icons
 Money > Settings > Categories > Edit > Choose... offers 1,400+ built-in emoji and a search of 200,000+ modern icons from open icon sets
 (Lucide, Tabler, Phosphor, Material, Fluent and more) through the Iconify website. Chosen icons are saved inside the app and work offline.
