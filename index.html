@@ -25,7 +25,7 @@ button.b:hover{background:var(--pri2)}button.g{background:none;color:var(--pg,va
 button.s{padding:5px 10px;font-size:calc(13px*var(--tz))}
 button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid #f2a900;outline-offset:1px}
 .tw{overflow-x:auto}table{border-collapse:collapse;width:100%;min-width:480px}th{background:var(--pri);color:var(--on,#fff);text-align:left;padding:8px;font-size:calc(13px*var(--tz));white-space:nowrap}td{padding:8px;border-top:1px solid var(--ln);white-space:nowrap}td.n,th.n{text-align:right}tr.t td{font-weight:700;background:var(--bg)}
-.cal{display:grid;grid-template-columns:repeat(7,1fr);gap:5px}.cal .wd{text-align:center;font-size:calc(12px*var(--tz));color:var(--mut)}
+.cal{display:grid;grid-template-columns:repeat(7,1fr);gap:5px}.cal .wd{text-align:center;font-size:calc(12px*var(--tz));color:var(--mut);font-weight:800}.cal .wd.we{color:var(--we)}.cal .wd.wk{color:var(--wk)}
 .day{border:1px solid var(--ln);border-radius:9px;min-height:58px;padding:4px;background:var(--card);color:var(--ink);font:inherit;cursor:pointer;text-align:left;display:flex;flex-direction:column;justify-content:space-between}
 .day b{font-size:calc(13px*var(--tz))}.day small{font-size:calc(11px*var(--tz));font-weight:700;line-height:1.1;overflow:hidden}
 .day.P{background:var(--p);color:var(--pt)}.day.A{background:var(--a);color:var(--at)}.day.H{background:var(--h);color:var(--ht)}.day.hol{background:var(--hol);color:var(--holt)}.day.e{visibility:hidden}
@@ -81,9 +81,9 @@ table{min-width:420px}
 }
 @media print{header,nav,.noprint,#toast{display:none!important}.rh{display:flex;align-items:center;gap:10px;margin-bottom:10px}.rh img{height:40px}body{background:#fff;color:#000}.card{border:0;padding:0}th{background:#ddd!important;color:#000!important}}
 /* ===== Money module ===== */
-:root{--s1:#2a78d6;--s2:#eb6834;--s3:#1baf7a;--s4:#eda100;--s5:#e87ba4;--s6:#008300;--s7:#6250d6;--so:#8b9099;--exp:#b42318;--inc:#0b7a3b}
-@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--s1:#3987e5;--s2:#d95926;--s3:#199e70;--s4:#c98500;--s5:#d55181;--s6:#008300;--s7:#9085e9;--exp:#ff9b8a;--inc:#62d68f}}
-:root[data-theme="dark"]{--s1:#3987e5;--s2:#d95926;--s3:#199e70;--s4:#c98500;--s5:#d55181;--s6:#008300;--s7:#9085e9;--exp:#ff9b8a;--inc:#62d68f}
+:root{--wk:#1565ff;--we:#e11d1d;--s1:#2a78d6;--s2:#eb6834;--s3:#1baf7a;--s4:#eda100;--s5:#e87ba4;--s6:#008300;--s7:#6250d6;--so:#8b9099;--exp:#b42318;--inc:#0b7a3b}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--wk:#5b9bff;--we:#ff6b6b;--s1:#3987e5;--s2:#d95926;--s3:#199e70;--s4:#c98500;--s5:#d55181;--s6:#008300;--s7:#9085e9;--exp:#ff9b8a;--inc:#62d68f}}
+:root[data-theme="dark"]{--wk:#5b9bff;--we:#ff6b6b;--s1:#3987e5;--s2:#d95926;--s3:#199e70;--s4:#c98500;--s5:#d55181;--s6:#008300;--s7:#9085e9;--exp:#ff9b8a;--inc:#62d68f}
 body.mm #dash{display:none!important}
 #modesw{max-width:980px;margin:0 auto;padding:10px 14px 0;display:flex;gap:8px}
 #modesw button{flex:1;border:1px solid var(--ln);background:var(--card);color:var(--mut);border-radius:12px;padding:10px;font:700 calc(15px*var(--tz)) var(--fb);cursor:pointer}
@@ -223,12 +223,12 @@ header h1{font-size:calc(15px*var(--tz));flex:1 1 0;min-width:0;overflow:hidden;
 .mdd .n{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.mdd .ph{color:var(--mut)}
 .mddl{margin-top:4px;border:1px solid var(--ln);border-radius:8px;background:var(--card);max-height:44vh;overflow-y:auto;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));-webkit-overflow-scrolling:touch}
 .mddl[hidden]{display:none}
-.mddi{display:flex;align-items:center;gap:5px;min-width:0;padding:6px 8px;border:0;border-bottom:1px solid var(--ln);border-radius:0;background:none;color:var(--ink);font:inherit;font-size:calc(12.5px*var(--tz));line-height:1.25;text-align:left;cursor:pointer}
-.mddi .i{flex:none;font-size:calc(14px*var(--tz))}.mddi .n{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.mddi{display:flex;align-items:center;gap:5px;min-width:0;padding:6px 8px;border:0;border-bottom:1px solid var(--ln);border-radius:0;background:none;color:var(--ink);font:inherit;font-size:calc(14.5px*var(--tz));line-height:1.25;text-align:left;cursor:pointer}
+.mddi .i{flex:none;font-size:calc(16px*var(--tz))}.mddi .n{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .mddi.on{background:var(--p,#e3f3ec);color:var(--pt,var(--pri));font-weight:700}
 .fsum{margin:0 0 10px;padding:7px 10px;border-radius:8px;background:var(--h,#fff4d6);color:var(--ht,#6b4d00);font-size:calc(12.5px*var(--tz));line-height:1.35;display:flex;gap:8px;align-items:center;justify-content:space-between}.fsum button{flex:none}
 .mddh{grid-column:1/-1;padding:4px 8px;font-size:calc(11px*var(--tz));font-weight:700;letter-spacing:.03em;text-transform:uppercase;color:var(--mut);background:var(--bg);border-bottom:1px solid var(--ln)}
-.mt small{text-transform:capitalize}
+.mt small{text-transform:capitalize;font-weight:700}
 .mt.big.cash{background:#fde047;border-color:#ca8a04}.mt.big.cash small{color:#5b4600}.mt.big.cash b,.mt.big.cash b.exp{color:#3b2f00}.mt.big.cash b.exp{color:#9a1c10}
 @media(min-width:701px){.maccs{display:flex;gap:10px;align-items:stretch;overflow-x:auto;padding-bottom:4px;margin-bottom:12px}.maccs>.card{flex:1 1 0;min-width:200px;margin-bottom:0;padding:12px}.maccs>.card.ed{flex:2 1 0;min-width:360px}
 .maccs>.card>.row:first-child{flex-direction:column;align-items:stretch!important;gap:8px}.maccs h2{font-size:calc(16px*var(--tz));line-height:1.3}.maccs .pa{display:flex;gap:6px;flex-wrap:wrap}
@@ -406,7 +406,7 @@ const psel=(id,val,all)=>`<label>Person<select id="${id}" onchange="${id=='ap'?'
 const none=()=>`<div class="card empty"><p>No one is on the register yet.</p><button class="b" onclick="go('ppl')">Add a house-maid, milkman or helper</button></div>`;
 const V={
 att(){if(!S.people.length)return none();const p=P(ui.pid),[y,m]=ui.mon.split('-').map(Number),H=hm(),a=ui.cal&&ui.draft&&ui.draft.pid==p.id?ui.draft.att:(S.att[p.id]||{}),first=(new Date(y,m-1,1).getDay()-(window.mWk?mWk():0)+7)%7,st=stats(p,y,m,a);
- let c=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'].map((_,i,A)=>A[(i+(window.mWk?mWk():0))%7]).map(d=>`<div class="wd">${d}</div>`).join('')+'<div class="day e"></div>'.repeat(first);
+ let c=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'].map((_,i,A)=>A[(i+(window.mWk?mWk():0))%7]).map(d=>`<div class="wd ${d=='Sun'||d=='Sat'?'we':'wk'}">${d}</div>`).join('')+'<div class="day e"></div>'.repeat(first);
  for(let d=1;d<=dim(y,m);d++){const k=key(y,m,d),v=a[k],cl=v||(H[k]?'hol':''),lb=v=='P'?'Present':v=='A'?'Absent':v=='H'?'Half day':H[k]?esc(H[k]).slice(0,14):'';
   c+=`<button class="day ${cl}" onclick="tog('${k}')" aria-label="${k} ${lb}"><b>${d}</b><small>${lb}${exd(p.id,k)?' +'+money(exd(p.id,k)):''}${(S.nt[p.id]||{})[k]?' 📝':''}</small></button>`}
  return `<div class="card"><div class="row">${psel('ap',ui.pid)}<label>Month<input type="month" value="${ui.mon}" onchange="chgMon(this)"></label></div>
@@ -423,7 +423,7 @@ pay(){if(!S.people.length)return none();const f=ui.pf||'all',y=ui.ry,L=S.pay.fil
  <details class="card" ${fo('payh',1)}><summary>Payment history</summary><div class="row"><label>Show person<select onchange="ui.pf=this.value;draw()"><option value="all">All people</option>${S.people.map(p=>`<option value="${p.id}" ${p.id==f?'selected':''}>${esc(p.name)}</option>`).join('')}</select></label><label>Year<input type="number" value="${y}" onchange="ui.ry=+this.value;draw()"></label></div>
  ${sfTable('payh',[{k:'d',label:'Date',get:x=>x.date,txt:x=>fd(x.date)+' '+x.date,html:x=>fd(x.date)},{k:'p',label:'Person',get:x=>(P(x.pid)?.name||'(removed)').toLowerCase(),txt:x=>P(x.pid)?.name||'(removed)',html:x=>esc(P(x.pid)?.name||'(removed)')},{k:'m',label:'For month',get:x=>x.mon,html:x=>x.mon},{k:'n',label:'Note',get:x=>(x.note||'').toLowerCase(),txt:x=>x.note||'',html:x=>esc(x.note)},{k:'a',label:'Amount',cls:'n',num:1,get:x=>+x.amt,txt:x=>x.amt+' '+money(x.amt),html:x=>money(x.amt)},{k:'_a',nosort:1,html:x=>`<button class="d s b" onclick="delPay('${x.id}')">Delete</button>`}],L,{empty:'No payments for this selection.',k:'d',d:-1,total:(r,f)=>`<tr class="t"><td colspan="4">Total${f?' (shown)':''}</td><td class="n">${money(r.reduce((t,x)=>t+ +x.amt,0))}</td><td></td></tr>`})}</details>`},
 ppl(){const e=ui.edit?P(ui.edit):{basis:'month',role:'House-maid'},roles=[...new Set(['House-maid','Milkman','Cook','Driver','Newspaper vendor',...S.people.map(p=>p.role)])];
- return `<div class="card"><h2>${ui.edit?'Edit person':'Add a person'}</h2><div class="row"><label>Name<input id="fn" value="${esc(e.name||'')}"></label><label>Role<input id="fr" list="rl" value="${esc(e.role||'')}"><datalist id="rl">${roles.map(r=>`<option>${esc(r)}</option>`).join('')}</datalist></label><label>Paid by<select id="fb"><option value="month" ${e.basis=='month'?'selected':''}>Fixed monthly salary</option><option value="day" ${e.basis=='day'?'selected':''}>Per day worked</option></select></label><label>Rate (₹)<input id="fa" type="number" min="0" value="${e.rate||''}"></label><label>Phone (optional)<input id="fp" value="${esc(e.phone||'')}"></label></div>
+ return `<div class="card"><h2>${ui.edit?'Edit person':'Add a person'}</h2><div class="row"><label>Name<input id="fn" value="${esc(e.name||'')}"></label><label>Role<input id="fr" value="${esc(e.role||'')}" autocomplete="off"></label><label>Paid by<select id="fb"><option value="month" ${e.basis=='month'?'selected':''}>Fixed monthly salary</option><option value="day" ${e.basis=='day'?'selected':''}>Per day worked</option></select></label><label>Rate (₹)<input id="fa" type="number" min="0" value="${e.rate||''}"></label><label>Phone (optional)<input id="fp" value="${esc(e.phone||'')}"></label></div>
  <label class="ck" style="margin-top:10px"><input type="checkbox" id="fh" ${e.payHol?'checked':''}>Pay for holidays (only matters for “per day” pay; monthly salary always covers holidays)</label>
  <p class="mut">Monthly salary: absent days deduct 1⁄days-in-month of the salary each, half days deduct half. Unmarked days are not deducted.</p>
  <div class="row"><button class="b" onclick="savePerson()">${ui.edit?'Update':'Add person'}</button>${ui.edit?'<button class="b g" onclick="go(\'ppl\')">Cancel</button>':''}</div></div>
@@ -807,15 +807,17 @@ function mCats(sign){const u=mUse(),l=M.cat.filter(c=>c.s==sign);return M.pf.cso
 
 /* ---- import / export ---- */
 function mExport(){const ai=new Map(M.acc.map((a,i)=>[a.id,i])),ci=new Map(M.cat.map((c,i)=>[c.id,i]));
- return{format:MFMT,v:1,exported:new Date().toISOString(),accounts:M.acc.map(a=>Object.assign({name:a.name,detail:a.detail||'',icon:a.icon,color:a.color,ini:a.ini||0,inc:a.inc===0?0:1},a.svg?{svg:a.svg}:{})),
- categories:M.cat.map(c=>Object.assign({name:c.name,sign:c.s,icon:c.icon},c.svg?{svg:c.svg}:{})),
+ return{format:MFMT,v:1,exported:new Date().toISOString(),accounts:M.acc.map(a=>Object.assign({name:a.name,detail:a.detail||'',icon:a.icon,color:a.color,ini:a.ini||0,inc:a.inc===0?0:1},a.svg?{svg:a.svg}:{},a.g?{g:a.g}:{})),
+ categories:M.cat.map(c=>Object.assign({name:c.name,sign:c.s,icon:c.icon},c.svg?{svg:c.svg}:{},c.g?{g:c.g}:{})),
  records:M.mv.map(r=>{const o=[ai.get(r.a),ci.get(r.c),r.m,r.s,r.d,r.t||'',r.n||''];if(r.ok===0||r.pic)o.push(r.ok===0?0:1,r.pic||'');return o}),
  budgets:M.bud.map(b=>[ci.get(b.c),b.amt]),prefs:M.pf}}
 function mImport(x,mode){if(!x||x.format!==MFMT||!Array.isArray(x.records))throw new Error('This is not an expense data file. Use the file named expense-data.json, or a backup made from the Money settings.');
- if(mode=='replace'){M.acc=[];M.cat=[];M.mv=[];M.bud=[];M.nx=1;M.sy={};M.tb={};M.sv=0}
+ const oa=M.acc.slice(),oc=M.cat.slice(),ug=new Set();
+ if(mode=='replace'){M.acc=[];M.cat=[];M.mv=[];M.bud=[];M.nx=1;M.rp=1}
  const am=[],cm=[];let added=0,skipped=0;
- (x.accounts||[]).forEach((a,i)=>{let e=M.acc.find(z=>z.name.toLowerCase()==String(a.name).toLowerCase());if(!e){e={id:'a'+M.nx++,name:a.name,detail:a.detail||'',icon:a.icon||'🏦',svg:a.svg||undefined,color:a.color||'#334155',ini:+a.ini||0,inc:a.inc===0?0:1};M.acc.push(e)}am[i]=e.id});
- (x.categories||[]).forEach((c,i)=>{let e=M.cat.find(z=>z.name==c.name&&z.s==c.sign);if(!e){e={id:'c'+M.nx++,name:c.name,s:c.sign,icon:c.icon||'📦',svg:c.svg||undefined};M.cat.push(e)}cm[i]=e.id});
+ const idg=(e,src,old,same)=>{const o=(src.g&&old.find(z=>z.g==src.g))||old.find(same);const g=o?o.g:src.g;if(mode=='replace'&&g&&!ug.has(g)){ug.add(g);e.g=g}};
+ (x.accounts||[]).forEach((a,i)=>{let e=M.acc.find(z=>z.name.toLowerCase()==String(a.name).toLowerCase());if(!e){e={id:'a'+M.nx++,name:a.name,detail:a.detail||'',icon:a.icon||'🏦',svg:a.svg||undefined,color:a.color||'#334155',ini:+a.ini||0,inc:a.inc===0?0:1};idg(e,a,oa,z=>String(z.name).toLowerCase()==String(a.name).toLowerCase());M.acc.push(e)}am[i]=e.id});
+ (x.categories||[]).forEach((c,i)=>{let e=M.cat.find(z=>z.name==c.name&&z.s==c.sign);if(!e){e={id:'c'+M.nx++,name:c.name,s:c.sign,icon:c.icon||'📦',svg:c.svg||undefined};idg(e,c,oc,z=>z.name==c.name&&z.s==c.sign);M.cat.push(e)}cm[i]=e.id});
  const seen=new Set();if(mode!='replace')M.mv.forEach(r=>seen.add([r.a,r.c,r.m,r.s,r.d,r.t,r.n].join('|')));
  (x.records||[]).forEach(r=>{const o={id:M.nx++,a:am[r[0]],c:cm[r[1]],m:+r[2],s:r[3],d:r[4],t:r[5]||'',n:r[6]||''};if(!o.a||!o.c||!(o.m>0))return;
   if(r.length>7){if(r[7]===0)o.ok=0;if(r[8])o.pic=r[8]}
@@ -1026,7 +1028,7 @@ function mDlg(){const e=ui.me;let d=$('#mdlg');if(!d){d=document.createElement('
  <p style="margin:6px 0"><button type="button" class="b g s" onclick="$('#mnc').hidden=!$('#mnc').hidden">＋ New category</button></p>
  <div id="mnc" hidden class="mex" style="margin:0 0 8px"><div class="row"><label style="flex:2 1 140px">Name<input id="mncn"></label><label style="flex:0 1 70px">Icon<input id="mnci" value="${e.s=='-'?'📦':'💰'}"></label><button type="button" class="b s" onclick="mNewCat()">Add</button></div><div class="emg">${EMO.map(x=>`<button type="button" class="emo" onclick="$('#mnci').value='${x}'">${x}</button>`).join('')}</div></div></div>
  <div class="row"><label>Date${mDF('mdd',e.d,'mNoop')}</label><label>Time${mTF('mtt',e.t)}</label></div>
- <label style="margin-top:8px">Details (optional)<input id="mnn" value="${esc(e.n||'')}" list="mdl" autocomplete="off" onkeydown="if(event.key=='Enter')mSaveRec()"></label><datalist id="mdl"></datalist>
+ <label style="margin-top:8px">Details (optional)<input id="mnn" type="text" value="${esc(e.n||'')}" autocomplete="off" placeholder="Type a note, if you like" onkeydown="if(event.key=='Enter')mSaveRec()"></label>
  ${e.ok===0?`<label class="ck" style="margin-top:8px"><input type="checkbox" id="mok"> This pending record is now confirmed</label>`:''}${e.pic?`<p class="mut">📎 Photos in the old app: ${esc(e.pic)} (file names only)</p>`:''}
  <div class="row" style="margin-top:14px"><button class="b" onclick="mSaveRec()">Save</button>${e.id==null?'<button class="b g" onclick="mSaveRec(1)">Save and add another</button>':`<button class="b d" onclick="mDel(${e.id})">Delete</button>`}<button class="b g" onclick="mClose()">Cancel</button></div></div>`;
  mSuggest();setTimeout(()=>{const a=$('#mam');if(a&&e.id==null)a.focus()},50)}
@@ -1079,14 +1081,20 @@ const bkHhData=()=>({format:BKH,v:1,exported:new Date().toISOString(),data:JSON.
 bkMoneyData=()=>{try{mFlush()}catch(e){}return mExport()},
 bkAllData=()=>{try{mFlush()}catch(e){}return{format:BKF,v:1,exported:new Date().toISOString(),money:mExport(),household:JSON.parse(JSON.stringify(S))}};
 function bkParts(x){if(!x||typeof x!='object')return null;if(x.format==BKF)return{m:x.money||null,h:x.household||null};if(x.format==MFMT)return{m:x,h:null};if(x.format==BKH)return{m:null,h:x.data||null};if(Array.isArray(x.people))return{m:null,h:x};return null}
-function bkApply(x,scope){const p=bkParts(x);if(!p)return toast('That is not a Help Register backup file.');
+async function bkApply(x,scope){const p=bkParts(x);if(!p)return toast('That is not a Help Register backup file.');
  if(scope=='money'&&!p.m)return toast('This backup has no Money data.');if(scope=='hh'&&!p.h)return toast('This backup has no Household data.');
  const m=scope=='hh'?null:p.m,h=scope=='money'?null:p.h;if(!m&&!h)return toast('This backup has nothing to restore here.');
  if(m&&!(m.format==MFMT&&Array.isArray(m.records)))return toast('The Money part of this file is damaged.');if(h&&!Array.isArray(h.people))return toast('The Household part of this file is damaged.');
  const what=m&&h?'ALL Money records and ALL Household records':m?'ALL Money records':'ALL Household records';
- if(!confirm('This replaces '+what+' on this device with the backup'+(x.exported?' made '+new Date(x.exported).toLocaleString('en-IN'):'')+'. Continue?'))return;
- try{if(m)mImport(m,'replace');if(h){S=Object.assign(DEF(),h);save()}}catch(e){return toast('Restore failed: '+e.message)}
- toast('Restored '+(m&&h?'Money and Household':m?'Money':'Household'));draw()}
+ if(!confirm('This replaces '+what+' with the backup'+(x.exported?' made '+new Date(x.exported).toLocaleString('en-IN'):'')+'. Anything not in the backup is removed. If sync is on, your other devices follow the next time they sync. Continue?'))return;
+ try{if(m)mImport(m,'replace');if(h)await hhRestore(h)}catch(e){return toast('Restore failed: '+e.message)}
+ toast('Restored '+(m&&h?'Money and Household':m?'Money':'Household'));draw();
+ if(m&&typeof gdOn=='function'&&gdOn()&&navigator.onLine)mSyncMoney().then(()=>draw()).catch(()=>{})}
+async function hhRestore(h){const old=S;let rem=null;if(on()&&navigator.onLine){try{rem=(await api('get')).result||null}catch(e){}}
+ const now=Date.now(),B=Object.assign(DEF(),JSON.parse(JSON.stringify(h))),D=Object.assign({},B.del),src=[old,rem].filter(Boolean);
+ [['people','id','p:'],['pay','id','y:'],['extra','id','x:'],['hol','date','h:'],['pl','id','l:'],['jr','id','j:'],['cj','id','c:'],['cp','id','q:']].forEach(([c,k,pre])=>{const keep=new Set((B[c]||[]).map(i=>i[k]));src.forEach(z=>(z[c]||[]).forEach(i=>{if(!keep.has(i[k]))D[pre+i[k]]=now}));(B[c]||[]).forEach(i=>{i.t=now;delete D[pre+i[k]]})});
+ [['att','at'],['nt','nat']].forEach(([v,t])=>{B[t]=B[t]||{};const ids=new Set([B,...src].flatMap(z=>Object.keys(z[v]||{})));ids.forEach(pid=>{if(!(B.people||[]).some(p=>p.id==pid))return;B[t][pid]=B[t][pid]||{};new Set([B,...src].flatMap(z=>Object.keys((z[v]||{})[pid]||{}))).forEach(d=>{B[t][pid][d]=now})})});
+ B.lbt=now;B.del=D;S=B;save()}
 async function bkPut(tid,name){const tg=bkTg(tid);if(!tg)return toast('Set up your Google script first.');if(!navigator.onLine)return bkStatus('Offline. Try again when you are online.',1);
  const data=name=='all'?bkAllData():name=='money'?bkMoneyData():bkHhData();bkStatus('Saving to Google Drive…');
  try{const j=await bkApi(tg,'bput',{name,data});bkStatus('Saved to Google Drive '+gdWhen(Date.now())+(j.file?' · '+j.file:''));toast('Backup saved to Google Drive');if(ui.bkl)delete ui.bkl[tid+name]}catch(e){bkStatus('Backup failed: '+e.message,1);toast('Backup failed')}}
@@ -1186,6 +1194,9 @@ function syMerge(L,R){const now=Date.now(),tb=Object.assign({},R&&R.tb||{});Obje
  const out={tb};['acc','cat','mv','bud'].forEach(k=>{const mp=new Map();L[k].forEach(p=>mp.set(p.g,p));
   (R&&R[k]||[]).forEach(r=>{const l=mp.get(r.g);if(!l||(r.u||0)>(l.u||0))mp.set(r.g,r)});
   mp.forEach((p,g)=>{if(tb[g]&&tb[g]>=(p.u||0))mp.delete(g)});out[k]=[...mp.values()]});return out}
+function syReplace(L,R){const now=Date.now(),tb=Object.assign({},R&&R.tb||{});Object.keys(M.tb||{}).forEach(g=>{tb[g]=Math.max(tb[g]||0,M.tb[g])});const out={tb};
+ ['acc','cat','mv','bud'].forEach(k=>{const have=new Set(L[k].map(p=>p.g));(R&&R[k]||[]).forEach(r=>{if(!have.has(r.g))tb[r.g]=Math.max(tb[r.g]||0,now)});L[k].forEach(p=>{delete tb[p.g]});out[k]=L[k].map(p=>Object.assign({},p,{u:now}))});
+ Object.keys(tb).forEach(g=>{if(tb[g]<now-15552e6)delete tb[g]});return out}
 function sySame(A,R){if(!R)return false;const ka=Object.keys(A.tb||{}),kr=Object.keys(R.tb||{});if(ka.length!=kr.length||ka.some(g=>(R.tb||{})[g]!==A.tb[g]))return false;
  for(const k of['acc','cat','mv','bud']){const rl=R[k]||[];if(A[k].length!=rl.length)return false;const rm=new Map(rl.map(p=>[p.g,p]));
   for(const p of A[k]){const r=rm.get(p.g);if(!r||(r.u||0)!=(p.u||0)||hsh(syKey(r))!=hsh(syKey(p)))return false}}return true}
@@ -1206,14 +1217,14 @@ function syApply(out){const fld=(o,p)=>{Object.keys(o).forEach(k=>{if(k!='id'&&!
 async function mSyncMoney(){if(!gdOn())throw new Error('Money sync is not set up yet.');if(msyBusy)throw new Error('Money sync is already running.');msyBusy=true;
  try{mFlush();
   for(let tries=0;tries<4;tries++){
-   const r=await gdApi('sget',{have:M.sv||0});let R=r.same?null:(r.data||null);
+   const rp=!!M.rp,r=await gdApi('sget',{have:rp?0:(M.sv||0)});let R=r.same?null:(r.data||null);
    if(!r.same&&!R){M.sy={};M.sv=0}
    const L=syLocal(R);let out,put;
-   if(r.same){out={acc:L.acc,cat:L.cat,mv:L.mv,bud:L.bud,tb:Object.assign({},M.tb)};put=L.changed}
-   else{out=syMerge(L,R);put=!sySame(out,R)}
+   if(r.same){out=rp?syReplace(L,null):{acc:L.acc,cat:L.cat,mv:L.mv,bud:L.bud,tb:Object.assign({},M.tb)};put=L.changed||rp}
+   else{out=rp?syReplace(L,R):syMerge(L,R);put=rp||!sySame(out,R)}
    let nv=r.ver||0;
    if(put){try{const j=await gdApi('sput',{ver:nv,data:{v:2,acc:out.acc,cat:out.cat,mv:out.mv,bud:out.bud,tb:out.tb}});nv=j.ver}catch(e){if(e.conflict)continue;throw e}}
-   const res=syApply(out);M.sv=nv;mDirty=true;mFlush();return res}
+   const res=syApply(out);M.sv=nv;delete M.rp;mDirty=true;mFlush();return res}
   throw new Error('Another device was syncing at the same time. Please try again.')}
  finally{msyBusy=false}}
 /* run a sync and report the result in Settings */
