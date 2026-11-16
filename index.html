@@ -17,8 +17,9 @@ main{max-width:980px;margin:0 auto;padding:14px}
 .card{background:var(--card);border:1px solid var(--ln);border-radius:12px;padding:14px;margin-bottom:14px}
 h2{font:700 calc(18px*var(--tz)) var(--fh);margin:0 0 10px}h3{margin:0 0 8px;font-size:calc(15px*var(--tz))}
 .row{display:flex;flex-wrap:wrap;gap:10px;align-items:end}
-label{display:block;font-size:calc(13px*var(--tz));color:var(--mut);flex:1 1 150px}
+label{display:block;font-size:calc(11.5px*var(--tz));color:var(--mut);flex:1 1 150px}label.ck{font-size:calc(13px*var(--tz))}.sth{margin:18px 2px 8px;font-size:calc(13px*var(--tz));text-transform:uppercase;letter-spacing:.06em;color:var(--mut)}
 input,select,textarea{width:100%;margin-top:3px;padding:9px;border:1px solid var(--ln);border-radius:8px;background:var(--bg);color:var(--ink);font:inherit}
+:where(label) :is(input,select,textarea){font-size:calc(13px*var(--tz))}
 input[type=checkbox]{width:auto;margin:0 6px 0 0}
 button.b{border:0;background:var(--pri);color:var(--on,#fff);border-radius:9px;padding:9px 15px;font:600 calc(14px*var(--tz)) var(--fb);cursor:pointer}
 button.b:hover{background:var(--pri2)}button.g{background:none;color:var(--pg,var(--pri));border:1px solid var(--pg,var(--pri))}button.d{background:none;color:var(--at);border:1px solid var(--at)}
@@ -397,7 +398,7 @@ function stats(p,y,m,at0){const H=hm(),a=at0||S.att[p.id]||{};let pr=0,ab=0,hf=0
  return{pr,ab,hf,hl,ex,earned:Math.max(0,earned)+ex,paid}}
 const exd=(id,k)=>(S.extra||[]).filter(x=>x.pid==id&&x.date==k).reduce((s,x)=>s+ +x.amt,0);
 const TABS=[['att','Attendance'],['pay','Payments'],['ppl','People'],['hol','Holidays'],['pl','Planner'],['jr','Journal'],['rep','Reports'],['set','Settings']];
-function go(t){if(t!=ui.tab&&!lose())return;ui.tab=t;ui.edit=null;draw()}
+function go(t){if(t=='set')return navTo('ms');if(t!=ui.tab&&!lose())return;ui.tab=t;ui.edit=null;draw()}
 function brand(){$('#hn').textContent=S.label;document.title=S.label;const l=$('#hl');l.style.display=S.logo?'block':'none';if(S.logo)l.src=S.logo}
 function draw(){if(window.mSw)mSw();if(ui.mode=='money'&&window.mDraw)return mDraw();brand();window.navDraw&&navDraw();
  if(!ui.pid||!P(ui.pid))ui.pid=S.people[0]?.id||'';
@@ -480,7 +481,7 @@ set(){return `<details class="card" ${fo('s-logo',1)}><summary>App name and logo
  <p class="mut">Built in: Chore, Event, Important date.</p>
  <div class="sw">${(S.cp||[]).map(c=>`<span class="chip" style="display:inline-flex;align-items:center;gap:6px;border-color:var(--ln);background:var(--bg)">${esc(c.icon||'📌')} ${esc(c.name)}${c.tick?'':' (date only)'}<button class="b d s" style="padding:0 8px;min-height:26px" onclick="delPt('${c.id}')" aria-label="Delete ${esc(c.name)}">✕</button></span>`).join('')||'<span class="mut">No custom types yet.</span>'}</div>
  <p class="mut">Deleting a type does not change planner entries that already use it.</p></details>
- <details class="card" ${fo('s-sync',1)}><summary>Sync across devices</summary><p class="mut">Uses your own free Google account. Do the one-time steps in SETUP.txt, then enter the same address and key on every phone and computer.</p><div class="row"><label>Web app address<input id="su" value="${esc(CFG.url||'')}" placeholder="https://script.google.com/macros/s/…/exec"></label><label>Secret key<input id="sk" type="password" value="${esc(CFG.key||'')}"></label></div><div class="row" style="margin-top:10px"><button class="b" onclick="saveSync()">Save and sync</button>${on()?'<button class="b g" onclick="pull()">Sync now</button><button class="b d" onclick="stopSync()">Turn off sync</button>':''}</div></details>
+ <details class="card" ${fo('s-sync',1)}><summary>Sync across devices</summary><p class="mut">Uses your own free Google account. Do the one-time steps in SETUP-HOUSEHOLD-SYNC.txt, then enter the same address and key on every phone and computer.</p><div class="row"><label>Web app address<input id="su" value="${esc(CFG.url||'')}" placeholder="https://script.google.com/macros/s/…/exec"></label><label>Secret key<input id="sk" type="password" value="${esc(CFG.key||'')}"></label></div><div class="row" style="margin-top:10px"><button class="b" onclick="saveSync()">Save and sync</button>${on()?'<button class="b g" onclick="pull()">Sync now</button><button class="b d" onclick="stopSync()">Turn off sync</button>':''}</div></details>
  ${bkAllCard()}`}};
 const tdy=()=>{const d=new Date();return key(d.getFullYear(),d.getMonth()+1,d.getDate())},
 pd=s=>new Date(+s.slice(0,4),+s.slice(5,7)-1,+s.slice(8,10)),fmtD=d=>key(d.getFullYear(),d.getMonth()+1,d.getDate()),
@@ -811,7 +812,7 @@ function mExport(){const ai=new Map(M.acc.map((a,i)=>[a.id,i])),ci=new Map(M.cat
  categories:M.cat.map(c=>Object.assign({name:c.name,sign:c.s,icon:c.icon},c.svg?{svg:c.svg}:{},c.g?{g:c.g}:{})),
  records:M.mv.map(r=>{const o=[ai.get(r.a),ci.get(r.c),r.m,r.s,r.d,r.t||'',r.n||''];if(r.ok===0||r.pic)o.push(r.ok===0?0:1,r.pic||'');return o}),
  budgets:M.bud.map(b=>[ci.get(b.c),b.amt]),prefs:M.pf}}
-function mImport(x,mode){if(!x||x.format!==MFMT||!Array.isArray(x.records))throw new Error('This is not an expense data file. Use the file named expense-data.json, or a backup made from the Money settings.');
+function mImport(x,mode){if(!x||x.format!==MFMT||!Array.isArray(x.records))throw new Error('This is not an expense data file. Use the file named expense-data.json, or a backup made from Settings.');
  const oa=M.acc.slice(),oc=M.cat.slice(),ug=new Set();
  if(mode=='replace'){M.acc=[];M.cat=[];M.mv=[];M.bud=[];M.nx=1;M.rp=1}
  const am=[],cm=[];let added=0,skipped=0;
@@ -918,7 +919,7 @@ function mFab(on){let f=$('#mfab');if(!on||ui.mode!='money'||M.pf.btn.pos=='dash
 const MVW={mh(){const[y,m]=ui.mm.split('-').map(Number);let h=mChips(ui.macc,'mSetAcc')+`<div class="mnav"><button class="b g" onclick="mMon(-1)" aria-label="Previous month">◀</button><b>${mMonthName(ui.mm)}</b><button class="b g" onclick="mMon(1)" aria-label="Next month">▶</button></div>`;
  if(ui.mm!=mTd().slice(0,7))h+=`<p style="margin:-6px 0 12px;text-align:center"><button class="b g s" onclick="ui.mm=mTd().slice(0,7);mDraw()">Back to this month</button></p>`;
  M.pf.cards.forEach(([k,on])=>{if(on&&CARD[k])h+=CARD[k]()});return h},
- mr:()=>mRecords(),ma:()=>mAccounts(),mp:()=>mReportsPage(),ms:()=>mSettings()};
+ mr:()=>mRecords(),ma:()=>mAccounts(),mp:()=>mReportsPage(),ms:()=>stAll()};
 function mSetAcc(id){ui.macc=id;mDraw()}
 function mMon(n){ui.mm=mAddM(ui.mm,n);ui.mps=-1;mDraw()}
 const CARD={
@@ -1112,7 +1113,7 @@ function bkAllCard(){const tg=bkAllTg(),w=ui.bkw||(tg?'drive':'file'),r=ui.bkr||
  return`<details class="card" ${fo('bk-all',1)}><summary>Backup and restore (Money + Household)</summary><p class="mut" style="margin:0 0 8px">Choose what to back up. “Money + Household” puts all your Money records and all your Household records in one file, and restoring it brings both back together.</p>
  <div class="row"><label style="flex:1 1 260px">What to back up and restore<select onchange="bkSetK(this.value)">${Object.entries(BKN).map(([v,t])=>`<option value="${v}" ${bkK()==v?'selected':''}>${t}</option>`).join('')}</select></label></div>
  <h3 style="margin:10px 0 6px">Back up</h3><div class="row"><label style="flex:1 1 220px">Save the backup to${sel(w,'bkSetW')}</label><button class="b" onclick="bkBackup()">Back up now</button></div>
- <p class="mut" style="margin:6px 0 0">${w=='drive'?(tg?'Saved in your Google Drive, through your '+esc(tg.label)+'. The last 30 daily copies are kept.':'Google Drive is not set up yet. Fill in the Google Drive box in Money settings, or “Sync across devices” in Household settings, first.'):'The file is saved in your Downloads folder (Downloads › Help Register on Android).'}</p>
+ <p class="mut" style="margin:6px 0 0">${w=='drive'?(tg?'Saved in your Google Drive, through your '+esc(tg.label)+'. The last 30 daily copies are kept.':'Google Drive is not set up yet. Fill in the Google Drive addresses and keys in Settings › Google Drive sync, first.'):'The file is saved in your Downloads folder (Downloads › Help Register on Android).'}</p>
  <h3 style="margin:14px 0 6px">Restore</h3><div class="row"><label style="flex:1 1 220px">Restore from${sel(r,'bkSetR')}</label>${r=='drive'?(tg?`<button class="b g" onclick="bkList('${tg.id}','${bkK()}')">Show copies in Drive</button>`:''):`<label>Choose the backup file (any kind)<input type="file" accept=".json,application/json" onchange="bkRestoreFile(this,'all')"></label>`}</div>
  ${r=='drive'&&tg?bkListSel(tg.id,bkK()):''}${r=='drive'&&!tg?'<p class="mut" style="margin:6px 0 0">Google Drive is not set up yet (see above).</p>':''}
  <p class="mut bks" style="margin:8px 0 0">${esc(ui.bks||'')}</p><p class="mut" style="margin:6px 0 0">Restoring replaces the records on this device with the ones in the backup. A file made from “Money only” restores Money only, and so on. A Money + Household file brings back both.</p></details>`}
@@ -1228,7 +1229,7 @@ async function mSyncMoney(){if(!gdOn())throw new Error('Money sync is not set up
   throw new Error('Another device was syncing at the same time. Please try again.')}
  finally{msyBusy=false}}
 /* run a sync and report the result in Settings */
-async function mSyncRun(auto){if(!gdOn()){if(!auto)toast('Set up Money sync first (Settings > Money > Google Drive).');return false}
+async function mSyncRun(auto){if(!gdOn()){if(!auto)toast('Set up Money sync first (Settings › Google Drive sync).');return false}
  if(!navigator.onLine){GD.syncMsg='Offline. Will sync when you are online.';gdSaveCfg();return false}
  try{const r=await mSyncMoney();GD.syncT=Date.now();gdDirty=false;
   GD.syncMsg='Synced ✓ '+gdWhen(GD.syncT)+(r.add||r.del?' ('+(r.add?r.add+' received':'')+(r.add&&r.del?', ':'')+(r.del?r.del+' removed':'')+')':'');GD.syncBad=0;gdSaveCfg();
@@ -1242,10 +1243,10 @@ function syDraw(){const hOn=on(),mOn=gdOn(),o=$('#msy');if(!o)return;
  <div class="syr"><span>🏠 <b>Household</b><small>Attendance, payments, people, journal, planner</small></span><em id="syh" ${hOn?'':'class="mut"'}>${hOn?esc($('#sy').textContent):'Not set up'}</em></div>
  <div class="syr"><span>💰 <b>Money</b><small>Accounts, categories, expenses, income</small></span><em id="sym" ${mOn?(GD.syncBad?'style="color:var(--exp)"':''):'class="mut"'}>${mOn?esc(GD.syncMsg||'Not synced yet'):'Not set up'}</em></div>
  <div class="row" style="margin-top:14px"><button class="b" onclick="syncAll('both')">Sync both</button><button class="b g" onclick="syncAll('house')">Household only</button><button class="b g" onclick="syncAll('money')">Money only</button></div>
- <p class="mut" style="margin:12px 0 0;font-size:13px">${hOn?'':'Household sync: set it up in Settings › Household. '}${mOn?'':'Money sync: set it up in Settings › Money › Google Drive.'}</p></div>`}
+ <p class="mut" style="margin:12px 0 0;font-size:13px">${hOn?'':'Household sync: set it up in Settings › Google Drive sync. '}${mOn?'':'Money sync: set it up in Settings › Google Drive sync.'}</p></div>`}
 async function syncAll(w){const bs=[...document.querySelectorAll('#msy .row button')];bs.forEach(b=>b.disabled=true);const set=(id,t,bad)=>{const e=$('#'+id);if(e){e.textContent=t;e.style.color=bad?'var(--exp)':''}};
- if(w!='money'){if(on()){set('syh','Syncing…');try{await syncNow()}catch(e){}set('syh',$('#sy').textContent,!/^Synced/.test($('#sy').textContent))}else set('syh','Not set up (Settings › Household)')}
- if(w!='house'){if(gdOn()){set('sym','Syncing…');const ok=await mSyncRun(true);set('sym',GD.syncMsg||'',!ok)}else set('sym','Not set up (Settings › Money › Google Drive)')}
+ if(w!='money'){if(on()){set('syh','Syncing…');try{await syncNow()}catch(e){}set('syh',$('#sy').textContent,!/^Synced/.test($('#sy').textContent))}else set('syh','Not set up (Settings › Google Drive sync)')}
+ if(w!='house'){if(gdOn()){set('sym','Syncing…');const ok=await mSyncRun(true);set('sym',GD.syncMsg||'',!ok)}else set('sym','Not set up (Settings › Google Drive sync)')}
  bs.forEach(b=>b.disabled=false);toast(w=='both'?'Sync finished':w=='house'?'Household sync finished':'Money sync finished')}
 /* automatic sync when the app opens or comes back to the front */
 setTimeout(()=>{if(gdOn()&&GD.auto)mSyncRun(true)},4000);
@@ -1258,10 +1259,10 @@ const NAVG=[
  ['house','🏠','Household',[['att','Attendance'],['pay','Payments'],['ppl','People']]],
  ['hol','🏖️','Holiday',[['hol','Holidays']]],
  ['rep','📊','Reports',[['mp','Money'],['rep','Household']]],
- ['set','⚙️','Settings',[['ms','Money'],['set','Household']]]];
+ ['set','⚙️','Settings',[['ms','Settings']]]];
 const navCur=()=>ui.mode=='money'?ui.mtab:ui.tab,
  navGrp=()=>NAVG.find(g=>g[3].some(s=>s[0]==navCur()))||NAVG[0];
-function navTo(k){const isM=['mh','mr','ma','mp','ms'].includes(k);
+function navTo(k){if(k=='set')k='ms';const isM=['mh','mr','ma','mp','ms'].includes(k);
  if(isM){if(ui.mode!='money'){if(!lose())return;ui.mode='money'}ui.mtab=k;mClose();draw();return}
  if(ui.mode=='money'){ui.mode='reg';ui.tab=k;ui.edit=null;draw();return}go(k)}
 function navPick(g){const G=NAVG.find(x=>x[0]==g),m=(ui.nmem||{})[g];navTo(m&&G[3].some(s=>s[0]==m)?m:G[3][0][0])}
@@ -1321,6 +1322,20 @@ const mSel=(k,cur,opts,fn)=>`<select onchange="${fn||'mPF'}('${k}',this.value)">
 const CARDN={bal:'Monthly balance and previous balance',btn:'Buttons to add records (when placed in the dashboard)',pie:'Monthly summary pie chart',last:'Last ten records',bar:'Monthly graph by category',bud:'Monthly budgets'};
 function mCardMove(i,d){const c=M.pf.cards,j=i+d;if(j<0||j>=c.length)return;[c[i],c[j]]=[c[j],c[i]];mSave();mDraw()}
 function mCardOn(i,v){M.pf.cards[i][1]=v?1:0;mSave();mDraw()}
+/* ===== One Settings page for Money and Household: cards from both screens, each shown once ===== */
+function stParse(h){const o={};String(h).split('<details class="card"').slice(1).forEach(c=>{const t=(c.match(/<summary>([^<]*)<\/summary>/)||[])[1];if(t)o[t]='<details class="card"'+c});return o}
+const stBody=c=>c?c.slice(c.indexOf('</summary>')+10,c.lastIndexOf('</details>')).replace(/^\s*<p class="mut">[\s\S]*?<\/p>/,''):'';
+function stAll(){const m=stParse(mSettings()),h=stParse(V.set()),used=new Set(),P=(o,t)=>{const c=o[t];if(c)used.add(o===m?'m:'+t:'h:'+t);return c||''},sec=t=>`<h3 class="sth">${t}</h3>`;
+ const sync=`<details class="card" ${fo('st-sync',1)}><summary>Google Drive sync (Money and Household)</summary><p class="mut" style="margin:0 0 6px">Money and Household each sync through their own small Google script, so each has its own web app address and secret key. Fill in both on every device, then use the <b>Sync</b> button at the top to sync both.</p><h3 style="margin:12px 0 6px">Household</h3>${stBody(P(h,'Sync across devices'))}<h3 style="margin:18px 0 6px">Money</h3>${stBody(P(m,'Google Drive connection and sync (Money)'))}</details>`;
+ let out=`<div class="card"><h2 style="margin:0">Settings</h2><p class="mut" style="margin:4px 0 0">Money and Household together, in one place.</p></div>`
+ +sec('Look and feel')+P(h,'App name and logo')+P(h,'Appearance')+P(h,'Dashboard, clock and weather')+P(h,'Confetti on special days')+P(m,'Buttons, colours and layout')+P(m,'Currency format')+P(m,'Date and time format')
+ +sec('Money')+P(m,'Categories')+P(m,'Monthly budgets')+P(m,'Payments from the Help Register')
+ +sec('Journal and planner')+P(h,'Journal categories')+P(h,'Planner types')
+ +sec('Privacy')+P(h,'App lock')
+ +sec('Sync and backup')+sync+P(m,'Backup and restore (Money + Household)')+P(m,'Data check (compare devices)')+P(m,'Import and reset');
+ used.add('m:Appearance');used.add('h:Backup and restore (Money + Household)');used.add('m:Backup and restore (Money + Household)');
+ const left=[...Object.keys(m).filter(t=>!used.has('m:'+t)).map(t=>m[t]),...Object.keys(h).filter(t=>!used.has('h:'+t)).map(t=>h[t])];
+ return out+(left.length?sec('More')+left.join(''):'')}
 function mSettings(){const b=M.pf.btn,sw=(k,cur,cols)=>`<div class="sw">${cols.map(c=>`<button class="swb ${cur.toLowerCase()==c?'on':''}" style="background:${c}" aria-label="Colour ${c}" onclick="mBtn('${k}','${c}')"></button>`).join('')}<label class="cp">Custom<input type="color" value="${cur}" onchange="mBtn('${k}',this.value)"></label></div>`;
  const cc=ui.mcs,cl=mCats(cc),u=mUse();
  return`<details class="card" ${fo('m-cat',1)}><summary>Categories</summary><div class="mseg"><button class="b g s ${cc=='-'?'on ex1':''}" onclick="ui.mcs='-';ui.mce=null;mDraw()">Expense categories (${mCats('-').length})</button><button class="b g s ${cc=='+'?'on in1':''}" onclick="ui.mcs='+';ui.mce=null;mDraw()">Income categories (${mCats('+').length})</button></div>
@@ -1332,7 +1347,7 @@ function mSettings(){const b=M.pf.btn,sw=(k,cur,cols)=>`<div class="sw">${cols.m
  <details class="card" ${fo('m-ap',1)}><summary>Appearance</summary><div class="row"><label>Theme<select onchange="setTheme(this.value);draw()"><option value="auto" ${LOOK.th=='auto'?'selected':''}>Automatic (follow my device)</option><option value="light" ${LOOK.th=='light'?'selected':''}>Light</option><option value="dark" ${LOOK.th=='dark'?'selected':''}>Dark</option></select></label>${tzCtl()}${fontSel()}${numSel()}</div>${fontPrev()}
  <h3 style="margin-top:14px">Colour</h3><div class="sw">${PRE.map(c=>`<button class="swb ${(LOOK.acc||PRE[0]).toLowerCase()==c?'on':''}" style="background:${c}" aria-label="Colour ${c}" onclick="setAcc('${c}')"></button>`).join('')}<label class="cp">Custom<input type="color" value="${LOOK.acc||PRE[0]}" onchange="setAcc(this.value)"></label></div>
  <h3 style="margin-top:14px">Title bar</h3><label class="ck"><input type="checkbox" ${PF.clock?'checked':''} onchange="setPF('clock',this.checked?1:0)"> Show the clock</label><label class="ck" style="margin-top:6px"><input type="checkbox" ${PF.wx?'checked':''} onchange="setPF('wx',this.checked?1:0)"> Show the weather card</label><label class="ck" style="margin-top:6px"><input type="checkbox" ${PF.flag?'checked':''} onchange="setPF('flag',this.checked?1:0)"> Show the National Flag</label>
- <p class="mut" style="margin:8px 0 0">The clock, weather and flag appear in the title bar at the top. To choose the weather place or °C/°F, open Settings › Household.</p>
+ <p class="mut" style="margin:8px 0 0">The clock, weather and flag appear in the title bar at the top. To choose the weather place or °C/°F, use “Dashboard, clock and weather” in Settings.</p>
  <div class="row" style="margin-top:10px"><button class="b g s" onclick="resetLook()">Reset appearance</button></div><p class="mut">Appearance is saved on this device only, so your phone and computer can look different.</p></details>
  <details class="card" ${fo('m-dc',0)}><summary>Data check (compare devices)</summary>${mDataCheck()}</details>
  <details class="card" ${fo('m-dt',1)}><summary>Date and time format</summary><div class="row"><label>Date format${mSel('df',M.pf.df,MDFS.map(f=>[f,f+'  ('+f.replace(/yyyy|dd|mm|MMM/g,t=>({yyyy:'2026',dd:'13',mm:'11',MMM:'Nov'}[t]))+')']))}</label><label>Time format${mSel('tf',M.pf.tf,[['12','12-hour (03:30 pm)'],['24','24-hour (15:30)']])}</label><label>First day of the week${mSel('fw',M.pf.fw,[[1,'Monday'],[0,'Sunday'],[6,'Saturday']])}</label></div>
